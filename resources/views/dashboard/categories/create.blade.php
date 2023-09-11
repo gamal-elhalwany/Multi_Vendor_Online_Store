@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Create Category</li>
+    <h1 class="breadcrumb-item active">Create Category</h1>
 @endsection
 
 @section('content')
