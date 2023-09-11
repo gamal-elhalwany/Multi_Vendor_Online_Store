@@ -2,10 +2,16 @@
 
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item active">Categories</li>
+    <h1 class="breadcrumb-item active">Categories</h1>
 @endsection
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 <table class="table">
     <a href="{{ route('categories.create') }}" class="btn btn-outline-primary m-3">Create Category</a>
@@ -16,7 +22,7 @@
             <th>Name</th>
             <th>Parent_Id</th>
             <th>Created At</th>
-            <th>Actions</th>
+            <th colspan="2">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -28,8 +34,10 @@
             <td>{{ $category->parent_id }}</td>
             <td>{{ $category->created_at }}</td>
             <td>
-                <a href="{{ route('category.edit') }}" class="btn btn-outline-primary.btn-sm">Edit</a>
-                <form action="{{ route('category.destroy') }}" method="post">
+                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-outline-primary btn-sm">Edit</a>
+            </td>
+            <td>
+                <form action="{{ route('categories.destroy', $category->id) }}" method="post">
                     @csrf
                     @method('delete')
                     <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
