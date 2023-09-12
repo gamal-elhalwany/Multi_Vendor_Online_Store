@@ -10,6 +10,7 @@
 @if (session()->has('success'))
     <div class="alert alert-success">
         {{ session('success') }}
+        <button class="close-alert" style="float:right;">x</button>
     </div>
 @endif
 
