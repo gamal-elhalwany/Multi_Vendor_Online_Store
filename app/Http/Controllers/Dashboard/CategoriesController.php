@@ -55,7 +55,11 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = Category::where('id', '<>', $id)->where(function ($query) use ($id) {
+            $query->whereNull('parent_id')->orWhere('parent_id', '<>', $id);
+        })->get();
+        $category = Category::findOrFail($id);
+        return view('dashboard.categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -63,7 +67,16 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $request->merge([
+            'slug' => Str::slug($request->post('name')),
+            'parent_id' => $request->post('category_name')
+        ]);
+
+        $category->update($request->all());
+        return redirect()->route('categories.index')->with('success', 'Category Updated Successfully!');
+
     }
 
     /**
@@ -71,6 +84,9 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('categories.index')->with('success', 'Category Deleted Successfully!');
     }
 }
