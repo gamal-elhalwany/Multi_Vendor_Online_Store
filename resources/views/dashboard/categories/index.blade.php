@@ -1,8 +1,10 @@
 @extends('layouts.dashboardLayout')
 
+@section('title', 'Categories')
+
 @section('breadcrumb')
     @parent
-    <h1 class="breadcrumb-item active">Categories</h1>
+    <li class="breadcrumb-item active">Categories</li>
 @endsection
 
 @section('content')
