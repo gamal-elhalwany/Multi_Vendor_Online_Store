@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('categories.store') }}" method="post">
+    <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="">Category Name</label>
@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label>Category Parent</label>
-            <select class="form-control form-select" name="category_name">
+            <select class="form-control form-select" name="parent_id">
                 <option value="">Primary Category</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>

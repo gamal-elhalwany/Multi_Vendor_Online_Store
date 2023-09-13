@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
@@ -35,10 +36,18 @@ class CategoriesController extends Controller
     {
         $request->merge([
             'slug' => Str::slug($request->post('name')),
-            'parent_id' => $request->post('category_name')
         ]);
 
-        $category = Category::create($request->all());
+        // You Have to run this command first to make the laravel storage linked with the public path:php artisan storage:link
+        $data = $request->except('image');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', 'public');
+            $data['image'] = $path;
+        }
+
+        $category = Category::create($data);
         return redirect()->route('categories.index')->with('success', 'Category Created!');
     }
 
@@ -69,12 +78,26 @@ class CategoriesController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $request->merge([
-            'slug' => Str::slug($request->post('name')),
-            'parent_id' => $request->post('category_name')
-        ]);
+        $old_image = $category->image;
+        $data = $request->except('image');
 
-        $category->update($request->all());
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', 'public');
+            $data['image'] = $path;
+        }
+
+        // $request->merge([
+        //     'slug' => Str::slug($request->post('name')),
+        //     // 'parent_id' => $request->post('category_name'),
+        // ]);
+
+        $category->update($data);
+
+        if ($old_image && isset($data['image'])) {
+            Storage::disk('public')->delete($old_image);
+        }
+
         return redirect()->route('categories.index')->with('success', 'Category Updated Successfully!');
 
     }
