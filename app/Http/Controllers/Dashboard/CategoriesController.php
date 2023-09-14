@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
+    protected function uploadImage (Request $request) {
+        // You Have to run this command first to make the laravel storage linked with the public path:php artisan storage:link
+
+        if (!$request->hasFile('image')) {
+            return;
+        }
+        $file = $request->file('image');
+        $path = $file->store('uploads', 'public');
+        return $path;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -38,14 +49,8 @@ class CategoriesController extends Controller
             'slug' => Str::slug($request->post('name')),
         ]);
 
-        // You Have to run this command first to make the laravel storage linked with the public path:php artisan storage:link
         $data = $request->except('image');
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('uploads', 'public');
-            $data['image'] = $path;
-        }
+        $data['image'] = $this->uploadImage($request);
 
         $category = Category::create($data);
         return redirect()->route('categories.index')->with('success', 'Category Created!');
@@ -82,11 +87,13 @@ class CategoriesController extends Controller
         $old_image = $category->image;
         $data = $request->except('image');
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('uploads', 'public');
-            $data['image'] = $path;
-        }
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $path = $file->store('uploads', 'public');
+        //     $data['image'] = $path;
+        // }
+
+        $data['image'] = $this->uploadImage($request);
 
         $category->update($data);
 
@@ -104,6 +111,10 @@ class CategoriesController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
 
         return redirect()->route('categories.index')->with('success', 'Category Deleted Successfully!');
     }

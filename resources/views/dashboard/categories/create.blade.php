@@ -45,7 +45,7 @@
                 <label>Active</label>
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <input type="radio" aria-label="Radio button for following text input" name="status" value="archive">
+                        <input type="radio" aria-label="Radio button for following text input" name="status" value="archived">
                     </div>
                 </div>
                 <label>Archive</label>
