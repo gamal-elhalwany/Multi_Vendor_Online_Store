@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('categories.update', $category->id) }}" method="post">
+    <form action="{{ route('categories.update', $category->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -19,10 +19,10 @@
 
         <div class="form-group">
             <label>Category Parent</label>
-            <select class="form-control form-select" name="category_name">
+            <select class="form-control form-select" name="parent_id">
                 <option value="">Primary Category</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @selected($category->parent_id == $category->id)>{{ $category->name }}</option>
+                @foreach ($categories as $parent)
+                    <option value="{{ $parent->id }}" @selected($category->parent_id == $parent->parent_id)>{{ $parent->name }}</option>
                 @endforeach
             </select>
         </div>

@@ -67,6 +67,7 @@ class CategoriesController extends Controller
         $categories = Category::where('id', '<>', $id)->where(function ($query) use ($id) {
             $query->whereNull('parent_id')->orWhere('parent_id', '<>', $id);
         })->get();
+
         $category = Category::findOrFail($id);
         return view('dashboard.categories.edit', compact('category', 'categories'));
     }
@@ -87,11 +88,6 @@ class CategoriesController extends Controller
             $data['image'] = $path;
         }
 
-        // $request->merge([
-        //     'slug' => Str::slug($request->post('name')),
-        //     // 'parent_id' => $request->post('category_name'),
-        // ]);
-
         $category->update($data);
 
         if ($old_image && isset($data['image'])) {
@@ -99,7 +95,6 @@ class CategoriesController extends Controller
         }
 
         return redirect()->route('categories.index')->with('success', 'Category Updated Successfully!');
-
     }
 
     /**
