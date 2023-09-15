@@ -11,27 +11,39 @@
         @csrf
         <div class="form-group">
             <label for="">Category Name</label>
-            <input type="text" name="name" class="form-control" />
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"/>
+            @error('name')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Category Parent</label>
-            <select class="form-control form-select" name="parent_id">
+            <select class="form-control form-select @error('parent_id') is-invalid @enderror" name="parent_id">
                 <option value="">Primary Category</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+            @error('parent_id')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="">Description</label>
-            <textarea name="description" class="form-control"></textarea>
+            <textarea name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+            @error('description')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="">Image</label>
             <input type="file" name="image" class="form-control"/>
+            @error('image')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -50,6 +62,9 @@
                 </div>
                 <label>Archive</label>
             </div>
+            @error('status')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
