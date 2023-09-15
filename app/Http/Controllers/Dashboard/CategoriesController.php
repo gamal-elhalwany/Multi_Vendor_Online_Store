@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -43,7 +44,7 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $request->merge([
             'slug' => Str::slug($request->post('name')),
@@ -80,24 +81,22 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         $category = Category::findOrFail($id);
 
         $old_image = $category->image;
         $data = $request->except('image');
 
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $path = $file->store('uploads', 'public');
-        //     $data['image'] = $path;
-        // }
+        $new_image = $this->uploadImage($request);
 
-        $data['image'] = $this->uploadImage($request);
+        if ($new_image) {
+            $data['image'] = $new_image;
+        }
 
         $category->update($data);
 
-        if ($old_image && isset($data['image'])) {
+        if ($old_image && $new_image) {
             Storage::disk('public')->delete($old_image);
         }
 
@@ -112,6 +111,7 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
+        // this if statement is for deleting the image after deleting the category and don't leave it.
         if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }

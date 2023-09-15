@@ -15,6 +15,9 @@
         <div class="form-group">
             <label for="">Category Name</label>
             <input type="text" name="name" class="form-control" value="{{ $category->name }}"/>
+            @error('name')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -25,16 +28,25 @@
                     <option value="{{ $parent->id }}" @selected($category->parent_id == $parent->parent_id)>{{ $parent->name }}</option>
                 @endforeach
             </select>
+            @error('parent_id')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="">Description</label>
             <textarea name="description" class="form-control">{{ $category->description }}</textarea>
+            @error('description')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="">Image</label>
             <input type="file" name="image" class="form-control"/>
+            @error('image')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
             @if ($category->image)
             <img src="{{ asset('storage/' .$category->image) }}" alt="Image" height="50">
             @endif
@@ -56,6 +68,9 @@
                 </div>
                 <label>Archive</label>
             </div>
+            @error('status')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
