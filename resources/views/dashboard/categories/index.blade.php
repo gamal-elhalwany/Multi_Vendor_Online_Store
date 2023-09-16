@@ -11,7 +11,7 @@
 
     <x-alert type="success" />
 
-    <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4 hello">
+    <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
         <input type="text" name="name" class="form-control mx-2" placeholder="Filter Categories" :value="request('name')">
         <select name="status" class="form-control mx-2">
             <option value="">All</option>
