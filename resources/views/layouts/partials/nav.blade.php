@@ -22,6 +22,7 @@
                     <a href="#" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Inactive Page</p>
+                        <span class="right badge badge-danger">New</span>
                     </a>
                 </li>
             </ul>
