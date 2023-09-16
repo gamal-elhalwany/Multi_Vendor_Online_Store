@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
             'name' => "required|string|min:3|max:255|unique:categories,name,$id",//this attribute (id) here for ignoring it.
             'parent_id' => 'nullable|int|exists:categories,id',
             'description' => 'nullable|string',
-            'image' => 'image|mimes:*|min:1048576',
+            'image' => 'image|mimes:jpg, jpeg, png, bmp, gif, svg, or webp',
             'status' => 'required|in:active,archived',
         ];
     }
