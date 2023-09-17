@@ -13,16 +13,15 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('categories.index') }}" class="nav-link">
+                    <a href="{{ route('categories.index') }}" class="nav-link {{ request()->is('dashboard/categories*') ? 'active-link' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Categories</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link {{ request()->is('dashboard/products*') ? 'active-link' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Inactive Page</p>
-                        {{-- <span class="right badge badge-danger">New</span> --}}
+                        <p>Products</p>
                     </a>
                 </li>
             </ul>
