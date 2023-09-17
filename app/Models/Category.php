@@ -17,4 +17,8 @@ class Category extends Model
         'image',
         'status',
     ];
+
+    public function parent () {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
 }

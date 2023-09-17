@@ -28,7 +28,7 @@
                 <th>Image</th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Parent_Id</th>
+                <th>Parent_Category</th>
                 <th>Status</th>
                 <th>Created At</th>
                 <th colspan="2">Actions</th>
@@ -42,7 +42,8 @@
                     </td>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
-                    <td>{{ $category->parent_id }}</td>
+                    {{-- The optional() function is used to handle cases where a category may not have a parent, preventing any potential errors. --}}
+                    <td>{{ optional($category->parent)->name }}</td>
                     <td>{{ $category->status }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>

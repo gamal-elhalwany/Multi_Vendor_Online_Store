@@ -36,7 +36,9 @@ class CategoriesController extends Controller
             $query->where('status', '=', $status);
         }
 
-        $categories = $query->paginate();
+        $categories = $query->with('parent')->paginate();
+
+        // dd($categories);
 
         return view('dashboard.categories.index', compact('categories'));
     }
