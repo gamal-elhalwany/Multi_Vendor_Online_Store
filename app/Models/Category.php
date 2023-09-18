@@ -24,7 +24,7 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    // Example For Local Scope for this Model.
+    // Example For Local Scope for this Model and Filtering Data.
     public function scopeFilter (Builder $builder, $filters) {
         $builder->when($filters['name'] ?? false, function($builder, $name) {
             $builder->where('name', 'LIKE', "%$name%");

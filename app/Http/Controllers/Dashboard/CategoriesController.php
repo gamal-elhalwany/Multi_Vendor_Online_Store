@@ -27,16 +27,14 @@ class CategoriesController extends Controller
      */
     public function index(Request $request)
     {
-        // [
-            // This is another way to filtering data without scopes.
-            // $query = Category::query();
-            // if ($name = $request->query('name')) {
-            //     $query->where('name', 'LIKE', "%$name%");
-            // }
-            // if ($status = $request->query('status')) {
-            //     $query->where('status', '=', $status);
-            // }
-        // ]
+        // Comment:- This is another way to filtering data without scopes.
+        // $query = Category::query();
+        // if ($name = $request->query('name')) {
+        //     $query->where('name', 'LIKE', "%$name%");
+        // }
+        // if ($status = $request->query('status')) {
+        //     $query->where('status', '=', $status);
+        // }
 
         // this filter method is the name of the category model scope.
         $categories = Category::filter($request->all())->orderby('name')
@@ -74,7 +72,7 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -128,11 +126,17 @@ class CategoriesController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category Moved to Trash Successfully!');
     }
 
+    /**
+     * View Trashed Categories.
+     */
     public function trash () {
         $categories = Category::onlyTrashed()->paginate();
         return view('dashboard.categories.trash',compact('categories'));
     }
 
+    /**
+     * Restore a specific category.
+     */
     public function restore (Request $request, $id) {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
@@ -140,6 +144,9 @@ class CategoriesController extends Controller
         return redirect()->route('categories.trash')->with('success', 'Category Restored!');
     }
 
+    /**
+     * Remove the specified resource from categories table forever.
+     */
     public function forceDelete (Request $request, $id) {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
