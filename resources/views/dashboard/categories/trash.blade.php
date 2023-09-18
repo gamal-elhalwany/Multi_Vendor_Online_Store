@@ -1,10 +1,11 @@
 @extends('layouts.dashboardLayout')
 
-@section('title', 'Categories')
+@section('title', 'Trashed Categories')
 
 @section('breadcrumb')
     @parent
     <li class="breadcrumb-item active">Categories</li>
+    <li class="breadcrumb-item active">Trash</li>
 @endsection
 
 @section('content')
@@ -22,8 +23,7 @@
     </form>
 
     <div class="mb-5">
-        <a href="{{ route('categories.create') }}" class="btn btn-outline-primary m-3">Create Category</a>
-        <a href="{{ route('categories.trash') }}" class="btn btn-outline-dark m-3">Trash</a>
+        <a href="{{ route('categories.index') }}" class="btn btn-outline-primary m-3">Back</a>
     </div>
 
     <table class="table">
@@ -32,9 +32,8 @@
                 <th>Image</th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Parent_Category</th>
                 <th>Status</th>
-                <th>Created At</th>
+                <th>Deleted At</th>
                 <th colspan="2">Actions</th>
             </tr>
         </thead>
@@ -46,16 +45,17 @@
                     </td>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
-                    {{-- The optional() function is used to handle cases where a category may not have a parent, preventing any potential errors. --}}
-                    <td>{{ optional($category->parent)->name }}</td>
                     <td>{{ $category->status }}</td>
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $category->deleted_at }}</td>
                     <td>
-                        <a href="{{ route('categories.edit', $category->id) }}"
-                            class="btn btn-outline-primary btn-sm">Edit</a>
+                        <form action="{{ route('categories.restore', $category->id) }}" method="post">
+                            @csrf
+                            @method('put')
+                            <button type="submit" class="btn btn-outline-info btn-sm">Restore</button>
+                        </form>
                     </td>
                     <td>
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                        <form action="{{ route('categories.force-delete', $category->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
@@ -64,7 +64,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td>No Categories Defined.</td>
+                    <td colspan="7">No Categories Defined.</td>
                 </tr>
             @endforelse
         </tbody>
