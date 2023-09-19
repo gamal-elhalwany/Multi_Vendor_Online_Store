@@ -24,6 +24,10 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
+    public function product () {
+        return $this->hasMany(Product::class);
+    }
+
     // Example For Local Scope for this Model and Filtering Data.
     public function scopeFilter (Builder $builder, $filters) {
         $builder->when($filters['name'] ?? false, function($builder, $name) {
