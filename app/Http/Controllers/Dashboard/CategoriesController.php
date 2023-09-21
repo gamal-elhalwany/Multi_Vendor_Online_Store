@@ -39,7 +39,15 @@ class CategoriesController extends Controller
         // this filter method is the name of the category model scope.
         $categories = Category::filter($request->all())->orderby('name')
         // this parent value is coming from the Model Category public function parent that makes the relationship.
-        ->with('parent')->paginate();
+        ->with('parent')
+        ->withCount([
+            'products'
+            //Comment:- this goes when you want to get a specific rows with specific conditions.
+            // 'products' => function ($query) {
+            //     $query->where('status', '=', 'archived');
+            // }
+        ])
+        ->paginate();
 
         return view('dashboard.categories.index', compact('categories'));
     }
@@ -72,9 +80,9 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return view('dashboard.categories.show', compact('category'));
     }
 
     /**

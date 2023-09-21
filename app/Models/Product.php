@@ -14,6 +14,10 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function store () {
+        return $this->belongsTo(Store::class);
+    }
+
     // this protected function is for making or calling the global scope that we have created by this command:php artisan make:scope [nameOfScope].
     protected static function booted () {
         static::addGlobalScope('store', new StoreScope());
