@@ -4,7 +4,7 @@
         <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link active">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -25,21 +25,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="" class="nav-link {{ request()->is('dashboard/order*') ? 'active' : '' }}">
+                        <i class="fab fas fa-list nav-icon"></i>
+                        <p>Orders</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('categories.trash') }}" class="nav-link {{ request()->is('dashboard/categories/trash') ? 'active-link' : '' }}" class="nav-link {{ request()->is('dashboard/products*') ? 'active-link' : '' }}">
                         <i class="fas fa-trash-alt nav-icon"></i>
                         <p>Trash</p>
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                    Simple Link
-                    <span class="right badge badge-danger">New</span>
-                </p>
-            </a>
         </li>
     </ul>
 </nav>

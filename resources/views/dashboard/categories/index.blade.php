@@ -33,6 +33,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Parent_Category</th>
+                <th>Products #</th>
                 <th>Status</th>
                 <th>Created At</th>
                 <th colspan="2">Actions</th>
@@ -45,9 +46,10 @@
                         <img src="{{ asset('storage/' . $category->image) }}" alt="Image" height="50">
                     </td>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
                     {{-- The optional() function is used to handle cases where a category may not have a parent, preventing any potential errors. --}}
-                    <td>{{ optional($category->parent)->name }}</td>
+                    <td>{{ $category->parent ? $category->parent->name : '-' }}</td>
+                    <td>{{ $category->products_count }}</td>
                     <td>{{ $category->status }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>
@@ -64,7 +66,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td>No Categories Defined.</td>
+                    <td colspan="9">No Categories Defined.</td>
                 </tr>
             @endforelse
         </tbody>

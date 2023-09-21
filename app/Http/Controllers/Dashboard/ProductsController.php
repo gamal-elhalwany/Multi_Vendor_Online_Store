@@ -13,6 +13,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        //Comment:- almost the same code in the global scope file but we here just used the product model instead its query builder facade.
         // $user = auth()->user();
         // if ($user->store_id) {
         //     $products = Product::where('store_id', '=', $user->store_id)->paginate();
