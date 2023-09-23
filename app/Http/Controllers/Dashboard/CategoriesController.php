@@ -124,7 +124,7 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage called soft-delete.
      */
     public function destroy(string $id)
     {
@@ -153,7 +153,7 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Remove the specified resource from categories table forever.
+     * Remove the specified resource from categories table forever called [force-delete].
      */
     public function forceDelete (Request $request, $id) {
         $category = Category::onlyTrashed()->findOrFail($id);

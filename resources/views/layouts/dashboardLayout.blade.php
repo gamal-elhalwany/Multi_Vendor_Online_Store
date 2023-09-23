@@ -17,6 +17,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+
+
+    <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
+
     <style>
         .active-link {
             background-color: #007bff;
@@ -192,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+                            <a href="{{ route('dashboard.profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-primary m-3">Logout</button>
@@ -276,6 +280,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED SCRIPTS -->
 
+    <!-- Tagify Scripts -->
+    <script src="{{ asset('js/tagify.net_npm_@yaireo_tagify') }}"></script>
+    <script src="{{ asset('js/tagify.polyfills.min.js') }}"></script>
+
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -288,6 +296,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $('.close-alert').on('click', function() {
             $('.alert').hide();
         });
+
+        var inputElm = document.querySelector('[name=tags]'),
+        tagify = new Tagify (inputElm);
     </script>
 </body>
 
