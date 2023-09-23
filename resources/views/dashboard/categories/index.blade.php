@@ -49,7 +49,7 @@
                     <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
                     {{-- The optional() function is used to handle cases where a category may not have a parent, preventing any potential errors. --}}
                     <td>{{ $category->parent ? $category->parent->name : '-' }}</td>
-                    <td>{{ $category->products_count }}</td>
+                    <td>{{ $category->parent_count }}</td>
                     <td>{{ $category->status }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>

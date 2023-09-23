@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/categories/{category}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
 
     Route::delete('/categories/{category}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
+
+    Route::get('dashboard/profile/edit', [ProfileController::class, 'edit'])->name('dashboard.profile.edit');
+
+    Route::patch('dashboard/profile/edit', [ProfileController::class, 'update'])->name('dashboard.profile.update');
 
     Route::resource('dashboard/categories', CategoriesController::class);
     Route::resource('dashboard/products', ProductsController::class);

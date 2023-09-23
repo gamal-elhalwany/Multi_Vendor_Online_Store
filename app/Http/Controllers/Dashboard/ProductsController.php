@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -55,15 +58,42 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        //Comment:- this pluck function returns the field name of an array that it takes to an array of string.
+        $tags = implode(',', $product->tags()->pluck('name')->toArray());
+
+        return view('dashboard.products.edit', compact('product', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([]);
+
+        $product->update($request->except('tags'));
+
+        $tags = json_decode($request->post('tags'));
+        $tag_ids = [];
+        $allTags = Tag::all();
+        foreach ($tags as $tag_name) {
+            $slug = Str::slug($tag_name->value);
+            $tag = $allTags->where('slug', $slug)->first();
+            if (!$tag) {
+                $tag = Tag::create([
+                    'name' => $tag_name->value,
+                    'slug' => $slug,
+                ]);
+            }
+            $tag_ids[] = $tag->id;
+        }
+
+        // the sync function is used only with belongToMany relationships and here I assigned the tags array to the tags model after creating it.
+        $product->tags()->sync($tag_ids);
+
+        return redirect()->route('products.index')->with('success', 'Product Updated Successfully!');
     }
 
     /**
