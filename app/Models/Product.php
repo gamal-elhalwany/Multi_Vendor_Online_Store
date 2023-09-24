@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Scopes\StoreScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -36,5 +38,38 @@ class Product extends Model
     // this protected function is for making or calling the global scope that we have created by this command:php artisan make:scope [nameOfScope].
     protected static function booted () {
         static::addGlobalScope('store', new StoreScope());
+    }
+
+    public function scopeFilter (Builder $builder, $filters) {
+        $builder->when($filters['name'] ?? false, function($builder, $name) {
+            $builder->where('name', 'LIKE', "%$name%");
+        });
+
+        $builder->when($filters['status'] ?? false, function($builder, $status) {
+            $builder->where('status', '=', $status);
+        });
+    }
+
+    public function scopeActive (Builder $builder) {
+        $builder->where('status', '=', 'active');
+    }
+
+
+    // Accessors: these accessors are made for making changes on the DB attributes when we access them and we call its names like this as below example [image_url], it makes some operations on the DB attribute and return it back.
+    public function getImageUrlAttribute() {
+        if (!$this->image) {
+            return 'https://www.incathlab.com/images/products/default_product.png';
+        }
+        if (Str::startsWith($this->image, ['https://', 'http:/'])) {
+            return $this->image;
+        }
+        return asset('storage/' . $this->image);
+    }
+
+    public function getSalePercentageAttribute() {
+        if (!$this->compare_price) {
+            return;
+        }
+        return round(100 - (100 * $this->price / $this->compare_price), 1);
     }
 }

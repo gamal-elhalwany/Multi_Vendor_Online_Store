@@ -14,7 +14,7 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //Comment:- almost the same code in the global scope file but we here just used the product model instead its query builder facade.
         // $user = auth()->user();
@@ -25,7 +25,7 @@ class ProductsController extends Controller
         // }
 
         // I used the global scope instead of the above code and repeat it every time.
-        $products = Product::paginate();
+        $products = Product::filter($request->all())->orderby('name')->paginate();
         return view('dashboard.products.index', compact('products'));
     }
 
