@@ -12,11 +12,12 @@
     <x-alert type="success" />
 
     <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
-        <input type="text" name="name" class="form-control mx-2" placeholder="Filter products" :value="request('name')">
+        <input type="text" name="name" class="form-control mx-2" placeholder="Filter products" :value="old(request('name'))">
         <select name="status" class="form-control mx-2">
             <option value="">All</option>
             <option value="active" @selected(request('status') == 'active')>Active</option>
             <option value="archived" @selected(request('status') == 'archived')>Archived</option>
+            <option value="draft" @selected(request('status') == 'draft')>Draft</option>
         </select>
         <button type="submit" class="btn btn-dark mx-2 form-control">Search</button>
     </form>

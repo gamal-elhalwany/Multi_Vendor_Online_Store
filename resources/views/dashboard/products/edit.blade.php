@@ -93,7 +93,7 @@
 
                 <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <input type="radio" aria-label="Radio button for following text input" name="status" value="archived" @checked($product->status == 'draft')>
+                        <input type="radio" aria-label="Radio button for following text input" name="status" value="draft" @checked($product->status == 'draft')>
                     </div>
                 </div>
                 <label>Draft</label>
