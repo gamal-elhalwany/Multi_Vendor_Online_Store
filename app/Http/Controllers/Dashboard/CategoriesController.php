@@ -120,7 +120,10 @@ class CategoriesController extends Controller
             Storage::disk('public')->delete($old_image);
         }
 
-        return redirect()->route('categories.index')->with('success', 'Category Updated Successfully!');
+        return redirect()->route('categories.index')->with([
+            'success', 'Category Updated Successfully!',
+            'updated_id' => $id,
+        ]);
     }
 
     /**

@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
+        'Type',
+        'last_active_at',
     ];
 
     public function profile () {
