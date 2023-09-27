@@ -41,7 +41,7 @@
         </thead>
         <tbody>
             @forelse ($categories as $category)
-                <tr>
+                <tr id="category_{{ $category->id }}">
                     <td>
                         <img src="{{ asset('storage/' . $category->image) }}" alt="Image" height="50">
                     </td>
@@ -74,5 +74,17 @@
 
     {{-- If your app uses a bootstrap as css framework and this method doesn't work with you go to the appServiceProvider and call for this method:Paginator::useBootstrap(); --}}
     {{ $categories->withQueryString()->links() }}
+
+    @if ($message = Session::get('updated_id'))
+    <script>
+        $updatedEle = {{ $message }}
+        function addClass () {
+            let $ele = document.getElementById('category_'+$updatedEle);
+            $ele.className += "table-info";
+            console.log($ele);
+        }
+        addClass();
+    </script>
+    @endif
 
 @endsection

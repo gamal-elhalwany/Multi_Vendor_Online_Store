@@ -1,5 +1,5 @@
 <x-front-layout :title="$product->name">
-    <x-slot:breadcrumb>
+    @section('breadcrumbs')
         <div class="breadcrumbs">
             <div class="container">
                 <div class="row align-items-center">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-    </x-slot:breadcrumb>
+    @endsection
 
     <!-- Start Item Details -->
     <section class="item-details section">
@@ -45,24 +45,27 @@
                         <div class="product-info">
                             <h2 class="title">{{ $product->name }}</h2>
                             <p class="category">
-                                <i class="lni lni-tag">{{ $product->tag }}</i>
-                                <a href="javascript:void(0)">{{ $product->category->name }}</a>
+                                <i class="lni lni-tag"></i>
+                                {{ $product->tag }}:
+                                <a href="javascript:void(0)">
+                                    {{ $product->category->name }}
+                                </a>
                             </p>
                             <h3 class="price">
                                 {{ Currency::format($product->price) }}
                                 @if ($product->compare_price)
-                                <span>{{ Currency::format($product->compare_price) }}</span>
+                                    <span>{{ Currency::format($product->compare_price) }}</span>
                                 @endif
                             </h3>
                             <p class="info-text">
-                                {{ $product->description }}
+                                {{ $product->descrtipion }}
                             </p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
                                         <label class="title-label" for="size">Choose color</label>
                                         <div class="single-checkbox checkbox-style-1">
-                                            <input type="checkbox" id="checkbox-1" checked>
+                                            <input type="checkbox" id="checkbox-1" checked="">
                                             <label for="checkbox-1"><span></span></label>
                                         </div>
                                         <div class="single-checkbox checkbox-style-2">
@@ -162,6 +165,127 @@
                                     <li><span>UPS Ground Shipping:</span> 4 - 6 days, $18.00</li>
                                     <li><span>Unishop Global Export:</span> 3 - 4 days, $25.00</li>
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        <div class="single-block give-review">
+                            <h4>4.5 (Overall)</h4>
+                            <ul>
+                                <li>
+                                    <span>5 stars - 38</span>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                </li>
+                                <li>
+                                    <span>4 stars - 10</span>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star"></i>
+                                </li>
+                                <li>
+                                    <span>3 stars - 3</span>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                </li>
+                                <li>
+                                    <span>2 stars - 1</span>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                </li>
+                                <li>
+                                    <span>1 star - 0</span>
+                                    <i class="lni lni-star-filled"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                    <i class="lni lni-star"></i>
+                                </li>
+                            </ul>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn review-btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Leave a Review
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-12">
+                        <div class="single-block">
+                            <div class="reviews">
+                                <h4 class="title">Latest Reviews</h4>
+                                <!-- Start Single Review -->
+                                <div class="single-review">
+                                    <img src="assets/images/blog/comment1.jpg" alt="#">
+                                    <div class="review-info">
+                                        <h4>Awesome quality for the price
+                                            <span>Jacob Hammond
+                                            </span>
+                                        </h4>
+                                        <ul class="stars">
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                        </ul>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor...</p>
+                                    </div>
+                                </div>
+                                <!-- End Single Review -->
+                                <!-- Start Single Review -->
+                                <div class="single-review">
+                                    <img src="assets/images/blog/comment2.jpg" alt="#">
+                                    <div class="review-info">
+                                        <h4>My husband love his new...
+                                            <span>Alex Jaza
+                                            </span>
+                                        </h4>
+                                        <ul class="stars">
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star"></i></li>
+                                        </ul>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor...</p>
+                                    </div>
+                                </div>
+                                <!-- End Single Review -->
+                                <!-- Start Single Review -->
+                                <div class="single-review">
+                                    <img src="assets/images/blog/comment3.jpg" alt="#">
+                                    <div class="review-info">
+                                        <h4>I love the built quality...
+                                            <span>Jacob Hammond
+                                            </span>
+                                        </h4>
+                                        <ul class="stars">
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                            <li><i class="lni lni-star-filled"></i></li>
+                                        </ul>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor...</p>
+                                    </div>
+                                </div>
+                                <!-- End Single Review -->
                             </div>
                         </div>
                     </div>

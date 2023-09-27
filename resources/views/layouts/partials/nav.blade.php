@@ -30,12 +30,6 @@
                         <p>Orders</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('categories.trash') }}" class="nav-link {{ request()->is('dashboard/categories/trash') ? 'active-link' : '' }}" class="nav-link {{ request()->is('dashboard/products*') ? 'active-link' : '' }}">
-                        <i class="fas fa-trash-alt nav-icon"></i>
-                        <p>Trash</p>
-                    </a>
-                </li>
             </ul>
         </li>
     </ul>

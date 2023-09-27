@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>{{ $title }}</title>
+    <title>@yield('title', $title)</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
@@ -110,7 +110,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route('home') }}">
                             <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
@@ -343,7 +343,7 @@
     <!-- End Header Area -->
 
     <!-- Start Breadcrumbs -->
-    {{ $breadcrumb }}
+    @yield('breadcrumbs')
     <!-- End Breadcrumbs -->
 
     <!-- this slot references to the content that be between the component tag -->
