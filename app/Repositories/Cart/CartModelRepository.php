@@ -50,7 +50,7 @@ class CartModelRepository implements CartRepository
 
     public function empty()
     {
-        return Cart::where('cookie_id', '=', $this->getCookieId())->destroy();
+        return Cart::where('cookie_id', '=', $this->getCookieId())->delete();
     }
 
     public function total($quantity): float
