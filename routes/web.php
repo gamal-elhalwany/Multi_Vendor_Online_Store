@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
     Route::resource('cart', CartController::class);
+
+    Route::get('checkout', [OrdersController::class, 'create'])->name('checkout.create');
+    Route::post('checkout', [OrdersController::class, 'store'])->name('checkout.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

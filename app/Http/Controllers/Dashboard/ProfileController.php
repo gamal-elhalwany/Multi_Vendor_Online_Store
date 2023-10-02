@@ -24,7 +24,6 @@ class ProfileController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            // 'birth_day' => 'nullable|date|before:.'(date('Y')),
             'birth_day' => 'nullable|date|before:now',
             'gender' => 'in:male,female',
             'country' => 'required|string',

@@ -26,12 +26,22 @@ class Product extends Model
 
     public function tags () {
         return $this->belongsToMany(
+            // this is used if there is a many to many relationship.
             Tag::class,     // Related Model
             'product_tag',  // Pivot Table
             'product_id',   // FK in the pivot table for the current model
             'tag_id',       // FK in the pivot table for the related model
             'id',           // Primary key Current Model
             'id',           // Primary key Related Model
+        );
+    }
+
+    public function orders () {
+        return $this->belongsToMany(
+            Order::class,
+            'orders_items', 'product_id', 'order_id', 'id', 'id')->withPivot([
+                'product_name', 'price', 'quantity', 'options',
+            ]
         );
     }
 

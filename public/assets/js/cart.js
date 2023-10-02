@@ -21,7 +21,7 @@
                 _token: $('#d-csrf').val(),
             },
             success: response => {
-                $(`${id}`).hide();
+                $('#' + id).remove();
             }
         });
     });

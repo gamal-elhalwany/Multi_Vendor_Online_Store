@@ -13,7 +13,7 @@ class StoreScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        // here you can put any logic you want.
+        // here you can put any logic you want and it will run on the eloquent model automatically.
         $user = auth()->user();
         if ($user && $user->store_id) {
             $builder->where('store_id', '=', $user->store_id);

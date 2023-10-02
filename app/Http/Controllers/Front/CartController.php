@@ -45,7 +45,7 @@ class CartController extends Controller
         //Comment:- By using this variable $cart you are using the services container.
         $request->validate([
             'product_id' => 'required|int|exists:products,id',
-            'quantity' => 'nullable|int|min:1',
+            'quantity' => 'required|int|min:1',
         ]);
 
         $product = Product::findOrFail($request->post('product_id'));
@@ -56,11 +56,15 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CartRepository $cart, string $id)
+    public function destroy(Request $request, CartRepository $cart, string $id)
     {
+        //Comment:- The ajax method is responsible for hitting the php or laravel method that does the action but without reloading page.
         $cart->delete($id);
-        return [
-            'message' => 'item deleted!',
-        ];
+        if ($request->expectsJson()) {
+            return [
+                'message' => 'item deleted!',
+            ];
+        }
+        return redirect()->route('cart.index')->with('success', 'Cart Deleted Successfully!');
     }
 }

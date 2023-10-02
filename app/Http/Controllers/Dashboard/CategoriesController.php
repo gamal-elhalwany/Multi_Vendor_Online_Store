@@ -36,7 +36,7 @@ class CategoriesController extends Controller
         //     $query->where('status', '=', $status);
         // }
 
-        // this filter method is the name of the category model scope.
+        // this filter() method is the name of the Scope of Category Model.
         $categories = Category::filter($request->all())->orderby('name')
         // this parent value is coming from the Model Category public function parent that makes the relationship.
         ->with('parent')
