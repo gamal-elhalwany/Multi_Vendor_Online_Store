@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -57,7 +58,7 @@ class OrdersController extends Controller
                 }
             }
 
-            $cart->empty();
+            event(new OrderCreated());
 
             DB::commit(); // this function is used for making this function works:startTransaction().
 
