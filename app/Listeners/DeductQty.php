@@ -24,10 +24,14 @@ class DeductQty
      */
     public function handle(): void
     {
-        foreach ($this->cart->get() as $item) {
-            Product::where('id', '=', $item->product_id)->update([
-                'qty' => DB::raw('qty - ' . $item->quantity),
-            ]);
+        try {
+            foreach ($this->cart->get() as $item) {
+                Product::where('id', '=', $item->product_id)->update([
+                    'qty' => DB::raw('qty - ' . $item->quantity),
+                ]);
+            }
+        } catch (\Throwable $e) {
+
         }
     }
 }

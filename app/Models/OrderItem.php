@@ -10,6 +10,7 @@ class OrderItem extends Model
     use HasFactory;
 
     protected $guarded = []; // Instead of fillable property.
+    protected $table = 'order_items';
 
     public $timestamps = false; //this is used if you are not using the timestamps method in the migration file.
 

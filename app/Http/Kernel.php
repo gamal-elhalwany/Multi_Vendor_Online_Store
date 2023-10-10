@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // here we can add all the middlewares that we want to work globally on all the routes of web.
             \App\Http\Middleware\UpdateUserLastAciveAt::class,
+            \App\Http\Middleware\MarkNotificationAsRead::class,
         ],
 
         'api' => [

@@ -11,13 +11,14 @@
         </div>
         <ul class="shopping-list">
             @foreach ($items as $cart)
+            @if ($cart->user_id == null)
             <li>
                 <a href="javascript:void(0)" class="remove"
                     title="Remove this item"><i class="lni lni-close"></i></a>
                 <div class="cart-img-head">
-                    <a class="cart-img" href="{{ route('cart.index', $cart->product->slug) }}"><img
-                            src="{{ $cart->product->image_url }}"
-                            alt="#"></a>
+                    <a class="cart-img" href="{{ route('cart.index', $cart->product->slug) }}">
+                        <img src="{{ $cart->product->image_url }}" alt="#">
+                    </a>
                 </div>
 
                 <div class="content">
@@ -29,6 +30,7 @@
                     <p class="quantity">{{ $cart->quantity }}x - <span class="amount">{{ Currency::format($cart->product->price) }}</span></p>
                 </div>
             </li>
+            @endif
             @endforeach
         </ul>
         <div class="bottom">

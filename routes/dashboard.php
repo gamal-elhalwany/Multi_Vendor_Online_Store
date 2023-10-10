@@ -4,7 +4,6 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 
