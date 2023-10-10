@@ -5,10 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'store_id', 'user_id', 'number', 'status', 'payment_status', 'payment_method',
@@ -42,7 +43,8 @@ class Order extends Model
     }
 
     public function products () {
-        return $this->belongsToMany(Product::class, 'orders_items', 'orders_id', 'product_id', 'id', 'id')->withPivot([
+        return $this->belongsToMany(Product::class, 'order_id', 'id')
+        ->withPivot([
             // this used if you have a pivot table with additional columns more than the foreign ids.
             'product_name', 'price', 'quantity', 'options',
         ]);

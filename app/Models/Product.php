@@ -24,6 +24,10 @@ class Product extends Model
         return $this->belongsTo(Store::class);
     }
 
+    public function carts (){
+        return $this->hasMany(Cart::class);
+    }
+
     public function tags () {
         return $this->belongsToMany(
             // this is used if there is a many to many relationship.
@@ -39,7 +43,7 @@ class Product extends Model
     public function orders () {
         return $this->belongsToMany(
             Order::class,
-            'orders_items', 'product_id', 'order_id', 'id', 'id')->withPivot([
+            'order_items', 'product_id', 'order_id', 'id', 'id')->withPivot([
                 'product_name', 'price', 'quantity', 'options',
             ]
         );

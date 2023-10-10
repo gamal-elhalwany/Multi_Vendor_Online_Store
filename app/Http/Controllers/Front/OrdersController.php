@@ -25,9 +25,13 @@ class OrdersController extends Controller
     }
 
     public function store (Request $request, CartRepository $cart) {
-        $request->validate([
-
-        ]);
+        // $request->validate([
+        //     'address.billing.first_name' => ['required', 'string', 'min:3', 'max:255'],
+        //     'address.billing.email' => ['required', 'email'],
+        //     'address.billing.phone_number' => ['required', 'string', 'min:11'],
+        //     'address.billing.city' => ['required'],
+        //     'address.billing.country' => ['required'],
+        // ]);
 
         $items = $cart->get()->groupBy('product.store_id')->all();
 
@@ -58,7 +62,7 @@ class OrdersController extends Controller
                 }
             }
 
-            event(new OrderCreated());
+            event(new OrderCreated($order));
 
             DB::commit(); // this function is used for making this function works:startTransaction().
 
@@ -68,4 +72,4 @@ class OrdersController extends Controller
         }
         return redirect()->route('home');
     }
-} // end of class.
+}
