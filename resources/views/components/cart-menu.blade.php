@@ -1,7 +1,11 @@
 <div class="cart-items">
     <a href="javascript:void(0)" class="main-btn">
         <i class="lni lni-cart"></i>
-        <span class="total-items">{{ $items->count() }}</span>
+        @auth
+        <span class="total-items">{{ Auth::user()->carts()->count() }}</span>
+        @else
+        <span class="total-items">0</span>
+        @endauth
     </a>
     <!-- Shopping Item -->
     <div class="shopping-item">
@@ -39,7 +43,7 @@
                 <span class="total-amount">{{ Currency::format($total) }}</span>
             </div>
             <div class="button">
-                <a href="checkout.html" class="btn animate">Checkout</a>
+                <a href="{{ route('checkout.create') }}" class="btn animate">Checkout</a>
             </div>
         </div>
     </div>

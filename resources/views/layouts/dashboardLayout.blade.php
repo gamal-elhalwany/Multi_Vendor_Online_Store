@@ -272,9 +272,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $('.alert').hide();
         });
 
+        // This is for making some tags to products with a package.
         var inputElm = document.querySelector('[name=tags]'),
         tagify = new Tagify (inputElm);
+
+        const userID = "{{ Auth::id() }}";
     </script>
+    <script type="module" src="{{ asset('js/notification.js') }}"></script>
 </body>
 
 </html>

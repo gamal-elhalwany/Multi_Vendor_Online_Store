@@ -12,7 +12,7 @@
         <a href="{{ $notification->data['url'] }}?notification_id={{ $notification->id }}" class="dropdown-item @if ($notification->unread())
             text-bold
         @endif">
-            <i class="fas fa-envelope mr-2"></i> {{ $notification->data['body'] }}
+            <i class="fas fa-envelope mr-2"></i> {{ Str::limit($notification->data['body'], 20, '...') }}
             <span class="float-right text-muted text-sm">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
         </a>
         <div class="dropdown-divider"></div>

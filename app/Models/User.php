@@ -30,6 +30,10 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault();
     }
 
+    public function carts () {
+        return $this->hasMany(Cart::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

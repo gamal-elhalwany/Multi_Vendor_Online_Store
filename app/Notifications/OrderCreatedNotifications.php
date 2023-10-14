@@ -28,7 +28,7 @@ class OrderCreatedNotifications extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'broadcast'];
         $channels = ['database'];
 
         if ($notifiable->notification_list['order_created']['sms'] ?? false) {
@@ -59,6 +59,17 @@ class OrderCreatedNotifications extends Notification
     }
 
     public function toDatabase($notifiable)
+    {
+        $addr = $this->order->billingAddress;
+        return [
+            'body' => "A new order has been created (#{$this->order->number}) by " . $addr->first_name . $addr->last_name . " from {$addr->country}",
+            'icon' => 'fas fa-envelope',
+            'url' => url('/dashboard'),
+            'order_id' => $this->order->id,
+        ];
+    }
+
+    public function toBroadcast($notifiable)
     {
         $addr = $this->order->billingAddress;
         return [
