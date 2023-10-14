@@ -78,7 +78,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{ route('home') }}">Home</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
                             </ul>
@@ -86,16 +86,32 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user">
-                                <i class="lni lni-user"></i>
-                                Hello
+                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <i class="lni lni-user"></i>
+                                    Hello
+                                    @if (Auth::user())
+                                    , {{ Auth::user()->name }}
+                                    @endif
+                                @auth
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                                    <li><div class="dropdown-divider"></div></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-primary m-2">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                                @else
+                                @endauth
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="login.html">Sign In</a>
+                                    <a href="{{ route('login') }}">Sign In</a>
                                 </li>
                                 <li>
-                                    <a href="register.html">Register</a>
+                                    <a href="{{ route('register') }}">Register</a>
                                 </li>
                             </ul>
                         </div>

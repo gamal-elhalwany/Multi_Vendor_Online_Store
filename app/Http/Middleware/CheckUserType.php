@@ -22,7 +22,7 @@ class CheckUserType
         }
 
         if (!in_array($user->type, $types)) {
-            abort(403);
+            return redirect()->route('home');
         }
 
         return $next($request);

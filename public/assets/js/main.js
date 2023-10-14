@@ -38,5 +38,4 @@ Author: GrayGrids
         navbarToggler.classList.toggle("active");
     });
 
-
 })();
