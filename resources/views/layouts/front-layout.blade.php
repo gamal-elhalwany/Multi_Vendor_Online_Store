@@ -97,23 +97,23 @@
                                     <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
                                     <li><div class="dropdown-divider"></div></li>
                                     <li>
-                                        <form action="{{ route('logout') }}" method="post">
+                                        <a class="front-logout" href="{{ route('logout') }}" type="submit" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign Out</a>
+                                        <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-outline-primary m-2">Logout</button>
                                         </form>
                                     </li>
                                 </ul>
                                 @else
+                                <ul class="user-login">
+                                    <li>
+                                        <a href="{{ route('login') }}">Sign In</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('register') }}">Register</a>
+                                    </li>
+                                </ul>
                                 @endauth
                             </div>
-                            <ul class="user-login">
-                                <li>
-                                    <a href="{{ route('login') }}">Sign In</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('register') }}">Register</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

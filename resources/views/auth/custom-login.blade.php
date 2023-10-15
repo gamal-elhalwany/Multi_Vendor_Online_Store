@@ -17,7 +17,8 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    {{-- <a href="../../index2.html"><b>Admin</b>LTE</a> --}}
+    Sign In
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -27,7 +28,7 @@
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
-          <input id="email" type="email" class="form-control" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Email">
+          <input id="email" type="text" class="form-control" name="{{ config('fortify.username') }}" :value="old('email')" required autofocus autocomplete="username" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -78,12 +79,11 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        {{-- <a href="forgot-password.html">I forgot my password</a> --}}
         @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                {{ __('Forgot your password?') }}
+            </a>
+        @endif
       </p>
       <p class="mb-0">
         <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
