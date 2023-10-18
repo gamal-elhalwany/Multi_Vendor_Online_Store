@@ -22,7 +22,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Here I told it that if it found a route that begin with the key word (admin) to start using the guard admin and check its credentials.
+        // Here I told it that if it found a route that begins with the keyword (admin) to start using the guard admin and check its credentials.
         $request = request();
         if ($request->is('admin/*')) {
             Config::set('fortify.guard', 'admin');
@@ -41,6 +41,10 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+        Fortify::twoFactorChallengeView(function () {
+            return view('auth.two-factor-challenge');
+        });
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());

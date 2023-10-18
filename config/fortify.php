@@ -151,9 +151,22 @@ return [
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
-            'confirm' => true,
+            'confirm' => false, // this is for making the challenge page been displayed if it false to force user to enter his recovery code.
             'confirmPassword' => true,
             // 'window' => 0,
         ]),
     ],
 ];
+
+// Recovery Codes: [
+
+    // 3yxIhUTBbo-qiYUibcOma
+    // NjTWlSZEeN-Af9SGvlYAK
+    // ZgRGdJLExO-LPHjJ2YyAn
+    // 2H8vmo6fps-wRRpnnL3zr
+    // w4qA7yZ2Ue-M9DGV8MyiD
+    // sPXgPFlBrj-nFbXD3y5hy
+    // RDUs5qHxLX-5jwD8o1j2p
+    // bdfk7flnvY-uawOj8QoUu
+
+// ]
