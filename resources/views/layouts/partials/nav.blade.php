@@ -4,7 +4,7 @@
         <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Dashboard
@@ -13,19 +13,19 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('categories.index') }}" class="nav-link {{ request()->is('dashboard/categories*') ? 'active-link' : '' }}">
+                    <a href="{{ route('categories.index') }}" class="nav-link {{ request()->is('admin/dashboard/categories*') ? 'active-link' : '' }}">
                         <i class="far fa-list-alt nav-icon"></i>
                         <p>Categories</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('products.index') }}" class="nav-link {{ request()->is('dashboard/products*') ? 'active-link' : '' }}">
+                    <a href="{{ route('products.index') }}" class="nav-link {{ request()->is('admin/dashboard/products*') ? 'active-link' : '' }}">
                         <i class="fab fa-product-hunt nav-icon"></i>
                         <p>Products</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link {{ request()->is('dashboard/order*') ? 'active' : '' }}">
+                    <a href="" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
                         <i class="fab fas fa-list nav-icon"></i>
                         <p>Orders</p>
                     </a>
