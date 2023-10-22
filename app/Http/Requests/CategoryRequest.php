@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
     {
         $id = $this->route('category');
         return [
-            'name' => "required|string|min:3|max:255|unique:categories,name,$id",//this attribute (id) here for ignoring it.
+            'name' => "required|string|min:3|max:255|unique:categories,name,$id",//this attribute (id) here for ignoring it for update method.
             'parent_id' => 'nullable|int|exists:categories,id',
             'description' => 'nullable|string',
             'image' => 'image|mimes:jpg, jpeg, png, bmp, gif, svg, or webp',

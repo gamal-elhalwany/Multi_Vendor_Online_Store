@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\SanctumAuthController;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('auth/register', [SanctumAuthController::class, 'register'])->middleware('guest:sanctum');
+
+Route::post('auth/login', [SanctumAuthController::class, 'login'])->middleware('guest:sanctum');
+
+Route::post('auth/logout', [SanctumAuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('products', ProductsController::class);
