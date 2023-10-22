@@ -16,6 +16,11 @@ class Product extends Model
         'name', 'slug', 'description', 'store_id', 'image', 'category_id', 'price', 'compare_price', 'options', 'rating', 'featured', 'status',
     ];
 
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'image'];
+
+    // this is how you can append the accessors to the response of api.
+    protected $appends = ['image_url'];
+
     public function category () {
         return $this->belongsTo(Category::class);
     }
@@ -52,6 +57,9 @@ class Product extends Model
     // this protected function is for making or calling the global scope that we have created by this command:php artisan make:scope [nameOfScope].
     protected static function booted () {
         static::addGlobalScope('store', new StoreScope());
+        static::creating(function (Product $product) {
+            $product->slug = Str::slug($product->name);
+        });
     }
 
     public function scopeFilter (Builder $builder, $filters) {
@@ -85,5 +93,29 @@ class Product extends Model
             return;
         }
         return round(100 - (100 * $this->price / $this->compare_price), 1);
+    }
+
+    public function scopeFilters (Builder $builder, $filters) {
+        $options = array_merge([
+            'store_id' => null,
+            'category_id' => null,
+            'tag_id' => null,
+            'status' => 'active',
+        ], $filters);
+
+        $builder->when($options['store_id'], function ($builder, $value) {
+            $builder->where('store_id', $value);
+        });
+
+        $builder->when($options['category_id'], function ($builder, $value) {
+            $builder->where('category_id', $value);
+        });
+
+        $builder->when($options['status'], function ($builder, $value) {
+            $builder->where('status', $value);
+        });
+        $builder->when($options['tag_id'], function ($builder, $value) {
+            $builder->whereRaw('id IN (SELECT product_id FROM product_tag WHERE tag_id = ?)',[ $value]);
+        });
     }
 }
