@@ -52,9 +52,9 @@
                                 </a>
                             </p>
                             <h3 class="price">
-                                {{ Currency::format($product->price) }}
+                                {{ CurrencyFormat::format($product->price) }}
                                 @if ($product->compare_price)
-                                    <span>{{ Currency::format($product->compare_price) }}</span>
+                                    <span>{{ CurrencyFormat::format($product->compare_price) }}</span>
                                 @endif
                             </h3>
                             <p class="info-text">
@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="form-group color-option">
-                                            <label class="title-label" for="size">Choose color</label>
+                                            <label class="title-label" for="size">{{ __('Choose color') }}</label>
                                             <div class="single-checkbox checkbox-style-1">
                                                 <input type="checkbox" id="checkbox-1" checked="">
                                                 <label for="checkbox-1"><span></span></label>

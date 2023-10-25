@@ -77,10 +77,10 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ Currency::format($cart->quantity * $cart->product->price) }}</p>
+                            <p>{{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ Currency::format(0) }}</p>
+                            <p>{{ CurrencyFormat::format(0) }}</p>
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
                             <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
@@ -111,7 +111,7 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>{{ Currency::format($carts->total(1)) }}</span></li>
+                                        <li>Cart Subtotal<span>{{ CurrencyFormat::format($carts->total(1)) }}</span></li>
                                         <li>Shipping<span>Free</span></li>
                                         <li>You Save<span>$29.00</span></li>
                                         <li class="last">You Pay<span>$2531.00</span></li>

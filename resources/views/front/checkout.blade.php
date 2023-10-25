@@ -343,7 +343,7 @@
                             <div class="sub-total-price">
                                 <div class="total-price">
                                     <p class="value">Subotal Price:</p>
-                                    <p class="price">{{ Currency::format($cart->total(0)) }}</p>
+                                    <p class="price">{{ CurrencyFormat::format($cart->total(0)) }}</p>
                                 </div>
                                 <div class="total-price shipping">
                                     <p class="value">Subotal Price:</p>
@@ -358,7 +358,7 @@
                             <div class="total-payable">
                                 <div class="payable-price">
                                     <p class="value">Subotal Price:</p>
-                                    <p class="price">{{ Currency::format($cart->total(0)) }}</p>
+                                    <p class="price">{{ CurrencyFormat::format($cart->total(0)) }}</p>
                                 </div>
                             </div>
                             <div class="price-table-btn button">

@@ -49,27 +49,48 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <select id="select4">
-                                            <option value="0" selected>$ USD</option>
-                                            <option value="1">€ EURO</option>
-                                            <option value="2">$ CAD</option>
-                                            <option value="3">₹ INR</option>
-                                            <option value="4">¥ CNY</option>
-                                            <option value="5">৳ BDT</option>
-                                        </select>
+                                        <form action="{{ route('currency.convert') }}" method="post">
+                                            @csrf
+                                            <select id="select4" name="base_currency" onchange="this.form.submit()">
+                                                <option value="USD" selected>$ USD</option>
+                                                <option value="1">€ EURO</option>
+                                                <option value="2">$ CAD</option>
+                                                <option value="3">₹ INR</option>
+                                                <option value="4">¥ CNY</option>
+                                                <option value="5">৳ BDT</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="select-position">
-                                        <select id="select5">
-                                            <option value="0" selected>English</option>
-                                            <option value="1">Español</option>
-                                            <option value="2">Filipino</option>
-                                            <option value="3">Français</option>
-                                            <option value="4">العربية</option>
-                                            <option value="5">हिन्दी</option>
-                                            <option value="6">বাংলা</option>
-                                        </select>
+                                        {{-- <form action="{{ URL::current() }}" method="get">
+                                            @csrf
+                                            <select name="locale" onchange="this.form.submit()">
+                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                    <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>{{ $properties['native'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </form> --}}
+
+                                        <div class="dropdown text-center text-light fw-bolder">
+                                            {{-- <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Languages
+                                            </button> --}}
+                                            {{ __('Language') }}
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                <li class="dropdown-item">
+                                                    <a rel="alternate" hreflang="{{ $localeCode }}"
+                                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                        {{ $properties['native'] }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -78,40 +99,47 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="{{ route('home') }}">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                                <li><a href="about-us.html">{{ __('About Us') }}</a></li>
+                                <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
-                                    <i class="lni lni-user"></i>
-                                    Hello
-                                    @if (Auth::user())
+                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="lni lni-user"></i>
+                                {{ __('Hello') }}
+                                @if (Auth::user())
                                     , {{ Auth::user()->name }}
-                                    @endif
+                                @endif
                                 @auth
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
-                                    <li><div class="dropdown-divider"></div></li>
-                                    <li>
-                                        <a class="front-logout" href="{{ route('logout') }}" type="submit" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign Out</a>
-                                        <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item"
+                                                href="{{ route('profile.edit') }}">{{ __('Profile') }}</a></li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="front-logout" href="{{ route('logout') }}" type="submit"
+                                                onclick="event.preventDefault(); document.getElementById('logout').submit()">{{ __('Sign
+                                                                                                Out') }}</a>
+                                            <form action="{{ route('logout') }}" method="post" style="display:none;"
+                                                id="logout">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
                                 @else
-                                <ul class="user-login">
-                                    <li>
-                                        <a href="{{ route('login') }}">Sign In</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('register') }}">Register</a>
-                                    </li>
-                                </ul>
+                                    <ul class="user-login">
+                                        <li>
+                                            <a href="{{ route('login') }}">{{ __('Sign In') }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li>
+                                    </ul>
                                 @endauth
                             </div>
                         </div>
@@ -189,7 +217,7 @@
                     <div class="nav-inner">
                         <!-- Start Mega Category Menu -->
                         <div class="mega-category-menu">
-                            <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
+                            <span class="cat-button"><i class="lni lni-menu"></i>{{ __('All Categories') }}</span>
                             <ul class="sub-category">
                                 <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
                                     <ul class="inner-sub-category">
