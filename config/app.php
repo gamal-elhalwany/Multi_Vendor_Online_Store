@@ -85,7 +85,7 @@ return [
 
     'locale' => 'en',
 
-    'currency' => 'EUR', //custom property
+    'currency' => 'INR', //custom property
 
     /*
     |--------------------------------------------------------------------------
@@ -187,7 +187,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Currency' => App\Helpers\Currency::class,
+        'CurrencyFormat' => App\Helpers\Currency::class,
     ])->toArray(),
 
 ];

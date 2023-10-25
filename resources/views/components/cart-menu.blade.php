@@ -31,7 +31,7 @@
                             {{ $cart->product->name }}
                         </a>
                         </h4>
-                    <p class="quantity">{{ $cart->quantity }}x - <span class="amount">{{ Currency::format($cart->product->price) }}</span></p>
+                    <p class="quantity">{{ $cart->quantity }}x - <span class="amount">{{ CurrencyFormat::format($cart->product->price) }}</span></p>
                 </div>
             </li>
             @endif
@@ -40,7 +40,7 @@
         <div class="bottom">
             <div class="total">
                 <span>Total</span>
-                <span class="total-amount">{{ Currency::format($total) }}</span>
+                <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
             </div>
             <div class="button">
                 <a href="{{ route('checkout.create') }}" class="btn animate">Checkout</a>
