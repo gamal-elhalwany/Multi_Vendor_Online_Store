@@ -5,8 +5,8 @@
         <span class="sale-tag">-{{ $product->sale_percentage }}%</span>
         @endif
         <div class="button">
-            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to
-                Cart</a>
+            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> {{ __('Add To
+                Cart') }}</a>
         </div>
     </div>
     <div class="product-info">
@@ -23,9 +23,9 @@
             <li><span>4.0 Review(s)</span></li>
         </ul>
         <div class="price">
-            <span>{{ $product->price }}</span>
+            <span>{{ CurrencyFormat::format($product->price) }}</span>
             @if ($product->compare_price)
-            <span class="discount-price">{{ $product->compare_price }}</span>
+            <span class="discount-price">{{ CurrencyFormat::format($product->compare_price) }}</span>
             @endif
         </div>
     </div>

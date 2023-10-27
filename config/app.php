@@ -85,7 +85,7 @@ return [
 
     'locale' => 'en',
 
-    'currency' => 'INR', //custom property
+    'currency' => 'EGP', //custom property
 
     /*
     |--------------------------------------------------------------------------

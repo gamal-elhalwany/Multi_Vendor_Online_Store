@@ -15,7 +15,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Now Only</span> $320.99</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div><div class="single-slider tns-item tns-slide-cloned" style="background-image: url(assets/images/hero/slider-bg2.jpg);" aria-hidden="true" tabindex="-1">
@@ -27,7 +27,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Combo Only:</span> $590.00</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Now Only</span> $320.99</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Combo Only:</span> $590.00</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Now Only</span> $320.99</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div><div class="single-slider tns-item tns-slide-cloned" style="background-image: url(assets/images/hero/slider-bg2.jpg);" aria-hidden="true" tabindex="-1">
@@ -82,7 +82,7 @@
                                         labore dolore magna aliqua.</p>
                                     <h3><span>Combo Only:</span> $590.00</h3>
                                     <div class="button">
-                                        <a href="product-grids.html" class="btn">Shop Now</a>
+                                        <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div></div></div></div></div>
@@ -111,7 +111,7 @@
                                     <h2>Weekly Sale!</h2>
                                     <p>Saving up to 50% off all online store items this week.</p>
                                     <div class="button">
-                                        <a class="btn" href="product-grids.html">Shop Now</a>
+                                        <a class="btn" href="product-grids.html">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Featured Categories</h2>
+                        <h2>{{ __('Featured Categories') }}</h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have
                             suffered alteration in some form.</p>
                     </div>
@@ -250,7 +250,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Trending Product</h2>
+                        <h2>{{ __('Trending Product') }}</h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have
                             suffered alteration in some form.</p>
                     </div>
@@ -269,28 +269,6 @@
     </section>
     <!-- End Trending Product Area -->
 
-    <!-- Start Call Action Area -->
-    <section class="call-action section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-lg-8 offset-lg-2 col-12">
-                    <div class="inner">
-                        <div class="content">
-                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Currently You are using free<br>
-                                Lite version of ShopGrids</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">Please, purchase full version of the template
-                                to get all pages,<br> features and commercial license.</p>
-                            <div class="button wow fadeInUp" data-wow-delay=".8s">
-                                <a href="javascript:void(0)" class="btn">Purchase Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Call Action Area -->
-
     <!-- Start Banner Area -->
     <section class="banner section">
         <div class="container">
@@ -301,7 +279,7 @@
                             <h2>Smart Watch 2.0</h2>
                             <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
                             <div class="button">
-                                <a href="product-grids.html" class="btn">View Details</a>
+                                <a href="product-grids.html" class="btn">{{ __('View Details') }}</a>
                             </div>
                         </div>
                     </div>
@@ -314,7 +292,7 @@
                             <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
                                 incididunt ut labore.</p>
                             <div class="button">
-                                <a href="product-grids.html" class="btn">Shop Now</a>
+                                <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
                             </div>
                         </div>
                     </div>
@@ -334,8 +312,8 @@
                         <i class="lni lni-delivery"></i>
                     </div>
                     <div class="media-body">
-                        <h5>Free Shipping</h5>
-                        <span>On order over $99</span>
+                        <h5>{{ __('Free Shipping') }}</h5>
+                        <span>{{ __('On Order Over') }} $99</span>
                     </div>
                 </li>
                 <!-- Money Return -->
@@ -344,8 +322,8 @@
                         <i class="lni lni-support"></i>
                     </div>
                     <div class="media-body">
-                        <h5>24/7 Support.</h5>
-                        <span>Live Chat Or Call.</span>
+                        <h5>{{ __('24/7 Support') }}</h5>
+                        <span>{{ __('Live Chat Or Call.') }}</span>
                     </div>
                 </li>
                 <!-- Support 24/7 -->
@@ -354,8 +332,8 @@
                         <i class="lni lni-credit-cards"></i>
                     </div>
                     <div class="media-body">
-                        <h5>Online Payment.</h5>
-                        <span>Secure Payment Services.</span>
+                        <h5>{{ __('Online Payment.') }}</h5>
+                        <span>{{ __('Secure Payment Services.') }}</span>
                     </div>
                 </li>
                 <!-- Safe Payment -->
@@ -364,8 +342,8 @@
                         <i class="lni lni-reload"></i>
                     </div>
                     <div class="media-body">
-                        <h5>Easy Return.</h5>
-                        <span>Hassle Free Shopping.</span>
+                        <h5>{{ __('Easy Return.') }}</h5>
+                        <span>{{ __('Hassle-Free Shopping.') }}</span>
                     </div>
                 </li>
             </ul>

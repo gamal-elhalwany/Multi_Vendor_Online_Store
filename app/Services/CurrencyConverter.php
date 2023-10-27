@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class CurrencyConverter
 {
     private $apiKey;
-    protected $baseUrl = 'https://api.exchangeratesapi.io/v1/';
+    protected $baseUrl = 'https://free.currconv.com/api/v7';
 
     public function __construct($apiKey)
     {
@@ -16,15 +16,14 @@ class CurrencyConverter
 
     public function convert ($from, $to, $amount = 1)
     {
-        $response = Http::baseUrl($this->baseUrl)->get('latest', [
-            '? access_key = ' => '7875c178d16a4875c7b35a94e7e9e87e',
-            '&from=' => $from,
-            '&to=' => $to,
-            '&amount=' => $amount,
+        $q = "{$from}_{$to}";
+        $response = Http::baseUrl($this->baseUrl)->get('/convert', [
+            'q' => $q,
+            'compact' => 'y',
+            'apiKey' => $this->apiKey,
         ]);
 
         $result = $response->json();
-        dd($result);
-        return $result * $amount;
+        return $result[$q]['val'] * $amount;
     }
 }

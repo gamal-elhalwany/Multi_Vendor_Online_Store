@@ -10,8 +10,13 @@
     <!-- Shopping Item -->
     <div class="shopping-item">
         <div class="dropdown-cart-header">
-            <span>{{ $items->count() }} Items</span>
-            <a href="{{ route('cart.index') }}">View Cart</a>
+            <span>
+                @auth
+                {{ Auth::user()->count() }}
+                @endauth
+                {{ __('Items') }}
+            </span>
+            <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
         </div>
         <ul class="shopping-list">
             @foreach ($items as $cart)
@@ -27,7 +32,7 @@
 
                 <div class="content">
                     <h4>
-                        <a href="product-details.html">
+                        <a href="{{ route('show', $product->id) }}">
                             {{ $cart->product->name }}
                         </a>
                         </h4>
@@ -39,11 +44,11 @@
         </ul>
         <div class="bottom">
             <div class="total">
-                <span>Total</span>
+                <span>{{ __('Total') }}</span>
                 <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
             </div>
             <div class="button">
-                <a href="{{ route('checkout.create') }}" class="btn animate">Checkout</a>
+                <a href="{{ route('checkout.create') }}" class="btn animate">{{ __('Checkout') }}</a>
             </div>
         </div>
     </div>

@@ -9,5 +9,12 @@
     "Login": "Login",
     "Register": "Register",
     "Sign In": "Sign In",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Forgot Password?": "Forgot Password?",
+    "Forgot Password": "<PASSWORD>",
+    "Reset Password": "<PASSWORD>",
+    "Back to Login": "Back to Login",
+    "Back to Register": "Back to Register",
+    "Back to Sign In": "Back to Sign In",
+    "Back to Sign Out": "Back to Sign Out"
 }
