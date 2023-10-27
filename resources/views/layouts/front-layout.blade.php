@@ -51,13 +51,15 @@
                                     <div class="select-position">
                                         <form action="{{ route('currency.convert') }}" method="post">
                                             @csrf
-                                            <select id="select4" name="base_currency" onchange="this.form.submit()">
-                                                <option value="USD" selected>$ USD</option>
-                                                <option value="1">€ EURO</option>
-                                                <option value="2">$ CAD</option>
-                                                <option value="3">₹ INR</option>
-                                                <option value="4">¥ CNY</option>
-                                                <option value="5">৳ BDT</option>
+                                            <select name="currency_code" onchange="this.form.submit()">
+                                                <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
+                                                <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
+                                                <option value="EGP" @selected('EGP' == session('currency_code'))>EGP</option>
+                                                <option value="ILS" @selected('ILS' == session('currency_code'))>₪ ILS</option>
+                                                <option value="SAR" @selected('SAR' == session('currency_code'))>SAR</option>
+                                                <option value="QAR" @selected('QAR' == session('currency_code'))>QAR</option>
+                                                <option value="GBP" @selected('GBP' == session('currency_code'))>£ GBP</option>
+                                                <option value="INR" @selected('INR' == session('currency_code'))>₹ INR</option>
                                             </select>
                                         </form>
                                     </div>
@@ -74,12 +76,7 @@
                                         </form> --}}
 
                                         <div class="dropdown text-center text-light fw-bolder">
-                                            {{-- <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                Languages
-                                            </button> --}}
-                                            {{ __('Language') }}
+                                            <p style="padding-right:12px;">{{ __('Language') }}</p>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                                 <li class="dropdown-item">
@@ -88,7 +85,7 @@
                                                         {{ $properties['native'] }}
                                                     </a>
                                                 </li>
-                                            @endforeach
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -122,11 +119,12 @@
                                             <div class="dropdown-divider"></div>
                                         </li>
                                         <li>
-                                            <a class="front-logout" href="{{ route('logout') }}" type="submit"
-                                                onclick="event.preventDefault(); document.getElementById('logout').submit()">{{ __('Sign
-                                                                                                Out') }}</a>
-                                            <form action="{{ route('logout') }}" method="post" style="display:none;"
-                                                id="logout">
+                                            <a class="front-logout" href="{{ route('logout') }}"   type="submit"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout').submit()">
+                                                {{ __('Sign Out') }}
+                                            </a>
+                                            <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
                                                 @csrf
                                             </form>
                                         </li>
@@ -191,7 +189,7 @@
                         <div class="middle-right-area">
                             <div class="nav-hotline">
                                 <i class="lni lni-phone"></i>
-                                <h3>Hotline:
+                                <h3>{{ __('Hotline') }}
                                     <span>(+100) 123 456 7890</span>
                                 </h3>
                             </div>
@@ -259,52 +257,26 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">Home</a>
+                                        <a href="index.html" aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-2"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Pages</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-2">
-                                            <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                            <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item"><a href="login.html">Login</a></li>
-                                            <li class="nav-item"><a href="register.html">Register</a></li>
-                                            <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
-                                            <li class="nav-item"><a href="404.html">404 Error</a></li>
-                                        </ul>
-                                    </li>
+
                                     <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
                                             data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Shop</a>
+                                            aria-label="Toggle navigation">{{ __('Shop') }}</a>
                                         <ul class="sub-menu collapse" id="submenu-1-3">
                                             <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
                                             <li class="nav-item active"><a href="product-details.html">shop Single</a>
                                             </li>
-                                            <li class="nav-item"><a href="cart.html">Cart</a></li>
-                                            <li class="nav-item"><a href="checkout.html">Checkout</a></li>
+                                            <li class="nav-item"><a href="cart.html">{{ __('Cart') }}</a></li>
+                                            <li class="nav-item"><a href="checkout.html">{{ __('Checkout') }}</a></li>
                                         </ul>
                                     </li>
+
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">Blog</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-4">
-                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid
-                                                    Sidebar</a>
-                                            </li>
-                                            <li class="nav-item"><a href="blog-single.html">Blog Single</a></li>
-                                            <li class="nav-item"><a href="blog-single-sidebar.html">Blog Single
-                                                    Sibebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">Contact Us</a>
+                                        <a href="contact.html" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -315,7 +287,7 @@
                 <div class="col-lg-4 col-md-6 col-12">
                     <!-- Start Nav Social -->
                     <div class="nav-social">
-                        <h5 class="title">Follow Us:</h5>
+                        <h5 class="title">{{ __('Follow Us:') }}</h5>
                         <ul>
                             <li>
                                 <a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a>
@@ -343,7 +315,7 @@
     @yield('breadcrumbs')
     <!-- End Breadcrumbs -->
 
-    <!-- this slot references to the content that be between the component tag -->
+    <!-- this slot references to the content that be between the component tag and this slot is for the front pages layout like home, products, and single_product -->
     {{ $slot }}
 
     <!-- Start Footer Area -->
@@ -363,14 +335,14 @@
                         <div class="col-lg-9 col-md-8 col-12">
                             <div class="footer-newsletter">
                                 <h4 class="title">
-                                    Subscribe to our Newsletter
-                                    <span>Get all the latest information, Sales and Offers.</span>
+                                    {{ __('Subscribe to our Newsletter') }}
+                                    <span>{{ __('Get all the latest information, Sales and Offers.') }}</span>
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
                                         <input name="EMAIL" placeholder="Email address here..." type="email">
                                         <div class="button">
-                                            <button class="btn">Subscribe<span class="dir-part"></span></button>
+                                            <button class="btn">{{ __('Subscribe') }}<span class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>
@@ -478,7 +450,7 @@
                         <div class="col-lg-4 col-12">
                             <ul class="socila">
                                 <li>
-                                    <span>Follow Us On:</span>
+                                    <span>{{ __('Follow Us On:') }}</span>
                                 </li>
                                 <li><a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a></li>
                                 <li><a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a></li>
