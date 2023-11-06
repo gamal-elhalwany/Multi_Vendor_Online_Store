@@ -8,7 +8,6 @@ use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
-
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -41,6 +40,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 // require __DIR__.'/auth.php';

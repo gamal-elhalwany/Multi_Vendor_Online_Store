@@ -52,6 +52,7 @@
                                         <form action="{{ route('currency.convert') }}" method="post">
                                             @csrf
                                             <select name="currency_code" onchange="this.form.submit()">
+                                                <option value="" @selected('' == session('currency_code'))>{{ __('Currency') }}</option>
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
                                                 <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
                                                 <option value="EGP" @selected('EGP' == session('currency_code'))>EGP</option>
@@ -340,7 +341,7 @@
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="Email address here..." type="email">
+                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}" type="email">
                                         <div class="button">
                                             <button class="btn">{{ __('Subscribe') }}<span class="dir-part"></span></button>
                                         </div>
@@ -361,7 +362,7 @@
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-contact">
-                                <h3>Get In Touch With Us</h3>
+                                <h3>{{ __('Get In Touch With Us') }}</h3>
                                 <p class="phone">Phone: +1 (900) 33 169 7720</p>
                                 <ul>
                                     <li><span>Monday-Friday: </span> 9.00 am - 8.00 pm</li>
@@ -376,20 +377,22 @@
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer our-app">
-                                <h3>Our Mobile App</h3>
+                                <h3>{{ __('Our Mobile App') }}</h3>
                                 <ul class="app-btn">
                                     <li>
                                         <a href="javascript:void(0)">
                                             <i class="lni lni-apple"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">App Store</span>
+                                            {{-- <span class="small-title">Download on the</span> --}}
+                                            <span class="small-title">{{ __('Comming Soon on the') }}</span>
+                                            <span class="big-title">{{ __('App Store') }}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)">
                                             <i class="lni lni-play-store"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">Google Play</span>
+                                            {{-- <span class="small-title">Download on the</span> --}}
+                                            <span class="small-title">{{ __('Comming Soon on the') }}</span>
+                                            <span class="big-title">{{ __('Google Play') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -399,7 +402,7 @@
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-link">
-                                <h3>Information</h3>
+                                <h3>{{ __('Information') }}</h3>
                                 <ul>
                                     <li><a href="javascript:void(0)">About Us</a></li>
                                     <li><a href="javascript:void(0)">Contact Us</a></li>
@@ -413,7 +416,7 @@
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-link">
-                                <h3>Shop Departments</h3>
+                                <h3>{{ __('Shop Departments') }}</h3>
                                 <ul>
                                     <li><a href="javascript:void(0)">Computers & Accessories</a></li>
                                     <li><a href="javascript:void(0)">Smartphones & Tablets</a></li>
@@ -436,7 +439,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
-                                <span>We Accept:</span>
+                                <span>{{ __('We Accept:') }}</span>
                                 <img src="{{ asset('assets/images/footer/credit-cards-footer.png') }}"
                                     alt="#">
                             </div>

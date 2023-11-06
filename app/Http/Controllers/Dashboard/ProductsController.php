@@ -25,7 +25,7 @@ class ProductsController extends Controller
         // }
 
         // I used the global scope instead of the above code and repeat it every time.
-        $products = Product::filter($request->all())->orderby('name')->paginate();
+        $products = Product::filter($request->all())->latest()->orderby('name')->paginate();
         return view('dashboard.products.index', compact('products'));
     }
 
