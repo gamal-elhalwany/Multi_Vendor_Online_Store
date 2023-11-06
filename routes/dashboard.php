@@ -4,6 +4,8 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,5 +28,9 @@ Route::group(
 
     Route::resource('dashboard/categories', CategoriesController::class);
     Route::resource('dashboard/products', ProductsController::class);
+
+    // These Routes of Spatie Package.
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
 });
 

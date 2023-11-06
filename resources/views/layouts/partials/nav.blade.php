@@ -30,6 +30,18 @@
                         <p>Orders</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                        <i class="fab fas fa-users nav-icon"></i>
+                        <p>Show Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('users.create') }}" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                        <i class="fab fas fa-user nav-icon"></i>
+                        <p>Create User</p>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>

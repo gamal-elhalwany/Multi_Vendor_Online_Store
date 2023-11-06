@@ -10,12 +10,11 @@
     <!-- Shopping Item -->
     <div class="shopping-item">
         <div class="dropdown-cart-header">
+            @auth
             <span>
-                @auth
-                {{ Auth::user()->count() }}
-                @endauth
-                {{ __('Items') }}
+                {{ Auth::user()->carts()->count() . ' ' . __('Items') }}
             </span>
+            @endauth
             <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
         </div>
         <ul class="shopping-list">

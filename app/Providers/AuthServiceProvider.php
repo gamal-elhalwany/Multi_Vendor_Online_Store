@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+
     ];
 
     /**
@@ -21,6 +22,28 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Gate::define('category.view', function ($user) {
+        //     return false;
+        // });
+
+        // Gate::define('category.create', function ($user) {
+        //     return true;
+        // });
+
+        // Gate::define('category.update', function ($user) {
+        //     return false;
+        // });
+
+        // Gate::define('category.delete', function ($user) {
+        //     return false;
+        // });
+
+        // Gate::before(function ($user){
+        //     if ($user->super_admin) {
+        //         return true;
+        //     }
+        // });
+
     }
+
 }
