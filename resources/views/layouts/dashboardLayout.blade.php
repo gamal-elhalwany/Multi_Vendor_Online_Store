@@ -278,6 +278,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         const userID = "{{ Auth::id() }}";
     </script>
+
+    {{-- this is for check all checkboxes --}}
+    <script>
+        document.getElementById('checkAll').addEventListener('change', function () {
+            var checkboxes = document.querySelectorAll('.check-list');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = this.checked;
+            }
+        });
+    </script>
+
     <script type="module" src="{{ asset('js/notification.js') }}"></script>
 </body>
 

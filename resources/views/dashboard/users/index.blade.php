@@ -7,7 +7,6 @@
     <li class="breadcrumb-item active">Users</li>
 @endsection
 
-
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -61,5 +60,5 @@
     </table>
 
 
-    {!! $data->render() !!}
+    {{-- {!! $data->render() !!} --}}
 @endsection

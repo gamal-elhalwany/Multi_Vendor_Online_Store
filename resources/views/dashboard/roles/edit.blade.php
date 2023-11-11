@@ -44,8 +44,12 @@
         <div class="form-group">
             <strong>Permission:</strong>
             <br/>
+            <label>
+                <input type="checkbox" id="checkAll"> Check All
+            </label>
+            <br/>
             @foreach($permission as $value)
-                <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
+                <label>{{ Form::checkbox('permission[]', $value->name, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name check-list')) }}
                 {{ $value->name }}</label>
             <br/>
             @endforeach
@@ -56,6 +60,5 @@
     </div>
 </div>
 {!! Form::close() !!}
-
 
 @endsection

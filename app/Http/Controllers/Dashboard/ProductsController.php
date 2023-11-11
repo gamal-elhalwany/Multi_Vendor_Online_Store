@@ -11,6 +11,14 @@ use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:product-list', ['only' => ['index']]);
+        $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +68,7 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        //Comment:- this pluck function returns the field name of an array that it takes to an array of string.
+        //Comment:- the pluck() method is used to retrieve a list of specific values from a collection of records in the database. This method allows you to specify the field you want to extract values from and is typically used to retrieve a single value or a small set of values from a result set.
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
 
         return view('dashboard.products.edit', compact('product', 'tags'));
