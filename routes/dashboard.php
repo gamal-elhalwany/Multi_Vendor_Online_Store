@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(
     // ['middleware' => ['auth', 'auth.type:super-admin,admin'], // This if you want to use the normal users table with the roles column that has user types.
-    ['middleware' => ['auth:admin'],
+    ['middleware' => ['auth'],
     'prefix' => 'admin'], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

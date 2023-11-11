@@ -75,7 +75,7 @@ class ProductsController extends Controller
         // this is another way to get data with its relations.
         return $product->load('category:id,name', 'store:id,name', 'tags:id,name');
 
-        // and this if you want to use the json resource to fetch the data with custom shape.
+        // And Resource method is for if you want to use the json resource to fetch the data with custom shape.
         // return new ProductResource($product);
 
         // return ['Single_Product', $product, 'Status', 200];
