@@ -59,7 +59,7 @@ class UserController extends Controller
             'username' => 'required|min:3|max:20',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|same:confirm-password',
-            'phone_number' => 'nullable|numeric|size:11',
+            'phone_number' => 'nullable|numeric|size:11'
         ]);
 
         $input = $request->all();
@@ -112,9 +112,11 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|exists:users,email',
             'password' => 'same:confirm-password',
+            'status' => 'in:active,inactive'
         ]);
 
         $input = $request->all();
+
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
         } else {
@@ -122,7 +124,11 @@ class UserController extends Controller
         }
 
         $user = User::findOrFail($id);
-        $user->update($input);
+        $user->fill($input);
+
+        $user->status = $request->input('status');
+        $user->save();
+
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));

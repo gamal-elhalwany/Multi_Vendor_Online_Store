@@ -24,8 +24,11 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
-        'Type',
+        'type',
         'last_active_at',
+        'provider',
+        'provider_id',
+        'provider_token',
     ];
 
     public function profile () {

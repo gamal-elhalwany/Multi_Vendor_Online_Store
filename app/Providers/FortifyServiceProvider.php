@@ -23,13 +23,13 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Here I told it that if it found a route that begins with the keyword (admin) to start using the guard admin and check its credentials.
-        $request = request();
-        if ($request->is('admin/*')) {
-            Config::set('fortify.guard', 'admin');
-            Config::set('fortify.passwords', 'admins');
-            Config::set('fortify.prefix', 'admin');
-            Config::set('fortify.home', 'admin/dashboard');
-        }
+        // $request = request();
+        // if ($request->is('admin/*')) {
+        //     Config::set('fortify.guard', 'admin');
+        //     Config::set('fortify.passwords', 'admins');
+        //     Config::set('fortify.prefix', 'admin');
+        //     Config::set('fortify.home', 'admin/dashboard');
+        // }
     }
 
     /**
