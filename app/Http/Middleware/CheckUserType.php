@@ -17,14 +17,20 @@ class CheckUserType
     {
         $user = $request->user();
 
-        if (!$user) {
-            return redirect()->route('login');
-        }
+        // These Codes Hashed Becaus Case Changed.
+        // if (!$user) {
+        //     return redirect()->route('login');
+        // }
 
-        if (!in_array($user->type, $types)) {
-            return redirect()->route('home');
-        }
+        // if (!in_array($user->type, $types)) {
+        //     return redirect()->route('home');
+        // }
 
+        if ($user) {
+            if ($user->hasAnyRole(['owner', 'super-admin', 'admin', 'editor'])) {
+                return redirect()->route('dashboard');
+            }
+        }
         return $next($request);
     }
 }

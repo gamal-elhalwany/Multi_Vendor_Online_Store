@@ -10,6 +10,7 @@
         "laravel/fortify": "^1.18",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
         "mcamara/laravel-localization": "^1.8",

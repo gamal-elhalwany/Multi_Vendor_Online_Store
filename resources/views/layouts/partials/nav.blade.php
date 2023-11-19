@@ -13,13 +13,15 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('categories.index') }}" class="nav-link {{ request()->is('admin/dashboard/categories*') ? 'active-link' : '' }}">
+                    <a href="{{ route('categories.index') }}"
+                        class="nav-link {{ request()->is('admin/dashboard/categories*') ? 'active-link' : '' }}">
                         <i class="far fa-list-alt nav-icon"></i>
                         <p>Categories</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('products.index') }}" class="nav-link {{ request()->is('admin/dashboard/products*') ? 'active-link' : '' }}">
+                    <a href="{{ route('products.index') }}"
+                        class="nav-link {{ request()->is('admin/dashboard/products*') ? 'active-link' : '' }}">
                         <i class="fab fa-product-hunt nav-icon"></i>
                         <p>Products</p>
                     </a>
@@ -31,13 +33,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                    <a href="{{ route('users.index') }}"
+                        class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
                         <i class="fab fas fa-users nav-icon"></i>
                         <p>Show Users</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('users.create') }}" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                    <a href="{{ route('users.create') }}"
+                        class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
                         <i class="fab fas fa-user nav-icon"></i>
                         <p>Create User</p>
                     </a>

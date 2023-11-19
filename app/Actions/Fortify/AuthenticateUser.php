@@ -32,7 +32,7 @@ class AuthenticateUser
         ->orWhere('phone_number', '=', $username)
         ->first();
 
-        if ($user && Hash::check($password, $user->password)) {
+        if ($user && Hash::check($password, $user->password) && $user->status == 'active') {
             return $user;
         }
         return false;

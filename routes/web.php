@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CurrencyController;
 use App\Http\Controllers\ProfileController;
@@ -21,7 +22,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home')->prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedirect', 'localizationRedirect', 'localeViewPath');
+Route::get('/', [HomeController::class, 'index'])->name('home')->prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth.type');
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
@@ -40,8 +41,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
+
+// Socialite Routes.
+Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
 
 // require __DIR__.'/auth.php';
 require __DIR__.'/dashboard.php';
