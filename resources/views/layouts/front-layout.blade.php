@@ -52,7 +52,8 @@
                                         <form action="{{ route('currency.convert') }}" method="post">
                                             @csrf
                                             <select name="currency_code" onchange="this.form.submit()">
-                                                <option value="" @selected('' == session('currency_code'))>{{ __('Currency') }}</option>
+                                                <option value="" @selected('' == session('currency_code'))>{{ __('Currency') }}
+                                                </option>
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
                                                 <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
                                                 <option value="EGP" @selected('EGP' == session('currency_code'))>EGP</option>
@@ -80,12 +81,12 @@
                                             <p style="padding-right:12px;">{{ __('Language') }}</p>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                <li class="dropdown-item">
-                                                    <a rel="alternate" hreflang="{{ $localeCode }}"
-                                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                        {{ $properties['native'] }}
-                                                    </a>
-                                                </li>
+                                                    <li class="dropdown-item">
+                                                        <a rel="alternate" hreflang="{{ $localeCode }}"
+                                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                            {{ $properties['native'] }}
+                                                        </a>
+                                                    </li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -120,12 +121,13 @@
                                             <div class="dropdown-divider"></div>
                                         </li>
                                         <li>
-                                            <a class="front-logout" href="{{ route('logout') }}"   type="submit"
+                                            <a class="front-logout" href="{{ route('logout') }}" type="submit"
                                                 onclick="event.preventDefault();
                                                 document.getElementById('logout').submit()">
                                                 {{ __('Sign Out') }}
                                             </a>
-                                            <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
+                                            <form action="{{ route('logout') }}" method="post" style="display:none;"
+                                                id="logout">
                                                 @csrf
                                             </form>
                                         </li>
@@ -272,12 +274,14 @@
                                             <li class="nav-item active"><a href="product-details.html">shop Single</a>
                                             </li>
                                             <li class="nav-item"><a href="cart.html">{{ __('Cart') }}</a></li>
-                                            <li class="nav-item"><a href="checkout.html">{{ __('Checkout') }}</a></li>
+                                            <li class="nav-item"><a href="checkout.html">{{ __('Checkout') }}</a>
+                                            </li>
                                         </ul>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
+                                        <a href="contact.html"
+                                            aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -316,6 +320,15 @@
     @yield('breadcrumbs')
     <!-- End Breadcrumbs -->
 
+    {{-- <form action="{{ route('payments.pay') }}" method="POST" class="form text-center m-5">
+        @csrf
+        <button type="submit" class="btn btn-primary">Pay Now</button>
+    </form> --}}
+
+    <x-alert type="success" />
+    <x-alert type="error" />
+    <x-alert type="info" />
+
     <!-- this slot references to the content that be between the component tag and this slot is for the front pages layout like home, products, and single_product -->
     {{ $slot }}
 
@@ -341,9 +354,11 @@
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}" type="email">
+                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}"
+                                            type="email">
                                         <div class="button">
-                                            <button class="btn">{{ __('Subscribe') }}<span class="dir-part"></span></button>
+                                            <button class="btn">{{ __('Subscribe') }}<span
+                                                    class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>

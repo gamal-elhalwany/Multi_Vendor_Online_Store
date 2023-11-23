@@ -46,4 +46,10 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => env('APP_URL') . '/auth/facebook/callback',
     ],
+
+    'paypal' => [
+        'mode' => 'sandbox',
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+    ],
 ];
