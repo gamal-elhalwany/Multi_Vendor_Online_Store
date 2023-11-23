@@ -174,6 +174,7 @@ return [
         App\Providers\CartServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        App\Providers\PaymentsServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -8,6 +8,8 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\TwoFactorAuthenticationController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\PayPalController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -46,6 +48,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 // Socialite Routes.
 Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
+
+// Paypal Routes.
+Route::get('payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
+Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
+Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+
+//Payments Routes.
+// Route::post('payments', [PaymentController::class, 'pay'])->name('payments.pay');
+// Route::get('success', [PaymentController::class, 'success'])->name('success');
+// Route::get('cancel', [PaymentController::class, 'cancel'])->name('cancel');
 
 // require __DIR__.'/auth.php';
 require __DIR__.'/dashboard.php';

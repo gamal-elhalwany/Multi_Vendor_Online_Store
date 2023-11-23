@@ -13,7 +13,10 @@
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
+        "league/omnipay": "^3.2",
         "mcamara/laravel-localization": "^1.8",
+        "omnipay/paypal": "^3.0",
+        "paypal/paypal-checkout-sdk": "^1.0",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-permission": "^6.0",
         "symfony/intl": "^6.3"

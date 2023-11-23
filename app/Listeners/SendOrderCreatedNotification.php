@@ -22,14 +22,20 @@ class SendOrderCreatedNotification
     /**
      * Handle the event.
      */
-    public function handle(OrderCreated $event): void
+    public function handle(OrderCreated $event)
     {
         $order = $event->order;
         $user = User::where('store_id', $order->store_id)->first();
-        $user->notifyNow(new OrderCreatedNotifications($order));
+        if ($user) {
+            $user->notifyNow(new OrderCreatedNotifications($order));
+        }
+        return redirect()->route('home')->with('success', 'Order Created Successfully!');
 
         // this is used when you want to send a multiple notifications for multiple users.
         $users = User::where('store_id', $order->store_id)->get();
-        Notification::send($users, new OrderCreatedNotifications($order));
+        if ($users) {
+            Notification::send($users, new OrderCreatedNotifications($order));
+        }
+        return redirect()->route('home')->with('success', 'Order Created Successfully!');
     }
 }

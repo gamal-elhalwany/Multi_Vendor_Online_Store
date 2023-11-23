@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Repositories\Cart\CartRepository;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,8 +38,8 @@ class OrdersController extends Controller
 
         DB::beginTransaction(); // this function is used for checking if all the insertion processes are good, or if it will stop the whole process and roll back again and this is used when you try to make multiple insertions at various tables.
         try {
-            foreach ($items as $store_id => $cart_items)
-            {
+            foreach ($items as $store_id => $cart_items) {
+                // dd($store_id);
                 $order = Order::create([
                     'store_id' => $store_id,
                     'user_id' => Auth::id(),
