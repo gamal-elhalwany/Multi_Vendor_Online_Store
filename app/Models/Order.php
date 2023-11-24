@@ -50,6 +50,10 @@ class Order extends Model
         ]);
     }
 
+    public function payments () {
+        return $this->hasMany(Payment::class);
+    }
+
     protected static function booted()
     {
 //these functions is used with Observers but we used it here without creating an Observer File.
