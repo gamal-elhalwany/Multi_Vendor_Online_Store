@@ -7,7 +7,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use Throwable;
+use PayPalHttp\HttpException;
 
 // The Main Controller of Payment.
 class PayPalController extends Controller
@@ -16,7 +16,8 @@ class PayPalController extends Controller
     {
         if (auth()->id() == $order->user_id) {
             if ($order->payment_status == 'paid') {
-                abort(404);
+                // abort(404);
+                return $order->payments;
             }
 
             $client = app('paypal.client');
@@ -48,7 +49,7 @@ class PayPalController extends Controller
                         }
                     }
                 }
-            } catch (\Throwable $ex) {
+            } catch (HttpException $ex) {
 
                 $order->payment_status = 'failed';
                 $order->save();
@@ -82,9 +83,16 @@ class PayPalController extends Controller
                 $order->payment_method = 'paid';
                 $order->status = 'pending';
                 $order->save();
+
+                $order->payments()->create([
+                    'amount' => $response->result->purchase_units[0]->amount->value,
+                    'payload' => $response->result,
+                    'method' => 'paypal',
+                ]);
+
                 return redirect('/')->with('success', 'Payment Successfully Done. thanks for using our app ♥');
             }
-        } catch (Throwable $ex) {
+        } catch (HttpException $ex) {
             echo $ex->statusCode;
             dd($ex->getMessage());
         }
