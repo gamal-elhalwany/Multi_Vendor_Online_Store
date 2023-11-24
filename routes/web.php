@@ -24,12 +24,15 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home')->prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth.type');
+Route::get('/', [HomeController::class, 'index'])->name('home')->prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedirect', 'localizationRedirect', 'localeViewPath');
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 
     Route::get('/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+
+    // Categories Routes.
+    Route::get('category/{category}', [HomeController::class, 'category'])->name('front.category');
 
     Route::resource('cart', CartController::class);
 

@@ -18,7 +18,7 @@ class SetAppLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-
+        // this middleware use only when native localization without any packages.
         $locale = request('locale', Cookie::get('locale', config('app.locale')));
         \App::setLocale($locale);
         Cookie::queue(Cookie::make('locale', $locale, 60 * 60 * 24 * 365));
