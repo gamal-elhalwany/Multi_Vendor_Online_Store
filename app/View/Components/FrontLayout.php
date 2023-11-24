@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Category;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -9,12 +10,16 @@ use Illuminate\View\Component;
 class FrontLayout extends Component
 {
     public $title;
+    public $category;
+
     /**
      * Create a new component instance.
      */
     public function __construct($title = null)
     {
         $this->title = $title ?? config('app.name');
+        $category = Category::whereNull('parent_id')->with('children')->get();
+        $this->category = $category;
     }
 
     /**

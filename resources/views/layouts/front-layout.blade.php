@@ -220,31 +220,25 @@
                         <div class="mega-category-menu">
                             <span class="cat-button"><i class="lni lni-menu"></i>{{ __('All Categories') }}</span>
                             <ul class="sub-category">
-                                <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
-                                    <ul class="inner-sub-category">
-                                        <li><a href="product-grids.html">Digital Cameras</a></li>
-                                        <li><a href="product-grids.html">Camcorders</a></li>
-                                        <li><a href="product-grids.html">Camera Drones</a></li>
-                                        <li><a href="product-grids.html">Smart Watches</a></li>
-                                        <li><a href="product-grids.html">Headphones</a></li>
-                                        <li><a href="product-grids.html">MP3 Players</a></li>
-                                        <li><a href="product-grids.html">Microphones</a></li>
-                                        <li><a href="product-grids.html">Chargers</a></li>
-                                        <li><a href="product-grids.html">Batteries</a></li>
-                                        <li><a href="product-grids.html">Cables & Adapters</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="product-grids.html">accessories</a></li>
-                                <li><a href="product-grids.html">Televisions</a></li>
-                                <li><a href="product-grids.html">best selling</a></li>
-                                <li><a href="product-grids.html">top 100 offer</a></li>
-                                <li><a href="product-grids.html">sunglass</a></li>
-                                <li><a href="product-grids.html">watch</a></li>
-                                <li><a href="product-grids.html">man’s product</a></li>
-                                <li><a href="product-grids.html">Home Audio & Theater</a></li>
-                                <li><a href="product-grids.html">Computers & Tablets </a></li>
-                                <li><a href="product-grids.html">Video Games </a></li>
-                                <li><a href="product-grids.html">Home Appliances </a></li>
+                                @foreach ($category as $category)
+                                    <li>
+                                        <a href="{{ route('front.category', $category->id) }}">
+                                            {{ $category->name }}
+                                            @if ($category->children->isNotEmpty())
+                                                <i class="lni lni-chevron-right"></i>
+                                            @endif
+                                        </a>
+                                        @if ($category->children->isNotEmpty())
+                                            <ul class="inner-sub-category">
+                                                @foreach ($category->children as $chiled)
+                                                    <li>
+                                                        <a href="{{ route('front.category', $chiled->id) }}">{{ $chiled->name }}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
@@ -263,7 +257,7 @@
                                         <a href="index.html" aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
 
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a class="dd-menu active collapsed" href="javascript:void(0)"
                                             data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
                                             aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -277,6 +271,10 @@
                                             <li class="nav-item"><a href="checkout.html">{{ __('Checkout') }}</a>
                                             </li>
                                         </ul>
+                                    </li> --}}
+
+                                    <li class="nav-item">
+                                        <a href="#">{{ __('About Us') }}</a>
                                     </li>
 
                                     <li class="nav-item">
