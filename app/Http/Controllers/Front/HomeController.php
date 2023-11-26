@@ -9,13 +9,20 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index () {
-        $products = Product::active()->with('category')->latest()->limit(8)->get();
+    public $child;
+    public function index (Request $request) {
+        $products = Product::filter($request->all())->orderBy('name')
+        ->active()
+        ->with('category')
+        ->latest()
+        // ->limit(8)
+        ->paginate();
+
         return view('front.home', compact('products'));
     }
 
-    public function category (Category $category)
+    public function show (Category $category)
     {
-        return "This is Category Page " . $category->id;
+        return "This is the Category Page " . $category->id;
     }
 }

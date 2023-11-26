@@ -1,4 +1,4 @@
-// This is for broadcast notifications.
+// This is for broadcast notifications or Notifications with Pusher.
 
 import Echo from 'laravel-echo'
 

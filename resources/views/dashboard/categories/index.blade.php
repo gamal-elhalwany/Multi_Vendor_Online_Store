@@ -76,15 +76,16 @@
     {{ $categories->withQueryString()->links() }}
 
     @if ($message = Session::get('updated_id'))
-    <script>
-        $updatedEle = {{ $message }}
-        function addClass () {
-            let $ele = document.getElementById('category_'+$updatedEle);
-            $ele.className += "table-info";
-            console.log($ele);
-        }
-        addClass();
-    </script>
+        <script>
+            $updatedEle = {{ $message }}
+
+            function addClass() {
+                let $ele = document.getElementById('category_' + $updatedEle);
+                $ele.className += "table-info";
+                console.log($ele);
+            }
+            addClass();
+        </script>
     @endif
 
 @endsection

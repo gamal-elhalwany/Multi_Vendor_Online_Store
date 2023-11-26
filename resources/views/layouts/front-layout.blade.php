@@ -163,27 +163,20 @@
                     <div class="col-lg-5 col-md-7 d-xs-none">
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
+                            <form action="#trending-products" method="get">
                             <!-- navbar search start -->
                             <div class="navbar-search search-style-5">
-                                <div class="search-select">
-                                    <div class="select-position">
-                                        <select id="select1">
-                                            <option selected>All</option>
-                                            <option value="1">option 01</option>
-                                            <option value="2">option 02</option>
-                                            <option value="3">option 03</option>
-                                            <option value="4">option 04</option>
-                                            <option value="5">option 05</option>
-                                        </select>
+                                    <div class="search-input">
+                                        <input type="text" name="name" placeholder="name" :value="$request->name">
+                                    </div>
+                                    <div class="search-input">
+                                        <input type="text" name="price" placeholder="0.00" :value="$request->price">
+                                    </div>
+                                    <div class="search-btn">
+                                        <button type="submit"><i class="lni lni-search-alt"></i></button>
                                     </div>
                                 </div>
-                                <div class="search-input">
-                                    <input type="text" placeholder="Search">
-                                </div>
-                                <div class="search-btn">
-                                    <button><i class="lni lni-search-alt"></i></button>
-                                </div>
-                            </div>
+                            </form>
                             <!-- navbar search Ends -->
                         </div>
                         <!-- End Main Menu Search -->
@@ -232,7 +225,8 @@
                                             <ul class="inner-sub-category">
                                                 @foreach ($category->children as $chiled)
                                                     <li>
-                                                        <a href="{{ route('front.category', $chiled->id) }}">{{ $chiled->name }}</a>
+                                                        <a
+                                                            href="{{ route('front.category', $chiled->id) }}">{{ $chiled->name }}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -257,24 +251,8 @@
                                         <a href="index.html" aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
 
-                                    {{-- <li class="nav-item">
-                                        <a class="dd-menu active collapsed" href="javascript:void(0)"
-                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
-                                            aria-controls="navbarSupportedContent" aria-expanded="false"
-                                            aria-label="Toggle navigation">{{ __('Shop') }}</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-3">
-                                            <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
-                                            <li class="nav-item"><a href="product-list.html">Shop List</a></li>
-                                            <li class="nav-item active"><a href="product-details.html">shop Single</a>
-                                            </li>
-                                            <li class="nav-item"><a href="cart.html">{{ __('Cart') }}</a></li>
-                                            <li class="nav-item"><a href="checkout.html">{{ __('Checkout') }}</a>
-                                            </li>
-                                        </ul>
-                                    </li> --}}
-
                                     <li class="nav-item">
-                                        <a href="#">{{ __('About Us') }}</a>
+                                        <a href="about-us.html">{{ __('About Us') }}</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -459,8 +437,8 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>Designed and Developed by<a href="https://graygrids.com/" rel="nofollow"
-                                        target="_blank">GrayGrids</a></p>
+                                <p>Developed by<a href="#" rel="nofollow"
+                                        target="_blank">{{ config('app.app-developer') }}</a></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -493,6 +471,9 @@
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
+        $('.close-alert').on('click', function() {
+            $('.alert').hide();
+        });
         const current = document.getElementById("current");
         const opacity = 0.6;
         const imgs = document.querySelectorAll(".img");

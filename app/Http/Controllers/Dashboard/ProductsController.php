@@ -41,6 +41,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        return "Hello From Creation Page of Products that we haven't Create it yet ♥.";
         // return view('dashboard.products.create');
     }
 
