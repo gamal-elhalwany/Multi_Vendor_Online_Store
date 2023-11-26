@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Multi Stores'),
+    'name' => env('APP_NAME', 'F-Multi-Stores'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,6 +86,7 @@ return [
     'locale' => 'en',
 
     'currency' => 'EGP', //custom property
+    'app-developer' => env('APP_DEVELOPER'), //custom property
 
     /*
     |--------------------------------------------------------------------------

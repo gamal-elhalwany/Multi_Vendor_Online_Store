@@ -249,7 +249,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="section-title">
+                    <div class="section-title" id="trending-products">
                         <h2>{{ __('Trending Products') }}</h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have
                             suffered alteration in some form.</p>
@@ -257,13 +257,15 @@
                 </div>
             </div>
             <div class="row">
-                @foreach ($products as $product)
+                @forelse ($products as $product)
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
                     <x-product-card :product="$product" />
                     <!-- End Single Product -->
                 </div>
-                @endforeach
+                @empty
+                <div class="alert alert-danger text-center mt-5">No products found!</div>
+                @endforelse
             </div>
         </div>
     </section>

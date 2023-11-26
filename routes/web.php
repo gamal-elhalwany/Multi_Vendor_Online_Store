@@ -32,7 +32,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
     // Categories Routes.
-    Route::get('category/{category}', [HomeController::class, 'category'])->name('front.category');
+    Route::get('category/{category}', [HomeController::class, 'show'])->name('front.category');
 
     Route::resource('cart', CartController::class);
 
@@ -46,16 +46,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Paypal Routes.
+    Route::get('payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
+    Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
+    Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 });
 
 // Socialite Routes.
 Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
 
-// Paypal Routes.
-Route::get('payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
-Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
-Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 
 //Payments Routes.
 // Route::post('payments', [PaymentController::class, 'pay'])->name('payments.pay');
