@@ -21,7 +21,7 @@ class PaymentController extends Controller
         $this->gateway->setTestMode(true);
     }
 
-    public function pay()
+    public function pay(Order $order)
     {
         try {
             $response = $this->gateway->purchase([
@@ -52,12 +52,20 @@ class PaymentController extends Controller
             ));
             $response = $transaction->send();
             if ($response->isSuccessful()) {
-                dd($response->isSuccessful());
+                // dd($response->isSuccessful());
                 $arr = $response->getData();
                 // $order->payment_status = 'paid';
+                // $order->payment_method = 'PayPal';
+                // $order->status = 'completed';
                 // $order->save();
-                // return redirect()->route('home')->with('success', 'Your Payment Operation Done Successfully!');
-                return "Payment is Successful. Your Transaction Id is " . $arr['id'];
+                $order->update([
+                    'payment_status'=>'paid',
+                    'payment_method'=>'PayPal',
+                    'status' => 'completed',
+                ]);
+
+                return redirect()->route('home')->with('success', 'Your Payment Operation Done Successfully. We will Proceed with your order very soon. ');
+                // return "Payment is Successful. Your Transaction Id is " . $arr['id'];
             } else {
                 dd($response->getMessage());
             }
@@ -68,10 +76,10 @@ class PaymentController extends Controller
 
     public function cancel(Order $order)
     {
-        // $order->update([
-        //     'payment_status' => 'paid',
-        // ]);
-        // $order->save();
+        $order->payment_status = 'failed';
+        $order->payment_method = 'cod';
+        $order->status = 'canceled';
+        $order->save();
         return redirect()->route('home')->with('error', 'You have Canceled the Payment Operation!');
     }
 }

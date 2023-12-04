@@ -26,11 +26,10 @@ class CheckUserType
         //     return redirect()->route('home');
         // }
 
-        if ($user) {
-            if ($user->hasAnyRole(['owner', 'super-admin', 'admin', 'editor'])) {
-                return redirect()->route('dashboard');
-            }
+        if ($user && $user->hasAnyRole('owner', 'super-admin', 'admin', 'editor')) {
+            return redirect()->route('dashboard');
         }
         return $next($request);
+
     }
 }

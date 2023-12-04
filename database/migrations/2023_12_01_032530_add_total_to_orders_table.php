@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('product_tag', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->foreignId('tag_id')->constrained('tags')->cascadeOnDelete();
-            $table->primary(['product_id', 'tag_id']);
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('total')->after('number')->default(0);
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_tag');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('total');
+        });
     }
 };
