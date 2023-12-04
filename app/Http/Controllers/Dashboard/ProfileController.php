@@ -10,6 +10,15 @@ use Symfony\Component\Intl\Languages;
 
 class ProfileController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:profile-list', ['only' => ['index']]);
+        $this->middleware('permission:profile-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:profile-show', ['only' => ['show']]);
+        $this->middleware('permission:profile-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:profile-delete', ['only' => ['destroy']]);
+    }
+
     public function edit() {
         $user = Auth::user();
         return view('dashboard.profile.edit', [

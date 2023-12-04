@@ -9,11 +9,14 @@ use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalHttp\HttpException;
 
-// The Main Controller of Payment.
+// The Main Controller of Payment That I'm using.
 class PayPalController extends Controller
 {
     public function create(Order $order)
     {
+        $auth_user = auth()->id();
+        $userOrders = Order::where('user_id', $auth_user)->first();
+
         if (auth()->id() == $order->user_id) {
             if ($order->payment_status == 'paid') {
                 // abort(404);
@@ -64,7 +67,8 @@ class PayPalController extends Controller
         // To make this method work right as you wish you have to create a custom accounts on PayPal Developer tool and not use the Default apps {personal or business} apps.
 
         if ($order->payment_status == 'paid') {
-            abort(404);
+            // abort(404);
+            return $order->payments;
         }
 
         $token = $request->query('token');
@@ -80,14 +84,14 @@ class PayPalController extends Controller
             $response = $client->execute($request);
             if ($response->statusCode == 201 && $response->result->status == 'COMPLETED') {
                 $order->payment_status = 'paid';
-                $order->payment_method = 'paid';
+                $order->payment_method = 'PayPal';
                 $order->status = 'pending';
                 $order->save();
 
                 $order->payments()->create([
                     'amount' => $response->result->purchase_units[0]->amount->value,
                     'payload' => $response->result,
-                    'method' => 'paypal',
+                    'method' => 'PayPal',
                 ]);
 
                 return redirect('/')->with('success', 'Payment Successfully Done. thanks for using our app ♥');

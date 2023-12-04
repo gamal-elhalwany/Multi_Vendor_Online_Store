@@ -17,6 +17,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+            'No Permissions',
+
             'role-list',
             'role-create',
             'role-show',
@@ -46,6 +48,12 @@ class PermissionSeeder extends Seeder
             'admin-show',
             'admin-edit',
             'admin-delete',
+
+            'list-editor',
+            'create-editor',
+            'show-editor',
+            'edit-editor',
+            'delete-editor',
 
             'user-list',
             'user-create',

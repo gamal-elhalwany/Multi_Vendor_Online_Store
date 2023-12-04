@@ -54,6 +54,7 @@
                     <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
                     <form method='POST' action="{{ route('users.destroy', $user->id) }} ">
                         @csrf
+                        @method('delete')
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>

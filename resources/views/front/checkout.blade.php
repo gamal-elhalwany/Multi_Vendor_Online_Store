@@ -1,32 +1,35 @@
 <x-front-layout title="Checkout">
     <!-- Start Breadcrumbs -->
     @section('breadcrumbs')
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Checkout</h1>
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="breadcrumbs-content">
+                            <h1 class="page-title">Checkout</h1>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                        <li><a href="{{ route('product.index') }}">Shop</a></li>
-                        <li>checkout</li>
-                    </ul>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <ul class="breadcrumb-nav">
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
+                            <li><a href="{{ route('product.index') }}">Shop</a></li>
+                            <li>checkout</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endsection
     <!-- End Breadcrumbs -->
+
+    <x-alert type="success" />
 
     <!--====== Checkout Form Steps Part Start ======-->
 
     <section class="checkout-wrapper section">
         <div class="container">
             <div class="row justify-content-center">
+                @if ($cart->get()->count() && $order->payment_status == 'paid')
                 <div class="col-lg-8">
                     <form action="{{ route('checkout.create') }}" method="POST">
                         @csrf
@@ -43,10 +46,12 @@
                                                     <label>User Name</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[billing][first_name]" placeholder="First Name">
+                                                            <input type="text" name="address[billing][first_name]"
+                                                                placeholder="First Name">
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[billing][last_name]" placeholder="Last Name">
+                                                            <input type="text" name="address[billing][last_name]"
+                                                                placeholder="Last Name">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -55,7 +60,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Email Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][email]" placeholder="Email Address">
+                                                        <input type="text" name="address[billing][email]"
+                                                            placeholder="Email Address">
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,7 +69,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Phone Number</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][phone_number]" placeholder="Phone Number">
+                                                        <input type="text" name="address[billing][phone_number]"
+                                                            placeholder="Phone Number">
                                                     </div>
                                                 </div>
                                             </div>
@@ -71,7 +78,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Mailing Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][street_address]" placeholder="Mailing Address">
+                                                        <input type="text" name="address[billing][street_address]"
+                                                            placeholder="Mailing Address">
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,7 +87,8 @@
                                                 <div class="single-form form-default">
                                                     <label>City</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][city]" placeholder="City">
+                                                        <input type="text" name="address[billing][city]"
+                                                            placeholder="City">
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,7 +96,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Post Code</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][postal_code]" placeholder="Post Code">
+                                                        <input type="text" name="address[billing][postal_code]"
+                                                            placeholder="Post Code">
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,7 +108,8 @@
                                                         <select class="form-control" name="address[billing][country]">
                                                             <option value="Country">Country</option>
                                                             @foreach ($countries as $country)
-                                                            <option value="{{ $country }}">{{ $country }}</option>
+                                                                <option value="{{ $country }}">{{ $country }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -108,7 +119,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Region/State</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][state]" placeholder="State">
+                                                        <input type="text" name="address[billing][state]"
+                                                            placeholder="State">
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,10 +134,10 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="single-form button">
-                                                    <button class="btn" data-bs-toggle="collapse"
+                                                    <a class="btn" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour">next
-                                                        step</button>
+                                                        aria-controls="collapseFour" href="javascript:void(0)">next
+                                                        step</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,10 +154,12 @@
                                                     <label>User Name</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[shipping][first_name]" placeholder="First Name">
+                                                            <input type="text" name="address[shipping][first_name]"
+                                                                placeholder="First Name">
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[shipping][last_name]" placeholder="Last Name">
+                                                            <input type="text" name="address[shipping][last_name]"
+                                                                placeholder="Last Name">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -154,7 +168,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Email Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][email]" placeholder="Email Address">
+                                                        <input type="text" name="address[shipping][email]"
+                                                            placeholder="Email Address">
                                                     </div>
                                                 </div>
                                             </div>
@@ -162,7 +177,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Phone Number</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][phone_number]" placeholder="Phone Number">
+                                                        <input type="text" name="address[shipping][phone_number]"
+                                                            placeholder="Phone Number">
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,7 +186,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Mailing Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][street_address]" placeholder="Mailing Address">
+                                                        <input type="text" name="address[shipping][street_address]"
+                                                            placeholder="Mailing Address">
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,7 +195,8 @@
                                                 <div class="single-form form-default">
                                                     <label>City</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][city]" placeholder="City">
+                                                        <input type="text" name="address[shipping][city]"
+                                                            placeholder="City">
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,7 +204,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Post Code</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][postal_code]" placeholder="Post Code">
+                                                        <input type="text" name="address[shipping][postal_code]"
+                                                            placeholder="Post Code">
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,10 +213,12 @@
                                                 <div class="single-form form-default">
                                                     <label>Country</label>
                                                     <div class="select-items">
-                                                        <select class="form-control" name="address[shipping][country]">
+                                                        <select class="form-control"
+                                                            name="address[shipping][country]">
                                                             <option value="Country">Country</option>
                                                             @foreach ($countries as $country)
-                                                            <option value="{{ $country }}">{{ $country }}</option>
+                                                                <option value="{{ $country }}">{{ $country }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -207,7 +228,8 @@
                                                 <div class="single-form form-default">
                                                     <label>Region/State</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][state]" placeholder="State">
+                                                        <input type="text" name="address[shipping][state]"
+                                                            placeholder="State">
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,16 +281,17 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="steps-form-btn button">
-                                                    <button data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">previous</button>
-                                                    <a href="javascript:void(0)" class="btn btn-alt">Save & Continue</a>
+                                                    <a data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                        aria-expanded="false" aria-controls="collapseThree"
+                                                        class="btn btn-primary">previous</a>
+                                                    <button type="submit" class="btn btn-alt">Save &
+                                                        Continue</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </section>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapsefive"
                                         aria-expanded="false" aria-controls="collapsefive">Payment Info</h6>
                                     <section class="checkout-steps-form-content collapse" id="collapsefive"
@@ -317,11 +340,12 @@
                                             </div>
                                         </div>
                                     </section>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </form>
                 </div>
+                @else
                 <div class="col-lg-4">
                     <div class="checkout-sidebar">
                         <div class="checkout-sidebar-coupon">
@@ -362,16 +386,15 @@
                                 </div>
                             </div>
                             <div class="price-table-btn button">
-                                <a href="javascript:void(0)" class="btn btn-alt">Checkout</a>
+                                <form action="{{ route('paypal.create', $order->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-alt {{ $order->get()->count() == 0 ? 'disabled' : ''}}">Checkout</button>
+                                </form>
                             </div>
-                        </div>
-                        <div class="checkout-sidebar-banner mt-30">
-                            <a href="product-grids.html">
-                                <img src="assets/images/banner/banner.jpg" alt="#">
-                            </a>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

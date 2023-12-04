@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-
 class SocialiteController extends Controller
 {
     public function redirect($provider)
@@ -42,7 +42,7 @@ class SocialiteController extends Controller
             Auth::login($user);
             return redirect()->route('home');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('login')->with('error', 'Something goes wrong check it and try again!');
         }
     }

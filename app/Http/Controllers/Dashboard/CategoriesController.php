@@ -16,7 +16,7 @@ class CategoriesController extends Controller
         $this->middleware('permission:category-list', ['only' => ['index']]);
         $this->middleware('permission:category-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:category-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:category-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:category-delete', ['only' => ['show', 'delete', 'restore', 'trash', 'forceDelete']]);
     }
 
     protected function uploadImage (Request $request) {

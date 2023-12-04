@@ -18,6 +18,8 @@ Route::group(
 
     Route::get('dashboard/categories/trash', [CategoriesController::class, 'trash'])->name('categories.trash');
 
+    Route::get('dashboard/categories/{category}', [CategoriesController::class, 'show'])->name('categories.show');
+
     Route::put('/categories/{category}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
 
     Route::delete('/categories/{category}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');

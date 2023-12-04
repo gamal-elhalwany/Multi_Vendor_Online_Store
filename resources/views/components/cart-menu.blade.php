@@ -48,7 +48,7 @@
                 <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
             </div>
             <div class="button">
-                <a href="{{ route('checkout.create') }}" class="btn animate">{{ __('Checkout') }}</a>
+                <a href="{{ route('checkout.create') }}" class="btn animate {{ $items->count() == 0 ?'disabled' : '' }}">{{ __('Checkout') }}</a>
             </div>
         </div>
     </div>
