@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalHttp\HttpException;
@@ -14,8 +16,15 @@ class PayPalController extends Controller
 {
     public function create(Order $order)
     {
-        $auth_user = auth()->id();
-        $userOrders = Order::where('user_id', $auth_user)->first();
+        $authID = auth()->id();
+        $totalPrice = 0;
+        if ($authID) {
+            $orders = Order::where('user_id', '=', $authID)->get();
+            foreach ($orders as $order) {
+                $orderTotalPrice = OrderItem::where('order_id', '=', $order->id)->sum('price');
+                $totalPrice += $orderTotalPrice;
+            }
+        }
 
         if (auth()->id() == $order->user_id) {
             if ($order->payment_status == 'paid') {
@@ -25,6 +34,10 @@ class PayPalController extends Controller
 
             $client = app('paypal.client');
 
+            $baseCurrency = config('app.currency', 'EUR');
+            $userCurrency = Session::get('currency_code', $baseCurrency);
+            $intValue = intval($totalPrice);
+
             $request = new OrdersCreateRequest();
             $request->prefer('return=representation');
             $request->body = [
@@ -32,8 +45,8 @@ class PayPalController extends Controller
                 "purchase_units" => [[
                     "reference_id" => $order->id,
                     "amount" => [
-                        "value" => '1000',
-                        "currency_code" => "USD"
+                        "value" => $intValue,
+                        "currency_code" => $userCurrency,
                     ]
                 ]],
                 "application_context" => [
@@ -94,7 +107,7 @@ class PayPalController extends Controller
                     'method' => 'PayPal',
                 ]);
 
-                return redirect('/')->with('success', 'Payment Successfully Done. thanks for using our app ♥');
+                return redirect('/')->with('success', 'Your Payment Operation Done Successfully. We will Proceed with your order very soon.');
             }
         } catch (HttpException $ex) {
             echo $ex->statusCode;
