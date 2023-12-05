@@ -29,7 +29,7 @@
     <section class="checkout-wrapper section">
         <div class="container">
             <div class="row justify-content-center">
-                @if ($cart->get()->count() && $order->payment_status == 'paid')
+                @if ($cart->get()->count())
                 <div class="col-lg-8">
                     <form action="{{ route('checkout.create') }}" method="POST">
                         @csrf

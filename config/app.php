@@ -85,7 +85,7 @@ return [
 
     'locale' => 'en',
 
-    'currency' => 'EGP', //custom property
+    'currency' => 'USD', //custom property
     'app-developer' => env('APP_DEVELOPER'), //custom property
 
     /*

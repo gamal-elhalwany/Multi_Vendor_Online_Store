@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,20 +17,8 @@ class HomeController extends Controller
         ->active()
         ->with('category')
         ->latest()
-        // ->limit(8)
+        // ->limit(8) this doesn't work with filter scope.
         ->paginate();
-
-        $authID = auth()->id();
-        $auth_order = Order::where('user_id', $authID)->with('orderItems')
-        ->first();
-
-        $orderItems = OrderItem::where('order_id', $auth_order->id)->get();
-        $totalPrice = 0;
-
-        foreach ($orderItems as $orderItem) {
-            $totalPrice += $orderItem->price;
-            dd($totalPrice);
-        }
 
         return view('front.home', compact('products'));
     }

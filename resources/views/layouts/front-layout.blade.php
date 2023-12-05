@@ -56,12 +56,8 @@
                                                 </option>
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
                                                 <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
-                                                <option value="EGP" @selected('EGP' == session('currency_code'))>EGP</option>
                                                 <option value="ILS" @selected('ILS' == session('currency_code'))>₪ ILS</option>
-                                                <option value="SAR" @selected('SAR' == session('currency_code'))>SAR</option>
-                                                <option value="QAR" @selected('QAR' == session('currency_code'))>QAR</option>
                                                 <option value="GBP" @selected('GBP' == session('currency_code'))>£ GBP</option>
-                                                <option value="INR" @selected('INR' == session('currency_code'))>₹ INR</option>
                                             </select>
                                         </form>
                                     </div>
