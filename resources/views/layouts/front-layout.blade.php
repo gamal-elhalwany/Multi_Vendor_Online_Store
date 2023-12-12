@@ -42,7 +42,7 @@
     <header class="header navbar-area">
         <!-- Start Topbar -->
         <div class="topbar">
-            <div class="container">
+            <div class="container" style="display: block !important">
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-left">
@@ -64,14 +64,6 @@
                                 </li>
                                 <li>
                                     <div class="select-position">
-                                        {{-- <form action="{{ URL::current() }}" method="get">
-                                            @csrf
-                                            <select name="locale" onchange="this.form.submit()">
-                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                    <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>{{ $properties['native'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </form> --}}
 
                                         <div class="dropdown text-center text-light fw-bolder">
                                             <p style="padding-right:12px;">{{ __('Language') }}</p>
@@ -159,14 +151,14 @@
                     <div class="col-lg-5 col-md-7 d-xs-none">
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
-                            <form action="#trending-products" method="get">
+                            <form action="{{ request()->is('/') ? url('#trending-products') : route('product.index') }}" method="get">
                             <!-- navbar search start -->
                             <div class="navbar-search search-style-5">
                                     <div class="search-input">
-                                        <input type="text" name="name" placeholder="name" :value="$request->name">
+                                        <input type="text" name="name" placeholder="search product" :value="$request->name">
                                     </div>
                                     <div class="search-input">
-                                        <input type="text" name="price" placeholder="0.00" :value="$request->price">
+                                        <input type="text" name="price" placeholder="filter by price" :value="$request->price">
                                     </div>
                                     <div class="search-btn">
                                         <button type="submit"><i class="lni lni-search-alt"></i></button>
@@ -244,7 +236,11 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="index.html" aria-label="Toggle navigation">{{ __('Home') }}</a>
+                                        <a href="{{ route('home') }}" aria-label="Toggle navigation">{{ __('Home') }}</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ route('product.index') }}" aria-label="Toggle navigation">{{ __('All Products') }}</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -291,11 +287,6 @@
     <!-- Start Breadcrumbs -->
     @yield('breadcrumbs')
     <!-- End Breadcrumbs -->
-
-    {{-- <form action="{{ route('payments.pay') }}" method="POST" class="form text-center m-5">
-        @csrf
-        <button type="submit" class="btn btn-primary">Pay Now</button>
-    </form> --}}
 
     <x-alert type="success" />
     <x-alert type="error" />

@@ -15,7 +15,7 @@ class StoreScope implements Scope
     {
         // here you can put any logic you want and it will run on the eloquent model automatically.
         $user = auth()->user();
-        if ($user && $user->store_id) {
+        if ($user && $user->store_id && request()->is('admin/*')) {
             $builder->where('store_id', '=', $user->store_id);
         }
     }

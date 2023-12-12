@@ -8,7 +8,13 @@
                 quantity: $(this).val(),
                 product_id: $('.product_id').val(),
                 _token: $('#x-csrf').val(),
-            }
+            },
+            success: function(response) {
+                let totalCartPrice =  $('.item-qty').val() * $('.product_price').val();
+                $('.totalCartPrice').text(
+                    Math.round(totalCartPrice, 2),
+                );
+            },
         });
     });
 

@@ -43,13 +43,18 @@
             @endforeach
         </ul>
         <div class="bottom">
-            <div class="total">
-                <span>{{ __('Total') }}</span>
-                <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
-            </div>
-            <div class="button">
-                <a href="{{ route('checkout.create') }}" class="btn animate {{ $items->count() == 0 ?'disabled' : '' }}">{{ __('Checkout') }}</a>
-            </div>
+            @foreach ($items as $cart)
+            @if (auth()->id() == $cart->user_id)
+                <div class="total">
+                    <span>{{ __('Total') }}</span>
+                    <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
+                </div>
+                <div class="button">
+                    <a href="{{ route('checkout.create') }}"
+                        class="btn animate {{ $items->count() == 0 ? 'disabled' : '' }}">{{ __('Checkout') }}</a>
+                </div>
+            @endif
+            @endforeach
         </div>
     </div>
     <!--/ End Shopping Item -->

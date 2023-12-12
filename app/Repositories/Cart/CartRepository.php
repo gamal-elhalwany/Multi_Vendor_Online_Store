@@ -5,6 +5,7 @@ namespace App\Repositories\Cart;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 interface CartRepository
 {

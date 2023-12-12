@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Client\ResponseSequence;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index () {
-        return "Here Suppose to be the Products Page!";
+    public function index (Request $request) {
+        $products = Product::filter($request->all())->active()->latest()->paginate(12);
+        return view('front.products.index', compact('products'));
     }
 
     public function show (Product $product) {
