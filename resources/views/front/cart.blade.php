@@ -52,7 +52,7 @@
                 </div>
                 <!-- End Cart List Title -->
                 <!-- Cart Single List list -->
-                @foreach ($carts->get() as $cart)
+                @foreach ($carts as $cart)
                 <div class="cart-single-list" id="{{ $cart->id }}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
@@ -71,13 +71,14 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <input class="form-control item-qty" data-id="{{ $cart->id }}" value="{{ $cart->quantity }}">
+                                <input class="form-control item-qty" data-id="{{ $cart->id }}" value="{{ $cart->quantity }}" name="quantity">
                                 <input type="hidden" class="product_id" value="{{ $cart->product_id }}">
+                                <input type="hidden" class="product_price" value="{{ $cart->product->price }}">
                                 <input type="hidden" id="x-csrf" value="{{ csrf_token() }}">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}</p>
+                            <p class="totalCartPrice">{{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <p>{{ CurrencyFormat::format(0) }}</p>
@@ -111,14 +112,14 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>{{ CurrencyFormat::format($carts->total(1)) }}</span></li>
+                                        <li>Cart Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity) }}</span></li>
                                         <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>$29.00</span></li>
-                                        <li class="last">You Pay<span>$2531.00</span></li>
+                                        <li>You Save<span>${{ $discount = $cartTotal - 10 * 350}}</span></li>
+                                        <li class="last">You Pay<span>{{ CurrencyFormat::format($cartTotal - $discount) }}</span></li>
                                     </ul>
                                     <div class="button">
                                         <a href="{{ route('checkout.store') }}" class="btn">Checkout</a>
-                                        <a href="product-grids.html" class="btn btn-alt">Continue shopping</a>
+                                        <a href="{{ route('product.index') }}" class="btn btn-alt">Continue shopping</a>
                                     </div>
                                 </div>
                             </div>

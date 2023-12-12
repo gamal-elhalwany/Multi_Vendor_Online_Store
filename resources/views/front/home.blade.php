@@ -31,7 +31,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Now Only</span> $320.99</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -47,7 +47,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Combo Only:</span> $590.00</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Now Only</span> $320.99</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Combo Only:</span> $590.00</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Now Only</span> $320.99</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                                     labore dolore magna aliqua.</p>
                                                 <h3><span>Combo Only:</span> $590.00</h3>
                                                 <div class="button">
-                                                    <a href="product-grids.html" class="btn">{{ __('Shop Now') }}</a>
+                                                    <a href="$trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@
                                     <h2>Weekly Sale!</h2>
                                     <p>Saving up to 50% off all online store items this week.</p>
                                     <div class="button">
-                                        <a class="btn" href="product-grids.html">{{ __('Shop Now') }}</a>
+                                        <a class="btn" href="#trending-products">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>

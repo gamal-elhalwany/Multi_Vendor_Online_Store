@@ -13,7 +13,10 @@ class CartModelRepository implements CartRepository
 {
     public function get(): Collection
     {
-        return Cart::with('product')->where('cookie_id', '=', $this->getCookieId())->get();
+        $authID = auth()->id();
+        return Cart::with('product')
+        ->where('cookie_id', '=', $this->getCookieId())
+        ->where('user_id', '=', $authID)->get();
     }
 
     public function add(Product $product, $quantity = 1)
@@ -34,8 +37,10 @@ class CartModelRepository implements CartRepository
 
     public function update(Product $product, $quantity)
     {
+        $authID = auth()->id();
         return Cart::where('product_id', '=', $product->id)
         ->where('cookie_id', '=', $this->getCookieId())
+        ->where('user_id', '=', $authID)
         ->update([
             'quantity' => $quantity,
         ]);
@@ -62,7 +67,7 @@ class CartModelRepository implements CartRepository
         $cookie_id = Cookie::get('cart_id');
         if (!$cookie_id) {
             $cookie_id = Str::uuid();
-            Cookie::queue('cart_id', $cookie_id, 30 * 24 * 60);
+            Cookie::queue('cart_id', $cookie_id, 60 * 24 * 7);
         }
         return $cookie_id;
     }
