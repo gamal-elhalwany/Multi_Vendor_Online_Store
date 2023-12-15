@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p class="totalCartPrice">{{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}</p>
+                            <p class="totalCartPrice" data-id="{{ $cart->id }}">{{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <p>{{ CurrencyFormat::format(0) }}</p>

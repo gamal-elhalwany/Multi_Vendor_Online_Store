@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\Cart\CartRepository;
@@ -18,7 +17,7 @@ class CartController extends Controller
         $user = auth()->user();
         $carts = $cart->get();
         if ($user) {
-            if ($carts) {
+            if ($carts->count()) {
                 //Comment:- By using this variable $cart you use the services container.
                 return view('front.cart', compact('carts'));
             }
