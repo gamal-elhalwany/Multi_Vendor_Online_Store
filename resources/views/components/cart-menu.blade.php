@@ -14,8 +14,10 @@
                 <span>
                     {{ Auth::user()->carts()->count() .' ' .__('Items') }}
                 </span>
+                @if (auth()->user()->carts()->count())
+                <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
+                @endif
             @endauth
-            <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
         </div>
         <ul class="shopping-list">
             @foreach ($items as $cart)
@@ -43,8 +45,8 @@
             @endforeach
         </ul>
         <div class="bottom">
-            @foreach ($items as $cart)
-            @if (auth()->id() == $cart->user_id)
+            @auth
+            @if (auth()->user()->carts()->count())
                 <div class="total">
                     <span>{{ __('Total') }}</span>
                     <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
@@ -54,7 +56,7 @@
                         class="btn animate {{ $items->count() == 0 ? 'disabled' : '' }}">{{ __('Checkout') }}</a>
                 </div>
             @endif
-            @endforeach
+            @endauth
         </div>
     </div>
     <!--/ End Shopping Item -->

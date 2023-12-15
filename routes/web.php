@@ -52,6 +52,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
     Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 
+    Route::get('/products/filter/by-range', [ProductController::class, 'filterByRange'])->name('filter.products.byRange');
+    Route::get('/products/sort', [ProductController::class, 'sortProducts'])->name('sort.products');
+
 
     //Payments Routes.
     // Route::match(['get', 'post'], 'payments/{order}', [PaymentController::class, 'pay'])->name('payments.pay');
