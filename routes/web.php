@@ -30,9 +30,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 
     Route::get('/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
-
-    // Categories Routes.
-    Route::get('category/{category}', [HomeController::class, 'show'])->name('front.category');
+    Route::get('category/{category:slug}', [HomeController::class, 'category'])->name('category.show');
+    Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about');
+    Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact');
 
     Route::resource('cart', CartController::class);
 

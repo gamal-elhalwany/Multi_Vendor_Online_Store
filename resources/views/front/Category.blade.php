@@ -5,14 +5,14 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title">Shop Grid</h1>
+                            <h1 class="page-title">Category: {{ $category->name }}</h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
                             <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
                             <li><a href="{{ route('product.index') }}">Shop</a></li>
-                            <li>Shop Grid</li>
+                            <li>Shop Department</li>
                         </ul>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                     max="10000" value="10" onchange="rangePrimary.value=value">
                                 <div class="range-inner">
                                     <label>$</label>
-                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100" value="10">
+                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100" value="0">
                                 </div>
                                 <button type="submit" class="btn btn-outline-primary m-3">Apply Filter</button>
                             </form>
@@ -105,7 +105,7 @@
                             <div class="tab-pane fade active show" id="nav-grid" role="tabpanel"
                                 aria-labelledby="nav-grid-tab">
                                 <div class="row">
-                                    @foreach ($products as $product)
+                                    @foreach ($category->products as $product)
                                         <div class="col-lg-4 col-md-6 col-12">
                                             <!-- Start Single Product -->
                                             <div class="single-product">
@@ -146,23 +146,23 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-12">
                                         <!-- Pagination -->
                                         <div class="pagination left">
                                             <ul class="pagination-list">
-                                                {{ $products->links() }}
+                                                {{ $category->products->links() }}
                                             </ul>
                                         </div>
                                         <!--/ End Pagination -->
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="tab-pane fade" id="nav-list" role="tabpanel"
                                 aria-labelledby="nav-list-tab">
                                 <div class="row">
-                                    @foreach ($products as $product)
+                                    @foreach ($category->products as $product)
                                         <div class="col-lg-12 col-md-12 col-12">
                                             <!-- Start Single Product -->
                                             <div class="single-product">
@@ -212,17 +212,17 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-12">
                                         <!-- Pagination -->
                                         <div class="pagination left">
                                             <ul class="pagination-list">
-                                                {{ $products->links() }}
+                                                {{ $categoryPaginate->products->links() }}
                                             </ul>
                                         </div>
                                         <!--/ End Pagination -->
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

@@ -87,8 +87,8 @@
                         <div class="top-middle">
                             <ul class="useful-links">
                                 <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
-                                <li><a href="about-us.html">{{ __('About Us') }}</a></li>
-                                <li><a href="contact.html">{{ __('Contact Us') }}</a></li>
+                                <li><a href="{{ route('about') }}">{{ __('About Us') }}</a></li>
+                                <li><a href="{{ route('contact') }}">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                             <ul class="sub-category">
                                 @foreach ($category as $category)
                                     <li>
-                                        <a href="{{ route('front.category', $category->id) }}">
+                                        <a href="{{ route('category.show', $category->slug) }}">
                                             {{ $category->name }}
                                             @if ($category->children->isNotEmpty())
                                                 <i class="lni lni-chevron-right"></i>
@@ -214,7 +214,7 @@
                                                 @foreach ($category->children as $chiled)
                                                     <li>
                                                         <a
-                                                            href="{{ route('front.category', $chiled->id) }}">{{ $chiled->name }}</a>
+                                                            href="{{ route('category.show', $chiled->slug) }}">{{ $chiled->name }}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -244,11 +244,11 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="about-us.html">{{ __('About Us') }}</a>
+                                        <a href="{{ route('about') }}">{{ __('About Us') }}</a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="contact.html"
+                                        <a href="{{ route('contact') }}"
                                             aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>

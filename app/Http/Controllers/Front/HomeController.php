@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Product;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,13 +15,23 @@ class HomeController extends Controller
         ->with('category')
         ->latest()
         // ->limit(8) this doesn't work with filter scope.
-        ->paginate();
+        ->paginate(12);
 
         return view('front.home', compact('products'));
     }
 
-    public function show (Category $category)
+    public function category (Category $category)
     {
-        return "This is the Category Page " . $category->id ." $category->name";
+        return view('front.category', compact('category'));
+    }
+
+    public function aboutUs ()
+    {
+        return view('front.about-us');
+    }
+
+    public function contactUs ()
+    {
+        return view('front.contact-us');
     }
 }
