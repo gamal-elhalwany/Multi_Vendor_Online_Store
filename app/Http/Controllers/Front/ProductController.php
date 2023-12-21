@@ -29,6 +29,7 @@ class ProductController extends Controller
 
     public function sortProducts(Request $request)
     {
+        dd("You are Here baba!");
         $selectedCriteria = $request->input('criteria');
         // $products = Product::orderBy($selectedCriteria)->paginate();
         dd($selectedCriteria);
