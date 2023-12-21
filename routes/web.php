@@ -33,6 +33,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('category/{category:slug}', [HomeController::class, 'category'])->name('category.show');
     Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about');
     Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact');
+    Route::post('/contact-us', [HomeController::class, 'sendContactEmail'])->name('email.contact');
 
     Route::resource('cart', CartController::class);
 

@@ -72,31 +72,58 @@
                         <div class="col-lg-8 col-md-12 col-12">
                             <div class="contact-form-head">
                                 <div class="form-main">
-                                    <form class="form" method="post" action="assets/mail/mail.php">
+                                    <x-alert type='success' />
+                                    <form class="form" method="POST" action="{{ route('email.contact') }}">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input name="name" type="text" placeholder="Your Name" required="required">
+                                                    @error('name')
+                                                    <p class="alert alert-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input name="subject" type="text" placeholder="Your Subject" required="required">
+                                                    @error('subject')
+                                                    <p class="alert alert-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input name="email" type="email" placeholder="Your Email" required="required">
+                                                    @error('email')
+                                                    <p class="alert alert-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input name="phone" type="text" placeholder="Your Phone" required="required">
+                                                    @error('phone')
+                                                    <p class="alert alert-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group message">
                                                     <textarea name="message" placeholder="Your Message"></textarea>
+                                                    @error('message')
+                                                    <p class="alert alert-danger">
+                                                        {{ $message }}
+                                                    </p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">
