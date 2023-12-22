@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\HeroSlider;
 use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Database\Seeder;
@@ -38,5 +39,7 @@ class DatabaseSeeder extends Seeder
         //     'password' => Hash::make('00000000'),
         //     'phone_number' => '01234567892',
         // ]);
+
+        // HeroSlider::factory(3)->create();
     }
 }

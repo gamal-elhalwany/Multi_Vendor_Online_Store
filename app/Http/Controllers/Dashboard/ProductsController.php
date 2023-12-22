@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\HeroSlider;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class ProductsController extends Controller
         $this->middleware('permission:product-show', ['only' => ['show']]);
         $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:product-create', ['only' => ['createSlider', 'storeSlider']]);
     }
 
     /**
@@ -111,5 +113,33 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function createSlider ()
+    {
+        return view ('dashboard.products.slider');
+    }
+
+    public function storeSlider (Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:5',
+            'image' => 'required|mimes:jpg,png,jpeg',
+            'price' => 'required',
+        ]);
+
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $path = $file->store('hero/slider', 'public');
+        }
+
+        HeroSlider::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'image' => $path,
+            'price' => $validatedData['price'],
+        ]);
+        return back()->with('success', 'Slider Created Successfully!');
     }
 }

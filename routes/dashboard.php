@@ -31,6 +31,9 @@ Route::group(
     Route::resource('dashboard/categories', CategoriesController::class);
     Route::resource('dashboard/products', ProductsController::class);
 
+    Route::get('dashboard/create-slider', [ProductsController::class, 'createSlider'])->name('slider.create');
+    Route::post('dashboard/create-slider', [ProductsController::class, 'storeSlider'])->name('slider.store');
+
     // These Routes of Spatie Package.
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

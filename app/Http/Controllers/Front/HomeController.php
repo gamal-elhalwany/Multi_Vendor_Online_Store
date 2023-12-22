@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;
+use App\Models\HeroSlider;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
@@ -19,8 +20,9 @@ class HomeController extends Controller
         ->latest()
         // ->limit(8) this doesn't work with filter scope.
         ->paginate(12);
+        $sliders = HeroSlider::all();
 
-        return view('front.home', compact('products'));
+        return view('front.home', compact('products', 'sliders'));
     }
 
     public function category (Category $category)

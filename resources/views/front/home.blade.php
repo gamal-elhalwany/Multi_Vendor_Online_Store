@@ -16,109 +16,23 @@
                                 <span class="current">4</span> of 2</div>
                             <div id="tns1-mw" class="tns-ovh">
                                 <div class="tns-inner" id="tns1-iw">
-                                    <div class="hero-slider  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal"
-                                        id="tns1"
+                                    <div class="hero-slider  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" id="tns1"
                                         style="transform: translate3d(-50%, 0px, 0px); transition-duration: 0s;">
-                                        <div class="single-slider tns-item tns-slide-cloned"
-                                            style="background-image: url(assets/images/hero/slider-bg1.jpg);"
-                                            aria-hidden="true" tabindex="-1">
+                                        @foreach ($sliders as $slider)
+                                        <div class="single-slider tns-item tns-slide-cloned" style="background-image: url({{ asset("storage/$slider->image") }});" aria-hidden="true" tabindex="-1">
                                             <div class="content">
-                                                <h2><span>No restocking fee ($35 savings)</span>
-                                                    M75 Sport Watch
+                                                <h2>
+                                                    {{-- <span>No restocking fee ($35 savings)</span> --}}
+                                                    {{ $slider->title }}
                                                 </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Now Only</span> $320.99</h3>
+                                                <p>{{ $slider->description }}</p>
+                                                <h3><span>Now Only</span> {{ CurrencyFormat::format($slider->price) }}</h3>
                                                 <div class="button">
                                                     <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="single-slider tns-item tns-slide-cloned"
-                                            style="background-image: url(assets/images/hero/slider-bg2.jpg);"
-                                            aria-hidden="true" tabindex="-1">
-                                            <div class="content">
-                                                <h2><span>Big Sale Offer</span>
-                                                    Get the Best Deal on CCTV Camera
-                                                </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Combo Only:</span> $590.00</h3>
-                                                <div class="button">
-                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Start Single Slider -->
-                                        <div class="single-slider tns-item"
-                                            style="background-image: url(assets/images/hero/slider-bg1.jpg);"
-                                            id="tns1-item0" aria-hidden="true" tabindex="-1">
-                                            <div class="content">
-                                                <h2><span>No restocking fee ($35 savings)</span>
-                                                    M75 Sport Watch
-                                                </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Now Only</span> $320.99</h3>
-                                                <div class="button">
-                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Slider -->
-                                        <!-- Start Single Slider -->
-                                        <div class="single-slider tns-item tns-slide-active"
-                                            style="background-image: url(assets/images/hero/slider-bg2.jpg);"
-                                            id="tns1-item1">
-                                            <div class="content">
-                                                <h2><span>Big Sale Offer</span>
-                                                    Get the Best Deal on CCTV Camera
-                                                </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Combo Only:</span> $590.00</h3>
-                                                <div class="button">
-                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Slider -->
-                                        <div class="single-slider tns-item tns-slide-cloned"
-                                            style="background-image: url(assets/images/hero/slider-bg1.jpg);"
-                                            aria-hidden="true" tabindex="-1">
-                                            <div class="content">
-                                                <h2><span>No restocking fee ($35 savings)</span>
-                                                    M75 Sport Watch
-                                                </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Now Only</span> $320.99</h3>
-                                                <div class="button">
-                                                    <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-slider tns-item tns-slide-cloned"
-                                            style="background-image: url(assets/images/hero/slider-bg2.jpg);"
-                                            aria-hidden="true" tabindex="-1">
-                                            <div class="content">
-                                                <h2><span>Big Sale Offer</span>
-                                                    Get the Best Deal on CCTV Camera
-                                                </h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                                                    incididunt ut
-                                                    labore dolore magna aliqua.</p>
-                                                <h3><span>Combo Only:</span> $590.00</h3>
-                                                <div class="button">
-                                                    <a href="$trending-products" class="btn">{{ __('Shop Now') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
