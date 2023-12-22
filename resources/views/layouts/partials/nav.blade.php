@@ -41,9 +41,16 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('users.create') }}"
-                        class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('admin/dashboard/create-user*') ? 'active' : '' }}">
                         <i class="fab fas fa-user nav-icon"></i>
                         <p>Create User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('slider.create') }}"
+                        class="nav-link {{ request()->is('admin/dashboard/create-slider*') ? 'active-link' : '' }}">
+                        <i class="fab fas fa-user nav-icon"></i>
+                        <p>Create Slider</p>
                     </a>
                 </li>
             </ul>
