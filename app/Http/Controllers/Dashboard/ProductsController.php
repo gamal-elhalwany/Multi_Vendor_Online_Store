@@ -125,7 +125,7 @@ class ProductsController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:5',
-            'image' => 'required|mimes:jpg,png,jpeg',
+            'image' => 'required|mimes:png',
             'price' => 'required',
         ]);
 

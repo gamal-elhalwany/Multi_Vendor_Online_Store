@@ -17,11 +17,8 @@ class CartController extends Controller
         $user = auth()->user();
         $carts = $cart->get();
         if ($user) {
-            if ($carts->count()) {
-                //Comment:- By using this variable $cart you use the services container.
-                return view('front.cart', compact('carts'));
-            }
-            return redirect('/');
+            //Comment:- By using this variable $cart you use the services container.
+            return view('front.cart', compact('carts'));
         }
         return redirect()->route('login');
     }

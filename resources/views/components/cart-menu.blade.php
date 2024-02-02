@@ -16,6 +16,8 @@
                 </span>
                 @if (auth()->user()->carts()->count())
                 <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
+                @else
+                <p>you have no carts</p>
                 @endif
             @endauth
         </div>
