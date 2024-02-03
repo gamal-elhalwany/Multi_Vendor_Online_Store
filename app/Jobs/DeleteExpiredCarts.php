@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Order;
+use App\Models\Cart;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class DeleteExpiredOrders implements ShouldQueue
+class DeleteExpiredCarts implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class DeleteExpiredOrders implements ShouldQueue
     public function handle(): void
     {
         // When you create a job you have to declare it into the kernel file that will be in the console directory.
-        Order::whereDate('created_at', '<', now()->subDays(7))->where('status', 'paid')->orWhere('status', 'pending')->delete();
+        Cart::whereDate('created_at', '<', now()->subDays(6))->delete();
     }
 }

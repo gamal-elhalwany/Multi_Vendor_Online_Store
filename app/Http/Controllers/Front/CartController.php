@@ -15,10 +15,13 @@ class CartController extends Controller
     public function index(CartRepository $cart)
     {
         $user = auth()->user();
+        //Comment:- By using this variable $cart you use the services container.
         $carts = $cart->get();
         if ($user) {
-            //Comment:- By using this variable $cart you use the services container.
-            return view('front.cart', compact('carts'));
+            if ($user->carts->count()) {
+                return view('front.cart', compact('carts'));
+            }
+            return  redirect('/');
         }
         return redirect()->route('login');
     }
