@@ -19,6 +19,7 @@ class SocialiteController extends Controller
     public function callback($provider)
     {
         try {
+            // this provider_user is coming from the provider such like Google or Facebook with his information.
             $provider_user = Socialite::driver($provider)->user();
             $user = User::where([
                 'provider' => $provider,
