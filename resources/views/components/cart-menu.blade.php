@@ -12,12 +12,14 @@
         <div class="dropdown-cart-header">
             @auth
                 <span>
-                    {{ Auth::user()->carts()->count() .' ' .__('Items') }}
+                    {{ Auth::user()->carts()->count() . ' ' . __('Items') }}
                 </span>
                 @if (auth()->user()->carts()->count())
-                <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
+                    <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
+                @elseif (auth()->user()->orders()->count())
+                    <p>You have some orders, but no items in the cart.</p>
                 @else
-                <p>you have no carts</p>
+                    <p>you have no carts</p>
                 @endif
             @endauth
         </div>
@@ -48,16 +50,19 @@
         </ul>
         <div class="bottom">
             @auth
-            @if (auth()->user()->carts()->count())
-                <div class="total">
-                    <span>{{ __('Total') }}</span>
-                    <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
-                </div>
-                <div class="button">
-                    <a href="{{ route('checkout.create') }}"
-                        class="btn animate {{ $items->count() == 0 ? 'disabled' : '' }}">{{ __('Checkout') }}</a>
-                </div>
-            @endif
+                @if (auth()->user()->carts()->count())
+                    <div class="total">
+                        <span>{{ __('Total') }}</span>
+                        <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
+                    </div>
+                    <div class="button">
+                        <a href="{{ route('checkout.create') }}" class="btn animate">{{ __('Checkout') }}</a>
+                    </div>
+                @elseif (auth()->user()->orders()->count())
+                    <div class="button">
+                        <a href="{{ route('checkout.create') }}" class="btn animate">{{ __('Checkout') }}</a>
+                    </div>
+                @endif
             @endauth
         </div>
     </div>
