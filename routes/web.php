@@ -68,4 +68,4 @@ Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
 
 // require __DIR__.'/auth.php';
-require __DIR__.'/dashboard.php';
+require __DIR__ . '/dashboard.php';
