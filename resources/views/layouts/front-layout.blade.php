@@ -42,7 +42,7 @@
     <header class="header navbar-area">
         <!-- Start Topbar -->
         <div class="topbar">
-            <div class="container">
+            <div class="container-fluid" style="width: 90%;">
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-left">
@@ -52,12 +52,17 @@
                                         <form action="{{ route('currency.convert') }}" method="post">
                                             @csrf
                                             <select name="currency_code" onchange="this.form.submit()">
-                                                <option value="" @selected('' == session('currency_code'))>{{ __('Currency') }}
+                                                <option value="" @selected(''==session('currency_code'))>
+                                                    {{ __('Currency') }}
                                                 </option>
-                                                <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
-                                                <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
-                                                <option value="ILS" @selected('ILS' == session('currency_code'))>₪ ILS</option>
-                                                <option value="GBP" @selected('GBP' == session('currency_code'))>£ GBP</option>
+                                                <option value="USD" @selected('USD'==session('currency_code'))>$ USD
+                                                </option>
+                                                <option value="EUR" @selected('EUR'==session('currency_code'))>€ EURO
+                                                </option>
+                                                <option value="ILS" @selected('ILS'==session('currency_code'))>₪ ILS
+                                                </option>
+                                                <option value="GBP" @selected('GBP'==session('currency_code'))>£ GBP
+                                                </option>
                                             </select>
                                         </form>
                                     </div>
@@ -68,13 +73,13 @@
                                         <div class="dropdown text-center text-light fw-bolder">
                                             <p style="padding-right:12px;">{{ __('Language') }}</p>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                    <li class="dropdown-item">
-                                                        <a rel="alternate" hreflang="{{ $localeCode }}"
-                                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                            {{ $properties['native'] }}
-                                                        </a>
-                                                    </li>
+                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode =>
+                                                $properties)
+                                                <li class="dropdown-item">
+                                                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                        {{ $properties['native'] }}
+                                                    </a>
+                                                </li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -94,41 +99,45 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown"
-                                aria-expanded="false">
+                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
                                 <i class="lni lni-user"></i>
                                 {{ __('Hello') }}
                                 @if (Auth::user())
-                                    , {{ Auth::user()->name }}
+                                , {{ Auth::user()->name }}
                                 @endif
                                 @auth
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('profile.edit') }}">{{ __('Profile') }}</a></li>
-                                        <li>
-                                            <div class="dropdown-divider"></div>
-                                        </li>
-                                        <li>
-                                            <a class="front-logout" href="{{ route('logout') }}" type="submit"
-                                                onclick="event.preventDefault();
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Profile') }}
+                                        </a>
+                                    </li>
+                                    @if(auth()->user()->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor'))
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                                    </li>
+                                    @endif
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="front-logout" href="{{ route('logout') }}" type="submit" onclick="event.preventDefault();
                                                 document.getElementById('logout').submit()">
-                                                {{ __('Sign Out') }}
-                                            </a>
-                                            <form action="{{ route('logout') }}" method="post" style="display:none;"
-                                                id="logout">
-                                                @csrf
-                                            </form>
-                                        </li>
-                                    </ul>
+                                            {{ __('Sign Out') }}
+                                        </a>
+                                        <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
                                 @else
-                                    <ul class="user-login">
-                                        <li>
-                                            <a href="{{ route('login') }}">{{ __('Sign In') }}</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                                        </li>
-                                    </ul>
+                                <ul class="user-login">
+                                    <li>
+                                        <a href="{{ route('login') }}">{{ __('Sign In') }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+                                </ul>
                                 @endauth
                             </div>
                         </div>
@@ -152,13 +161,13 @@
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
                             <form action="{{ request()->is('/') ? url('#trending-products') : route('product.index') }}" method="get">
-                            <!-- navbar search start -->
-                            <div class="navbar-search search-style-5">
+                                <!-- navbar search start -->
+                                <div class="navbar-search search-style-5">
                                     <div class="search-input">
-                                        <input type="text" name="name" placeholder="search product" :value="$request->name">
+                                        <input type="text" name="name" placeholder="{{__('Name')}}" :value="$request->name">
                                     </div>
                                     <div class="search-input">
-                                        <input type="text" name="price" placeholder="filter by price" :value="$request->price">
+                                        <input type="text" name="price" placeholder="{{__('Price')}}" :value="$request->price">
                                     </div>
                                     <div class="search-btn">
                                         <button type="submit"><i class="lni lni-search-alt"></i></button>
@@ -202,33 +211,30 @@
                             <span class="cat-button"><i class="lni lni-menu"></i>{{ __('All Categories') }}</span>
                             <ul class="sub-category">
                                 @foreach ($category as $category)
-                                    <li>
-                                        <a href="{{ route('category.show', $category->slug) }}">
-                                            {{ $category->name }}
-                                            @if ($category->children->isNotEmpty())
-                                                <i class="lni lni-chevron-right"></i>
-                                            @endif
-                                        </a>
+                                <li>
+                                    <a href="{{ route('category.show', $category->slug) }}">
+                                        {{ $category->name }}
                                         @if ($category->children->isNotEmpty())
-                                            <ul class="inner-sub-category">
-                                                @foreach ($category->children as $chiled)
-                                                    <li>
-                                                        <a
-                                                            href="{{ route('category.show', $chiled->slug) }}">{{ $chiled->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                        <i class="lni lni-chevron-right"></i>
                                         @endif
-                                    </li>
+                                    </a>
+                                    @if ($category->children->isNotEmpty())
+                                    <ul class="inner-sub-category">
+                                        @foreach ($category->children as $chiled)
+                                        <li>
+                                            <a href="{{ route('category.show', $chiled->slug) }}">{{ $chiled->name }}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                                </li>
                                 @endforeach
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
                         <!-- Start Navbar -->
                         <nav class="navbar navbar-expand-lg">
-                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="toggler-icon"></span>
                                 <span class="toggler-icon"></span>
                                 <span class="toggler-icon"></span>
@@ -248,8 +254,7 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{ route('contact') }}"
-                                            aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
+                                        <a href="{{ route('contact') }}" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -317,11 +322,9 @@
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}"
-                                            type="email">
+                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}" type="email">
                                         <div class="button">
-                                            <button class="btn">{{ __('Subscribe') }}<span
-                                                    class="dir-part"></span></button>
+                                            <button class="btn">{{ __('Subscribe') }}<span class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>
@@ -418,14 +421,12 @@
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
                                 <span>{{ __('We Accept:') }}</span>
-                                <img src="{{ asset('assets/images/footer/credit-cards-footer.png') }}"
-                                    alt="#">
+                                <img src="{{ asset('assets/images/footer/credit-cards-footer.png') }}" alt="#">
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>Developed by<a href="#" rel="nofollow"
-                                        target="_blank">{{ config('app.app-developer') }}</a></p>
+                                <p>Developed by<a href="#" rel="nofollow" target="_blank">{{ config('app.app-developer') }}</a></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -459,7 +460,6 @@
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
-
         $('.close-alert').on('click', function() {
             $('.alert').hide();
         });

@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index (Request $request) {
+    public function index(Request $request)
+    {
         $products = Product::filter($request->all())->active()->latest()->paginate(12);
         return view('front.products.index', compact('products'));
     }
 
-    public function show (Product $product) {
+    public function show(Product $product)
+    {
         if ($product->status != 'active') {
             abort(404);
         }
@@ -29,10 +31,8 @@ class ProductController extends Controller
 
     public function sortProducts(Request $request)
     {
-        dd("You are Here baba!");
         $selectedCriteria = $request->input('criteria');
         // $products = Product::orderBy($selectedCriteria)->paginate();
-        dd($selectedCriteria);
 
         switch ($selectedCriteria) {
             case 'low_high':

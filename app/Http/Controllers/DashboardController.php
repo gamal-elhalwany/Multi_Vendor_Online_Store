@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         $user = Auth::user();
-        if ($user->hasAnyRole('admin', 'super-admin', 'owner', 'editor')) {
+        if ($user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
             return view('dashboard.index');
+        } else {
+            return redirect()->route('home');
         }
-        return redirect()->route('home');
     }
 }

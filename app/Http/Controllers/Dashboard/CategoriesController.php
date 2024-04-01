@@ -13,13 +13,14 @@ class CategoriesController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:category-list', ['only' => ['index']]);
-        $this->middleware('permission:category-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:category-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:category-delete', ['only' => ['show', 'delete', 'restore', 'trash', 'forceDelete']]);
+        $this->middleware('permission:list-category', ['only' => ['index']]);
+        $this->middleware('permission:create-category', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-category', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-category', ['only' => ['show', 'delete', 'restore', 'trash', 'forceDelete']]);
     }
 
-    protected function uploadImage (Request $request) {
+    protected function uploadImage(Request $request)
+    {
         // You Have to run this command first to make the laravel storage linked with the public path:php artisan storage:link
 
         if (!$request->hasFile('image')) {
@@ -46,16 +47,16 @@ class CategoriesController extends Controller
 
         // this filter() method is the name of the Scope of Category Model.
         $categories = Category::filter($request->all())->orderby('name')
-        // this parent value is coming from the Model Category public function parent that makes the relationship.
-        ->with('children')
-        ->withCount([
-            'products'
-            //Comment:- this goes when you want to get a specific rows with specific conditions.
-            // 'products' => function ($query) {
-            //     $query->where('status', '=', 'archived');
-            // }
-        ])
-        ->paginate();
+            // this parent value is coming from the Model Category public function parent that makes the relationship.
+            ->with('children')
+            ->withCount([
+                'products'
+                //Comment:- this goes when you want to get a specific rows with specific conditions.
+                // 'products' => function ($query) {
+                //     $query->where('status', '=', 'archived');
+                // }
+            ])
+            ->paginate();
 
         return view('dashboard.categories.index', compact('categories'));
     }
@@ -148,15 +149,17 @@ class CategoriesController extends Controller
     /**
      * View Trashed Categories.
      */
-    public function trash () {
+    public function trash()
+    {
         $categories = Category::onlyTrashed()->paginate();
-        return view('dashboard.categories.trash',compact('categories'));
+        return view('dashboard.categories.trash', compact('categories'));
     }
 
     /**
      * Restore a specific category.
      */
-    public function restore (Request $request, $id) {
+    public function restore(Request $request, $id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
 
@@ -166,7 +169,8 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from categories table forever called [force-delete].
      */
-    public function forceDelete (Request $request, $id) {
+    public function forceDelete(Request $request, $id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
 

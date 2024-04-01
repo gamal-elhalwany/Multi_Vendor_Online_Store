@@ -13,12 +13,12 @@ class ProductsController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:product-list', ['only' => ['index']]);
-        $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:product-show', ['only' => ['show']]);
-        $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:product-create', ['only' => ['createSlider', 'storeSlider']]);
+        $this->middleware('permission:list-product', ['only' => ['index']]);
+        $this->middleware('permission:create-product', ['only' => ['create', 'store']]);
+        $this->middleware('permission:show-product', ['only' => ['show']]);
+        $this->middleware('permission:edit-product', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-product', ['only' => ['destroy']]);
+        $this->middleware('permission:create-product', ['only' => ['createSlider', 'storeSlider']]);
     }
 
     /**
@@ -115,17 +115,17 @@ class ProductsController extends Controller
         //
     }
 
-    public function createSlider ()
+    public function createSlider()
     {
-        return view ('dashboard.products.slider');
+        return view('dashboard.products.slider');
     }
 
-    public function storeSlider (Request $request)
+    public function storeSlider(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:5',
-            'image' => 'required|mimes:png',
+            'image' => 'required|mimes:png,jpg',
             'price' => 'required',
         ]);
 

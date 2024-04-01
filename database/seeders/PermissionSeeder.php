@@ -19,35 +19,35 @@ class PermissionSeeder extends Seeder
         $permissions = [
             'No Permissions',
 
-            'role-list',
-            'role-create',
-            'role-show',
-            'role-edit',
-            'role-delete',
+            'list-role',
+            'create-role',
+            'show-role',
+            'edit-role',
+            'delete-role',
 
-            'product-list',
-            'product-create',
-            'product-show',
-            'product-edit',
-            'product-delete',
+            'list-product',
+            'create-product',
+            'show-product',
+            'edit-product',
+            'delete-product',
 
-            'category-list',
-            'category-create',
-            'category-show',
-            'category-edit',
-            'category-delete',
+            'list-category',
+            'create-category',
+            'show-category',
+            'edit-category',
+            'delete-category',
 
-            'order-list',
-            'order-create',
-            'order-show',
-            'order-edit',
-            'order-delete',
+            'list-order',
+            'create-order',
+            'show-order',
+            'edit-order',
+            'delete-order',
 
-            'admin-list',
-            'admin-create',
-            'admin-show',
-            'admin-edit',
-            'admin-delete',
+            'list-admin',
+            'create-admin',
+            'show-admin',
+            'edit-admin',
+            'delete-admin',
 
             'list-editor',
             'create-editor',
@@ -55,17 +55,17 @@ class PermissionSeeder extends Seeder
             'edit-editor',
             'delete-editor',
 
-            'user-list',
-            'user-create',
-            'user-show',
-            'user-edit',
-            'user-delete',
-         ];
+            'list-user',
+            'create-user',
+            'show-user',
+            'edit-user',
+            'delete-user',
+        ];
 
-         foreach ($permissions as $permission) {
-             $thePermission = Permission::firstOrCreate(['name' => $permission]);
+        foreach ($permissions as $permission) {
+            $thePermission = Permission::firstOrCreate(['name' => $permission]);
             //  $thePermission->guard(['web', 'api', 'admin']);
-         }
+        }
 
         // Assign permissions to roles
         // $owner = Role::firstOrCreate(['name' => 'Owner']);

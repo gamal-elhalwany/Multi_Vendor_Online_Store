@@ -7,17 +7,13 @@
                     <div class="slider-head">
                         <!-- Start Hero Slider -->
                         <div class="tns-outer" id="tns1-ow">
-                            <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button
-                                    type="button" data-controls="prev" tabindex="-1" aria-controls="tns1"><i
-                                        class="lni lni-chevron-left"></i></button><button type="button"
-                                    data-controls="next" tabindex="-1" aria-controls="tns1"><i
-                                        class="lni lni-chevron-right"></i></button></div>
+                            <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button type="button" data-controls="prev" tabindex="-1" aria-controls="tns1"><i class="lni lni-chevron-left"></i></button><button type="button" data-controls="next" tabindex="-1" aria-controls="tns1"><i class="lni lni-chevron-right"></i></button></div>
                             <div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide
-                                <span class="current">4</span> of 2</div>
+                                <span class="current">4</span> of 2
+                            </div>
                             <div id="tns1-mw" class="tns-ovh">
                                 <div class="tns-inner" id="tns1-iw">
-                                    <div class="hero-slider  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" id="tns1"
-                                        style="transform: translate3d(-50%, 0px, 0px); transition-duration: 0s;">
+                                    <div class="hero-slider  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" id="tns1" style="transform: translate3d(-50%, 0px, 0px); transition-duration: 0s;">
                                         @foreach ($sliders as $slider)
                                         <div class="single-slider tns-item tns-slide-cloned" style="background-image: url({{ asset("storage/$slider->image") }});" aria-hidden="true" tabindex="-1">
                                             <div class="content">
@@ -26,7 +22,8 @@
                                                     {{ $slider->title }}
                                                 </h2>
                                                 <p>{{ $slider->description }}</p>
-                                                <h3><span>Now Only</span> {{ CurrencyFormat::format($slider->price) }}</h3>
+                                                <h3><span>Now Only</span> {{ CurrencyFormat::format($slider->price) }}
+                                                </h3>
                                                 <div class="button">
                                                     <a href="#trending-products" class="btn">{{ __('Shop Now') }}</a>
                                                 </div>
@@ -44,8 +41,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
                             <!-- Start Small Banner -->
-                            <div class="hero-small-banner"
-                                style="background-image: url('assets/images/hero/slider-bnr.jpg');">
+                            <div class="hero-small-banner" style="background-image: url('assets/images/hero/slider-bnr.jpg');">
                                 <div class="content">
                                     <h2>
                                         <span>New line required</span>
@@ -101,8 +97,7 @@
                             <li><a href="product-grids.html">View All</a></li>
                         </ul>
                         <div class="images">
-                            <img src="{{ asset('assets/images/featured-categories/fetured-item-1.png') }}"
-                                alt="#">
+                            <img src="{{ asset('assets/images/featured-categories/fetured-item-1.png') }}" alt="#">
                         </div>
                     </div>
                     <!-- End Single Category -->
@@ -211,13 +206,13 @@
             </div>
             <div class="row">
                 @forelse ($products as $product)
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <!-- Start Single Product -->
-                        <x-product-card :product="$product" />
-                        <!-- End Single Product -->
-                    </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <x-product-card :product="$product" />
+                    <!-- End Single Product -->
+                </div>
                 @empty
-                    <div class="alert alert-danger text-center mt-5">No products found!</div>
+                <div class="alert alert-danger text-center mt-5">No products found!</div>
                 @endforelse
             </div>
         </div>
@@ -240,8 +235,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner custom-responsive-margin"
-                        style="background-image:url('assets/images/banner/banner-2-bg.jpg')">
+                    <div class="single-banner custom-responsive-margin" style="background-image:url('assets/images/banner/banner-2-bg.jpg')">
                         <div class="content">
                             <h2>Smart Headphone</h2>
                             <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor

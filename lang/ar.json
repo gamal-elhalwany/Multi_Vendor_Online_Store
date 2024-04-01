@@ -20,7 +20,7 @@
     "Copyright © 2020": "جميع الحقوق محفوظة",
     "Get In Touch With Us": "تواصل معنا",
     "Information": "معلومات",
-    "Name": "الاسم",
+    "Name": "الأسم",
     "Email": "البريد الالكتروني",
     "Subject": "الموضوع",
     "Message": "الرسالة",
@@ -154,5 +154,6 @@
     "New Products": "منتجات جديدة",
     "Best Sellers": "أفضل المبيعات",
     "Top Rated": "الأعلى المرتبة",
-    "Top Selling": "أفضل البيع"
+    "Top Selling": "أفضل البيع",
+    "Dashboard": "لوحة التحكم"
 }

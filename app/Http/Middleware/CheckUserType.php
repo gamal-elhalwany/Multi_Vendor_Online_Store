@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class CheckUserType
 {
@@ -17,7 +16,7 @@ class CheckUserType
     {
         $user = $request->user();
 
-        // These Codes Hashed Becaus Case Changed.
+        // These Codes Hashed Becaus We Used the Spatie Permissions Instead of Multi guards.
         // if (!$user) {
         //     return redirect()->route('login');
         // }
@@ -26,10 +25,9 @@ class CheckUserType
         //     return redirect()->route('home');
         // }
 
-        if ($user && $user->hasAnyRole('owner', 'super-admin', 'admin', 'editor')) {
-            return redirect()->route('dashboard');
-        }
-        return $next($request);
-
+        // if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+        //     return redirect()->route('dashboard');
+        // }
+        // return $next($request);
     }
 }
