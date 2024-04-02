@@ -27,16 +27,44 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
+                    <a href="" class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active-link' : '' }}">
                         <i class="fab fas fa-list nav-icon"></i>
                         <p>Orders</p>
                     </a>
                 </li>
+
+                <li class="nav-item menu-open">
+                    <a href="{{ route('roles.index') }}"
+                        class="nav-link {{ request()->is('admin/roles*') ? 'active-link' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Roles
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('roles.index') }}"
+                                class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}">
+                                <i class="fab fas fa-list nav-icon"></i>
+                                <p>All Roles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('roles.create') }}"
+                                class="nav-link {{ request()->is('admin/roles/create') ? 'active' : '' }}">
+                                <i class="fab fas fa-list nav-icon"></i>
+                                <p>Create Role</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}"
                         class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
                         <i class="fab fas fa-users nav-icon"></i>
-                        <p>Show Users</p>
+                        <p>All Users</p>
                     </a>
                 </li>
                 <li class="nav-item">
