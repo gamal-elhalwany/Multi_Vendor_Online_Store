@@ -33,12 +33,13 @@
                     </a>
                 </li>
 
+                @if(Auth::user()->hasAnyRole('Owner', "Super-admin"))
                 <li class="nav-item menu-open">
                     <a href="{{ route('roles.index') }}"
                         class="nav-link {{ request()->is('admin/roles*') ? 'active-link' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Roles
+                            {{ __('Roles') }}
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -59,6 +60,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}"
