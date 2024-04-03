@@ -22,10 +22,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
 
     <style>
-        .active-link {
-            background-color: #007bff;
-            color: #fff !important;
-        }
+    .active-link {
+        background-color: #007bff;
+        color: #fff !important;
+    }
     </style>
 </head>
 
@@ -37,8 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">Home</a>
@@ -46,6 +45,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="background: none; color:gray; border:none; margin-top:1px">
+                        {{ __('Language') }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode =>
+                        $properties)
+                        <li style="margin:10px;">
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </div>
+                </div>
+
             </ul>
 
             <!-- Right navbar links -->
@@ -143,8 +162,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"
-                        role="button">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
@@ -165,19 +183,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 @auth
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                                alt="User Image">
-                        </div>
-                        <div class="info">
-                            <a href="{{ route('dashboard.profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-primary m-3">Logout</button>
-                            </form>
-                        </div>
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                            alt="User Image">
                     </div>
+                    <div class="info">
+                        <a href="{{ route('dashboard.profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-primary m-3">Logout</button>
+                        </form>
+                    </div>
+                </div>
                 @endauth
 
                 <!-- SidebarSearch Form -->
@@ -212,7 +230,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @section('breadcrumb')
-                                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                                <li class="breadcrumb-item"><a href="">Home</a></li>
                                 @show
                             </ol>
                         </div><!-- /.col -->
@@ -268,25 +286,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Custom Script -->
     <script>
-        $('.close-alert').on('click', function() {
-            $('.alert').hide();
-        });
+    $('.close-alert').on('click', function() {
+        $('.alert').hide();
+    });
 
-        // This is for making some tags to products with a package.
-        var inputElm = document.querySelector('[name=tags]'),
-        tagify = new Tagify (inputElm);
+    // This is for making some tags to products with a package.
+    var inputElm = document.querySelector('[name=tags]'),
+        tagify = new Tagify(inputElm);
 
-        const userID = "{{ Auth::id() }}";
+    const userID = "{{ Auth::id() }}";
     </script>
 
     {{-- this is for check all checkboxes --}}
     <script>
-        document.getElementById('checkAll').addEventListener('change', function () {
-            var checkboxes = document.querySelectorAll('.check-list');
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = this.checked;
-            }
-        });
+    document.getElementById('checkAll').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('.check-list');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+        }
+    });
     </script>
 
     <script type="module" src="{{ asset('js/notification.js') }}"></script>

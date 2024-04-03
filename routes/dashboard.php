@@ -7,17 +7,18 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::group(
     // ['middleware' => ['auth', 'auth.type:super-admin,admin'], // This if you want to use the normal users table with the roles column that has user types.
     [
-        'middleware' => ['auth'],
-        'prefix' => 'admin'
+        'middleware' => ['auth', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+        'prefix' => 'admin', LaravelLocalization::setLocale()
     ],
     function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])->prefix(LaravelLocalization::setLocale());
 
         Route::get('dashboard/categories/trash', [CategoriesController::class, 'trash'])->name('categories.trash');
 
