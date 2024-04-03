@@ -15,7 +15,7 @@
                 <li class="nav-item">
                     <a href="{{ route('categories.index') }}"
                         class="nav-link {{ request()->is('admin/dashboard/categories*') ? 'active-link' : '' }}">
-                        <i class="far fa-list-alt nav-icon"></i>
+                        <i class="fa fa-list nav-icon"></i>
                         <p>Categories</p>
                     </a>
                 </li>
@@ -48,13 +48,13 @@
                             <a href="{{ route('roles.index') }}"
                                 class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}">
                                 <i class="fab fas fa-list nav-icon"></i>
-                                <p>All Roles</p>
+                                <p>{{ __('All Roles') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('roles.create') }}"
                                 class="nav-link {{ request()->is('admin/roles/create') ? 'active' : '' }}">
-                                <i class="fab fas fa-list nav-icon"></i>
+                                <i class="fa fa-square-plus"></i>
                                 <p>Create Role</p>
                             </a>
                         </li>
@@ -62,20 +62,35 @@
                 </li>
                 @endif
 
-                <li class="nav-item">
+                @if(Auth::user()->hasAnyRole('Owner', "Super-admin"))
+                <li class="nav-item menu-open">
                     <a href="{{ route('users.index') }}"
-                        class="nav-link {{ request()->is('admin/dashboard/order*') ? 'active' : '' }}">
-                        <i class="fab fas fa-users nav-icon"></i>
-                        <p>All Users</p>
+                        class="nav-link {{ request()->is('admin/users*') ? 'active-link' : '' }}">
+                        <i class="fas fa-layer-group"></i>
+                        <p>
+                            {{ __('Users') }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}"
+                                class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}">
+                                <i class="fab fas fa-users nav-icon"></i>
+                                <p>{{ __('All Users') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('users.create') }}"
+                                class="nav-link {{ request()->is('admin/users/create') ? 'active' : '' }}">
+                                <i class="fab fas fa-user nav-icon"></i>
+                                <p>Create User</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.create') }}"
-                        class="nav-link {{ request()->is('admin/dashboard/create-user*') ? 'active' : '' }}">
-                        <i class="fab fas fa-user nav-icon"></i>
-                        <p>Create User</p>
-                    </a>
-                </li>
+                @endif
+
                 <li class="nav-item">
                     <a href="{{ route('slider.create') }}"
                         class="nav-link {{ request()->is('admin/dashboard/create-slider*') ? 'active-link' : '' }}">

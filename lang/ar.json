@@ -156,5 +156,10 @@
     "Top Rated": "الأعلى المرتبة",
     "Top Selling": "أفضل البيع",
     "Dashboard": "لوحة التحكم",
-    "Roles": "الأدوار"
+    "Roles": "الأدوار",
+    "All Roles": "كل الأدوار",
+    "Add New Role": "أضافة دور جديد",
+    "Users": "المستخدمين",
+    "Manage Users": "إدارة المستخدمين",
+    "Create  User": "إنشاء مستخدم"
 }

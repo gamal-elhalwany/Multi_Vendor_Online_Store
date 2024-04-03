@@ -74,12 +74,13 @@ class Product extends Model
         });
     }
 
-    public function scopeFilter (Builder $builder, $filters) {
-        $builder->when($filters['name'] ?? false, function($builder, $name) {
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $builder->when($filters['name'] ?? false, function ($builder, $name) {
             $builder->where('name', 'LIKE', "%$name%");
         });
 
-        $builder->when($filters['price'] ?? false, function($builder, $price) {
+        $builder->when($filters['price'] ?? false, function ($builder, $price) {
             $builder->where('price', 'LIKE', "%$price%");
         });
     }
