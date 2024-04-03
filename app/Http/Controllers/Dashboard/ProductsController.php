@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\HeroSlider;
-use App\Models\Product;
 use App\Models\Tag;
-use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\HeroSlider;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use App\Models\Store;
 
 class ProductsController extends Controller
 {
@@ -53,7 +55,16 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'          => ['required', 'min:3', 'max:100'],
+            'descirption'   => ['required', 'min:100', 'max:255'],
+            'price'         => ['required', 'numeric'],
+            'category'   => ['required', 'nullable', Rule::exists('categories', 'id')],
+            'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
+            'compare_price' => ['numeric'],
+            'store'      =>  'required|string|exists:stores,name',
+            'tags'      =>   'string|min:3|max:15',
+        ]);
     }
 
     /**
@@ -82,7 +93,15 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([]);
+        $request->validate([
+            'name'          => ['required', 'min:3', 'max:100'],
+            'descirption'   => ['required', 'min:100', 'max:255'],
+            'price'         => ['required', 'numeric'],
+            'category'   => ['required', 'nullable', Rule::exists('categories', 'id')],
+            'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
+            'compare_price' => ['numeric'],
+            'store'      =>  'required|string|exists:stores,name',
+        ]);
 
         $product->update($request->except('tags'));
 
