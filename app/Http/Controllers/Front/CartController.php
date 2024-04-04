@@ -49,14 +49,16 @@ class CartController extends Controller
     public function update(Request $request, CartRepository $cart)
     {
         //Comment:- By using this variable $cart you are using the services container.
-        $request->validate([
-            'product_id' => 'required|int|exists:products,id',
-            'quantity' => 'required|int|min:1',
-        ]);
+        // $request->validate([
+        //     'product_id' => 'required|int|exists:products,id',
+        //     'quantity' => 'required|int|min:1',
+        // ]);
 
         $product = Product::findOrFail($request->post('product_id'));
+        $quantity = $request->post('quantity');
 
-        $cart->update($product, $request->post('quantity'));
+        $cart->update($product, $quantity);
+        return redirect()->back(302)->with('success', "The quantity of {$product->name} has been updated!");
     }
 
     /**

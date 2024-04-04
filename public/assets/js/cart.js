@@ -1,23 +1,22 @@
 (function ($) {
 
-    $('.item-qty').on('change', function (e) {
-        var $product_id = $('#product_id');
-
+    $('.item-qty').on('change', function () {
+        let product_id = $(this).data("id");
+        let token = $('#x-csrf').val();
+        let totalCartPrice = $('.totalCartPrice').val();
+        let productPrice = $('.product_price').val();
         $.ajax({
-            url: "/cart/" + $(this).data('id'),
-            method: "put",
+            url: "/cart/" + product_id,
+            type: 'put',
             data: {
-                quantity: $(this).val(),
-                product_id: $product_id.val(),
-                _token: $('#x-csrf').val(),
+                product_id: product_id,
+                quantity: this.value,
+                _token: token,
             },
-            success: function(response) {
-                let totalCartPrice =  $('.item-qty').val() * $('.product_price').val();
-
-                $('.totalCartPrice').data('id').text(
-                    Math.round(totalCartPrice, 2),
-                );
-            },
+            success: function () {
+                $total = quantity * productPrice;
+                $('.totalCartPrice').text(total);
+            }
         });
     });
 
