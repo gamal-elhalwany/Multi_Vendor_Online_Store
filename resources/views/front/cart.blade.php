@@ -56,7 +56,8 @@
                 <div class="cart-single-list" id="{{ $cart->id }}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
-                            <a href="{{ route('product.show', $cart->product->slug) }}"><img src="{{ $cart->product->image_url }}" alt="#"></a>
+                            <a href="{{ route('product.show', $cart->product->slug) }}"><img
+                                    src="{{ $cart->product->image_url }}" alt="#"></a>
                         </div>
                         <div class="col-lg-4 col-md-3 col-12">
                             <h5 class="product-name">
@@ -71,7 +72,8 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <input class="form-control item-qty" data-id="{{ $cart->id }}" value="{{ $cart->quantity }}" name="quantity">
+                                <input class="form-control item-qty" data-id="{{ $cart->product_id }}"
+                                    value="{{ $cart->quantity }}" name="quantity">
                                 <input type="hidden" class="product_id" id="product_id" value="{{ $cart->product_id }}">
                                 <input type="hidden" class="product_price" value="{{ $cart->product->price }}">
                                 <input type="hidden" id="x-csrf" value="{{ csrf_token() }}">
@@ -87,7 +89,8 @@
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
                             <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                            <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)"><i class="lni lni-close"></i></a>
+                            <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)"><i
+                                    class="lni lni-close"></i></a>
                         </div>
                     </div>
                 </div>
