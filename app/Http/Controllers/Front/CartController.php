@@ -58,7 +58,12 @@ class CartController extends Controller
         $quantity = $request->post('quantity');
 
         $cart->update($product, $quantity);
-        return redirect()->back(302)->with('success', "The quantity of {$product->name} has been updated!");
+        if ($request->expectsJson()) {
+            return [
+                'message' => 'Quantity updated successfully!',
+            ];
+        }
+        return redirect()->back()->with('success', "The quantity of {$product->name} has been updated!");
     }
 
     /**

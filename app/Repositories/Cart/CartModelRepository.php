@@ -15,14 +15,13 @@ class CartModelRepository implements CartRepository
     {
         $authID = auth()->id();
         return Cart::with('product')
-        ->where('cookie_id', '=', $this->getCookieId())
-        ->where('user_id', '=', $authID)->get();
+            ->where('user_id', '=', $authID)->get();
     }
 
     public function add(Product $product, $quantity = 1)
     {
         $item = Cart::where('product_id', '=', $product->id)
-        ->where('cookie_id', '=', $this->getCookieId())->first();
+            ->where('cookie_id', '=', $this->getCookieId())->first();
 
         if (!$item) {
             return Cart::create([
@@ -39,18 +38,18 @@ class CartModelRepository implements CartRepository
     {
         $authID = auth()->id();
         return Cart::where('product_id', '=', $product->id)
-        ->where('cookie_id', '=', $this->getCookieId())
-        ->where('user_id', '=', $authID)
-        ->update([
-            'quantity' => $quantity,
-        ]);
+            ->where('user_id', '=', $authID)
+            ->update([
+                'quantity' => $quantity,
+            ]);
     }
 
     public function delete($id)
     {
+        $authID = auth()->id();
         return Cart::where('id', '=', $id)
-        ->where('cookie_id', '=', $this->getCookieId())
-        ->delete();
+            ->where('user_id', '=', $authID)
+            ->delete();
     }
 
     public function empty()
@@ -60,10 +59,12 @@ class CartModelRepository implements CartRepository
 
     public function total($quantity): float
     {
-       return (float) Cart::where('cookie_id', '=', $this->getCookieId())->join('products', 'products.id', '=', 'carts.product_id')->selectRaw('SUM(products.price * carts.quantity) as total')->value('total');
+        $authID = auth()->id();
+        return (float) Cart::where('user_id', '=', $authID)->join('products', 'products.id', '=', 'carts.product_id')->selectRaw('SUM(products.price * carts.quantity) as total')->value('total');
     }
 
-    protected function getCookieId () {
+    protected function getCookieId()
+    {
         $cookie_id = Cookie::get('cart_id');
         if (!$cookie_id) {
             $cookie_id = Str::uuid();

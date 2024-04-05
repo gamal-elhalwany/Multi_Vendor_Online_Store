@@ -1,12 +1,13 @@
 (function ($) {
 
     $('.item-qty').on('change', function () {
-        let product_id = $(this).data("id");
+        let cartID = $(this).data('id');
+        let product_id = $('#product_id').val();
         let token = $('#x-csrf').val();
-        let totalCartPrice = $('.totalCartPrice').val();
+        let totalCartPrice = $('.totalCartPrice');
         let productPrice = $('.product_price').val();
         $.ajax({
-            url: "/cart/" + product_id,
+            url: "/cart/" + cartID,
             type: 'put',
             data: {
                 product_id: product_id,
@@ -14,8 +15,10 @@
                 _token: token,
             },
             success: function () {
-                $total = quantity * productPrice;
-                $('.totalCartPrice').text(total);
+                let priceNumber = productPrice * $('.item-qty').val();
+                let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+                totalCartPrice.text(priceNumber.toLocaleString(undefined, options));
+                console.log($('.item-qty').val());
             }
         });
     });
