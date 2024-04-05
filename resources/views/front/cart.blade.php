@@ -72,9 +72,16 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <input class="form-control item-qty" data-id="{{ $cart->product_id }}"
+                                <input class="form-control item-qty" data-id="{{ $cart->id }}"
                                     value="{{ $cart->quantity }}" name="quantity">
-                                <input type="hidden" class="product_id" id="product_id" value="{{ $cart->product_id }}">
+                                @error('quantity')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                <input type="hidden" class="product_id" name="productID" id="product_id"
+                                    value="{{ $cart->product_id }}">
+                                @error('productID')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                                 <input type="hidden" class="product_price" value="{{ $cart->product->price }}">
                                 <input type="hidden" id="x-csrf" value="{{ csrf_token() }}">
                             </div>

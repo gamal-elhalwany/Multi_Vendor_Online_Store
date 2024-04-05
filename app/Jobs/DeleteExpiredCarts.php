@@ -28,6 +28,6 @@ class DeleteExpiredCarts implements ShouldQueue
     public function handle(): void
     {
         // When you create a job you have to declare it into the kernel file that will be in the console directory.
-        Cart::whereDate('created_at', '<', now()->subDays(6))->delete();
+        Cart::whereDate('created_at', '>', now()->subDays(6))->delete();
     }
 }
