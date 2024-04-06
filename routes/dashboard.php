@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\CouponController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -36,8 +37,11 @@ Route::group(
         Route::get('dashboard/create-slider', [ProductsController::class, 'createSlider'])->name('slider.create');
         Route::post('dashboard/create-slider', [ProductsController::class, 'storeSlider'])->name('slider.store');
 
-        // These Routes of Spatie Package.
+        // These Routes of Spatie Permission Package.
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
+
+        // Counpons Discount Codes Routes.
+        Route::resource('/dashboard/coupons', CouponController::class);
     }
 );
