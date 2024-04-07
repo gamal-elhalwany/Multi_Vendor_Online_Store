@@ -31,17 +31,24 @@ class User extends Authenticatable
         'provider_token',
     ];
 
-    public function profile () {
+    public function profile()
+    {
         return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault();
     }
 
-    public function carts () {
+    public function carts()
+    {
         return $this->hasMany(Cart::class);
     }
 
-    public function orders ()
+    public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
     }
 
     /**

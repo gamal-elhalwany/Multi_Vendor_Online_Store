@@ -10,11 +10,23 @@ class Store extends Model
 {
     use HasFactory, Notifiable;
 
-    public function products () {
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 
-    public function orders () {
+    public function orders()
+    {
         return $this->hasMany(Order::class);
+    }
+
+    public function coupon()
+    {
+        return $this->hasMany(Coupon::class);
     }
 }
