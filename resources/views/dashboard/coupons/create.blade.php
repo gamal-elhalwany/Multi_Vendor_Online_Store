@@ -51,7 +51,9 @@
             <div class="form-group">
                 <strong>Store:</strong>
                 <select name="store_id" class="form-control">
-                    <option value="">Store Name</option>
+                    @foreach($stores as $store)
+                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -110,7 +112,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
-            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Create Coupon</button>
+            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Create a New Coupon</button>
         </div>
     </div>
 </form>

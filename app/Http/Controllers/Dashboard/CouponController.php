@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 
 class CouponController extends Controller
 {
@@ -13,7 +14,16 @@ class CouponController extends Controller
      */
     public function index()
     {
-        return view('dashboard.coupons.index');
+        $user = auth()->user();
+        $coupons = Coupon::with('stores')->get();
+        // $storesWithCoupons = Store::with('coupon')->get();
+
+        // dd($stores);
+
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            return view('dashboard.coupons.index', compact('coupons'));
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -22,8 +32,9 @@ class CouponController extends Controller
     public function create()
     {
         $user = auth()->user();
+        $stores = Store::where('user_id', '=', $user->id)->get();
         if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
-            return view('dashboard.coupons.create');
+            return view('dashboard.coupons.create', compact('stores'));
         }
         return redirect(route('login'));
     }
@@ -42,11 +53,11 @@ class CouponController extends Controller
             'user_max_uses' => ['required', 'numeric'],
             'status' => ['nullable'],
             'start_at' => ['required', 'date', 'after_or_equal:today'],
-            'end_at' => ['required', 'date', 'after:start_at', 'nullable'],
+            'end_at' => ['required', 'date', 'after:start_at'],
         ]);
 
         $counpon = Coupon::create($request->all());
-        return redirect()->route('coupon.index');
+        return redirect()->route('coupons.index')->with('success', 'Coupon is successfully added!');
     }
 
     /**

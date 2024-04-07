@@ -9,4 +9,9 @@ class Coupon extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function stores()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }
