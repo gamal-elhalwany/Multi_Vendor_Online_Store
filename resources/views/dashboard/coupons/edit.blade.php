@@ -1,10 +1,10 @@
 @extends('layouts.dashboardLayout')
 
-@section('title', 'Create Counpons')
+@section('title', 'Edit Counpon')
 
 @section('breadcrumb')
 @parent
-<li class="breadcrumb-item active">Create Counpons</li>
+<li class="breadcrumb-item active">Edit Counpon</li>
 @endsection
 
 
@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Create a New Coupon</h2>
+            <h2>Edit Coupon</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('coupons.index') }}"> Back </a>
@@ -38,13 +38,13 @@
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Name:</strong>
-                <input type="text" name="code" placeholder="Counpon Code" class="form-control" />
+                <input type="text" name="code" value="{{ $coupon->code }}" class="form-control" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Name:</strong>
-                <input type="text" name="name" placeholder="Counpon name" class="form-control" />
+                <input type="text" name="name" value="{{ $coupon->name }}" class="form-control" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
@@ -60,13 +60,13 @@
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Max Uses:</strong>
-                <input type="number" name="max_uses" placeholder="Coupon Max Uses" class="form-control" />
+                <input type="number" name="max_uses" value="{{ $coupon->max_uses }}" class="form-control" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>User Max Uses:</strong>
-                <input type="number" name="user_max_uses" placeholder="User Max Uses" class="form-control" />
+                <input type="number" name="user_max_uses" value="{{ $coupon->user_max_uses }}" class="form-control" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
@@ -81,25 +81,25 @@
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Discount Amount:</strong>
-                <input type="text" placeholder="discount amount" class="form-control" name="discount_amount" />
+                <input type="text" value="{{ $coupon->discount_amount }}" class="form-control" name="discount_amount" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Min Amount:</strong>
-                <input type="text" placeholder="Min amount" class="form-control" name="min_amount" />
+                <input type="text" value="{{ $coupon->min_amount }}" class="form-control" name="min_amount" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>Start Date:</strong>
-                <input type="date" class="form-control" name="start_at" placeholder="Starts at" />
+                <input type="date" class="form-control" name="start_at" value="{{ $coupon->start_at }}" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
                 <strong>End Date:</strong>
-                <input type="date" class="form-control" name="end_at" placeholder="Ends at" />
+                <input type="date" class="form-control" name="end_at" value="{{ $coupon->end_at }}" />
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
-            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Create a New Coupon</button>
+            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Edit Coupon</button>
         </div>
     </div>
 </form>

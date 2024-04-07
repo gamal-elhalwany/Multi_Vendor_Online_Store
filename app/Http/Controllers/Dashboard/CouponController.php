@@ -6,6 +6,7 @@ use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
+use PHPUnit\Framework\Constraint\Count;
 
 class CouponController extends Controller
 {
@@ -16,9 +17,6 @@ class CouponController extends Controller
     {
         $user = auth()->user();
         $coupons = Coupon::with('stores')->get();
-        // $storesWithCoupons = Store::with('coupon')->get();
-
-        // dd($stores);
 
         if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
             return view('dashboard.coupons.index', compact('coupons'));
@@ -49,9 +47,10 @@ class CouponController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'type' => ['required', 'in:persentage,fixed'],
             'store_id' => ['required', 'exists:stores,id'],
+            'user_id' => ['required', 'exists:users,id'],
             'max_uses' => ['required', 'numeric'],
             'user_max_uses' => ['required', 'numeric'],
-            'status' => ['nullable'],
+            'status' => ['required'],
             'start_at' => ['required', 'date', 'after_or_equal:today'],
             'end_at' => ['required', 'date', 'after:start_at'],
         ]);
@@ -73,7 +72,13 @@ class CouponController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = auth()->user();
+        $stores = Store::where('user_id', '=', $user->id)->get();
+        $coupon = Coupon::findOrFail($id);
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin')) {
+            return view('dashboard.coupons.edit', compact('stores', 'coupon'));
+        }
+        return redirect(route('login'));
     }
 
     /**
@@ -89,6 +94,12 @@ class CouponController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin')) {
+            $coupon = Coupon::findOrFail($id);
+            $coupon->delete();
+            return redirect(route('coupons.index'))->with('success', "The coupon has been deleted!");
+        }
+        return redirect(route('login'));
     }
 }
