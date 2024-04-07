@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Store::class);
     }
 
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
