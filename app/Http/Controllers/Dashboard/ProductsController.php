@@ -97,9 +97,9 @@ class ProductsController extends Controller
             'name'          => ['required', 'min:3', 'max:100'],
             'descirption'   => ['required', 'min:100', 'max:255'],
             'price'         => ['required', 'numeric'],
-            'category'   => ['required', 'nullable', Rule::exists('categories', 'id')],
+            'category'   => ['required', Rule::exists('categories', 'id')],
             'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
-            'compare_price' => ['numeric'],
+            'compare_price' => ['numeric', 'nullable'],
             'store'      =>  'required|string|exists:stores,name',
         ]);
 

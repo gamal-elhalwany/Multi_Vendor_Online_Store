@@ -32,8 +32,9 @@
 </div>
 @endif
 
-<form action="{{ route('coupons.store') }}" method="POST">
+<form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
     @csrf
+    @method('PUT')
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
@@ -117,7 +118,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-8 offset-md-2 text-center">
-            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Edit Coupon</button>
+            <button type="submit" class="btn btn-primary form-control mb-4 mt-4">Update Coupon</button>
         </div>
     </div>
 </form>

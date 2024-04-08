@@ -55,7 +55,7 @@ class CouponController extends Controller
             'end_at' => ['required', 'date', 'after:start_at'],
         ]);
 
-        $counpon = Coupon::create($request->all());
+        $coupon = Coupon::create($request->all());
         return redirect()->route('coupons.index')->with('success', 'Coupon is successfully added!');
     }
 
@@ -86,7 +86,22 @@ class CouponController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'code' => ['required', 'string'],
+            'name' => ['required', 'string', 'min:3', 'max:50'],
+            'type' => ['required', 'in:persentage,fixed'],
+            'store_id' => ['required', 'exists:stores,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'max_uses' => ['required', 'numeric'],
+            'user_max_uses' => ['required', 'numeric'],
+            'status' => ['required'],
+            'start_at' => ['required', 'date', 'after_or_equal:today'],
+            'end_at' => ['required', 'date', 'after:start_at'],
+        ]);
+
+        $coupon = Coupon::findOrFail($id);
+        $coupon->update($request->all());
+        return redirect()->route('coupons.index')->with('success', 'Coupon is successfully updated!');
     }
 
     /**
