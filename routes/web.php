@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\TwoFactorAuthenticationController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\PayPalController;
+use App\Observers\CartObserver;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -36,6 +37,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::post('/contact-us', [HomeController::class, 'sendContactEmail'])->name('email.contact');
 
     Route::resource('cart', CartController::class);
+
+    // Apply Coupon Discount Code Route.
+    Route::post('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.discount');
 
     Route::get('checkout', [OrdersController::class, 'create'])->name('checkout.create');
     Route::post('checkout', [OrdersController::class, 'store'])->name('checkout.store');

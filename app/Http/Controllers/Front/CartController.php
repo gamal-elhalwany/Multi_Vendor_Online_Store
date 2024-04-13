@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\Cart\CartRepository;
+use Carbon\Carbon;
 
 class CartController extends Controller
 {
@@ -79,5 +81,28 @@ class CartController extends Controller
             ];
         }
         return redirect()->route('cart.index')->with('success', 'Cart Deleted Successfully!');
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $now = Carbon::now();
+        $coupon_code = Coupon::where('code', $request->coupon_code)->first();
+        if (!$coupon_code || $coupon_code == null) {
+            return ['message' => 'Invalid coupon code!'];
+        }
+
+        if ($coupon_code->start_at != "") {
+            $startDate = Carbon::createFromFormat("Y-m-d H:i:s", $coupon_code->start_at);
+            if ($now->lt($startDate)) {
+                return  ['message' => 'This coupon is not active yet!.'];
+            }
+        }
+
+        if ($coupon_code->end_at != "") {
+            $endDate = Carbon::createFromFormat("Y-m-d H:i:s", $coupon_code->end_at);
+            if ($now->gt($endDate)) {
+                return  ['message' => 'This coupon is not valid anymore!.'];
+            }
+        }
     }
 }

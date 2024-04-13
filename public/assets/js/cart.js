@@ -38,4 +38,17 @@
         });
     });
 
+    $('#apply_coupon').on('click', function () {
+        $.ajax({
+            url: '{{ route("apply.discount") }}',
+            method: 'POST',
+            data: {
+                coupon_code: $('#coupon_code').val(),
+            },
+            success: function (response) {
+                console.log('Coupon Applied Successfully!');
+            }
+        });
+    });
+
 })(jQuery);
