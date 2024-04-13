@@ -108,10 +108,12 @@
                             <div class="col-lg-8 col-md-6 col-12">
                                 <div class="left">
                                     <div class="coupon">
-                                        <form action="#" target="_blank">
-                                            <input name="Coupon" placeholder="Enter Your Coupon">
+                                        <x-alert type="error" />
+                                        <form action="{{ route('apply.discount') }}" method="POST">
+                                            @csrf
+                                            <input name="coupon_code" id="coupon_code" placeholder="{{__('Enter Your Coupon')}}">
                                             <div class="button">
-                                                <button class="btn">Apply Coupon</button>
+                                                <button class="btn" id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
                                             </div>
                                         </form>
                                     </div>

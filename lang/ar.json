@@ -151,6 +151,7 @@
     "ZAR": "رنج",
     "Complete Order": "أكمل الطلب",
     "All Products": "جميع المنتجات",
+    "Products": "المنتجات",
     "New Products": "منتجات جديدة",
     "Best Sellers": "أفضل المبيعات",
     "Top Rated": "الأعلى المرتبة",
@@ -163,5 +164,8 @@
     "Manage Users": "إدارة المستخدمين",
     "Create  User": "إنشاء مستخدم",
     "Coupons": "كوبونات الخصم",
-    "Discount Codes": "كودات الخصم"
+    "Coupon": "كوبون",
+    "Apply Coupon Code": "أضف كود الخصم",
+    "Discount Codes": "كودات الخصم",
+    "Enter Your Coupon": "أدخل كود الخصم"
 }

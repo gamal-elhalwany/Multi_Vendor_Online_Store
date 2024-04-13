@@ -1,24 +1,24 @@
 <x-front-layout title="Checkout">
     <!-- Start Breadcrumbs -->
     @section('breadcrumbs')
-        <div class="breadcrumbs">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="breadcrumbs-content">
-                            <h1 class="page-title">Checkout</h1>
-                        </div>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Checkout</h1>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('product.index') }}">Shop</a></li>
-                            <li>checkout</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <ul class="breadcrumb-nav">
+                        <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
+                        <li><a href="{{ route('product.index') }}">Shop</a></li>
+                        <li>checkout</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
     @endsection
     <!-- End Breadcrumbs -->
 
@@ -108,8 +108,8 @@
                                                         <select class="form-control" name="address[billing][country]">
                                                             <option value="Country">Country</option>
                                                             @foreach ($countries as $country)
-                                                                <option value="{{ $country }}">{{ $country }}
-                                                                </option>
+                                                            <option value="{{ $country }}">{{ $country }}
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -213,12 +213,11 @@
                                                 <div class="single-form form-default">
                                                     <label>Country</label>
                                                     <div class="select-items">
-                                                        <select class="form-control"
-                                                            name="address[shipping][country]">
+                                                        <select class="form-control" name="address[shipping][country]">
                                                             <option value="Country">Country</option>
                                                             @foreach ($countries as $country)
-                                                                <option value="{{ $country }}">{{ $country }}
-                                                                </option>
+                                                            <option value="{{ $country }}">{{ $country }}
+                                                            </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -240,8 +239,7 @@
                                                         Option</h6>
                                                     <div class="payment-option-wrapper">
                                                         <div class="single-payment-option">
-                                                            <input type="radio" name="shipping" checked
-                                                                id="shipping-1">
+                                                            <input type="radio" name="shipping" checked id="shipping-1">
                                                             <label for="shipping-1">
                                                                 <img src="assets/images/shipping/shipping-1.png"
                                                                     alt="Sipping">
@@ -388,7 +386,8 @@
                             <div class="price-table-btn button">
                                 <form action="{{ route('paypal.create', $order->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-alt {{ $order->get()->count() == 0 ? 'disabled' : ''}}">Checkout</button>
+                                    <button type="submit"
+                                        class="btn btn-alt {{ $order->get()->count() == 0 ? 'disabled' : ''}}">Checkout</button>
                                 </form>
                             </div>
                         </div>

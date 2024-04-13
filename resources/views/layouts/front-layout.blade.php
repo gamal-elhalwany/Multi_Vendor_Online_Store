@@ -76,7 +76,8 @@
                                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode =>
                                                 $properties)
                                                 <li class="dropdown-item">
-                                                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                    <a rel="alternate" hreflang="{{ $localeCode }}"
+                                                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                                         {{ $properties['native'] }}
                                                     </a>
                                                 </li>
@@ -99,7 +100,8 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <div class="user dropdown" id="dropdownMenuButton" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="lni lni-user"></i>
                                 {{ __('Hello') }}
                                 @if (Auth::user())
@@ -113,7 +115,8 @@
                                     </li>
                                     @if(auth()->user()->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor'))
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                                     </li>
                                     @endif
                                     <li>
@@ -124,7 +127,8 @@
                                                 document.getElementById('logout').submit()">
                                             {{ __('Sign Out') }}
                                         </a>
-                                        <form action="{{ route('logout') }}" method="post" style="display:none;" id="logout">
+                                        <form action="{{ route('logout') }}" method="post" style="display:none;"
+                                            id="logout">
                                             @csrf
                                         </form>
                                     </li>
@@ -160,14 +164,17 @@
                     <div class="col-lg-5 col-md-7 d-xs-none">
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
-                            <form action="{{ request()->is('/') ? url('#trending-products') : route('product.index') }}" method="get">
+                            <form action="{{ request()->is('/') ? url('#trending-products') : route('product.index') }}"
+                                method="get">
                                 <!-- navbar search start -->
                                 <div class="navbar-search search-style-5">
                                     <div class="search-input">
-                                        <input type="text" name="name" placeholder="{{__('Name')}}" :value="$request->name">
+                                        <input type="text" name="name" placeholder="{{__('Name')}}"
+                                            :value="$request->name">
                                     </div>
                                     <div class="search-input">
-                                        <input type="text" name="price" placeholder="{{__('Price')}}" :value="$request->price">
+                                        <input type="text" name="price" placeholder="{{__('Price')}}"
+                                            :value="$request->price">
                                     </div>
                                     <div class="search-btn">
                                         <button type="submit"><i class="lni lni-search-alt"></i></button>
@@ -222,7 +229,8 @@
                                     <ul class="inner-sub-category">
                                         @foreach ($category->children as $chiled)
                                         <li>
-                                            <a href="{{ route('category.show', $chiled->slug) }}">{{ $chiled->name }}</a>
+                                            <a
+                                                href="{{ route('category.show', $chiled->slug) }}">{{ $chiled->name }}</a>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -234,7 +242,9 @@
                         <!-- End Mega Category Menu -->
                         <!-- Start Navbar -->
                         <nav class="navbar navbar-expand-lg">
-                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="toggler-icon"></span>
                                 <span class="toggler-icon"></span>
                                 <span class="toggler-icon"></span>
@@ -242,11 +252,13 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
                                     <li class="nav-item">
-                                        <a href="{{ route('home') }}" aria-label="Toggle navigation">{{ __('Home') }}</a>
+                                        <a href="{{ route('home') }}"
+                                            aria-label="Toggle navigation">{{ __('Home') }}</a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{ route('product.index') }}" aria-label="Toggle navigation">{{ __('All Products') }}</a>
+                                        <a href="{{ route('product.index') }}"
+                                            aria-label="Toggle navigation">{{ __('Products') }}</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -254,7 +266,8 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="{{ route('contact') }}" aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
+                                        <a href="{{ route('contact') }}"
+                                            aria-label="Toggle navigation">{{ __('Contact Us') }}</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -322,9 +335,11 @@
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}" type="email">
+                                        <input name="EMAIL" placeholder="{{ __('Email address here...') }}"
+                                            type="email">
                                         <div class="button">
-                                            <button class="btn">{{ __('Subscribe') }}<span class="dir-part"></span></button>
+                                            <button class="btn">{{ __('Subscribe') }}<span
+                                                    class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>
@@ -426,7 +441,8 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>Developed by<a href="#" rel="nofollow" target="_blank">{{ config('app.app-developer') }}</a></p>
+                                <p>Developed by<a href="#" rel="nofollow"
+                                        target="_blank">{{ config('app.app-developer') }}</a></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -460,97 +476,97 @@
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
-        $('.close-alert').on('click', function() {
-            $('.alert').hide();
-        });
+    $('.close-alert').on('click', function() {
+        $('.alert').hide();
+    });
 
-        const current = document.getElementById("current");
-        const opacity = 0.6;
-        const imgs = document.querySelectorAll(".img");
-        imgs.forEach(img => {
-            img.addEventListener("click", (e) => {
-                //reset opacity
-                imgs.forEach(img => {
-                    img.style.opacity = 1;
-                });
-                current.src = e.target.src;
-                //adding class
-                //current.classList.add("fade-in");
-                //opacity
-                e.target.style.opacity = opacity;
+    const current = document.getElementById("current");
+    const opacity = 0.6;
+    const imgs = document.querySelectorAll(".img");
+    imgs.forEach(img => {
+        img.addEventListener("click", (e) => {
+            //reset opacity
+            imgs.forEach(img => {
+                img.style.opacity = 1;
             });
+            current.src = e.target.src;
+            //adding class
+            //current.classList.add("fade-in");
+            //opacity
+            e.target.style.opacity = opacity;
         });
+    });
     </script>
     <script type="text/javascript">
-        //========= Hero Slider
-        tns({
-            container: '.hero-slider',
-            slideBy: 'page',
-            autoplay: true,
-            autoplayButtonOutput: false,
-            mouseDrag: true,
-            gutter: 0,
-            items: 1,
-            nav: false,
-            controls: true,
-            controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
-        });
+    //========= Hero Slider
+    tns({
+        container: '.hero-slider',
+        slideBy: 'page',
+        autoplay: true,
+        autoplayButtonOutput: false,
+        mouseDrag: true,
+        gutter: 0,
+        items: 1,
+        nav: false,
+        controls: true,
+        controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+    });
 
-        //======== Brand Slider
-        tns({
-            container: '.brands-logo-carousel',
-            autoplay: true,
-            autoplayButtonOutput: false,
-            mouseDrag: true,
-            gutter: 15,
-            nav: false,
-            controls: false,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 3,
-                },
-                768: {
-                    items: 5,
-                },
-                992: {
-                    items: 6,
-                }
+    //======== Brand Slider
+    tns({
+        container: '.brands-logo-carousel',
+        autoplay: true,
+        autoplayButtonOutput: false,
+        mouseDrag: true,
+        gutter: 15,
+        nav: false,
+        controls: false,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            540: {
+                items: 3,
+            },
+            768: {
+                items: 5,
+            },
+            992: {
+                items: 6,
             }
-        });
+        }
+    });
     </script>
     <script>
-        const finaleDate = new Date("February 15, 2023 00:00:00").getTime();
+    const finaleDate = new Date("February 15, 2023 00:00:00").getTime();
 
-        const timer = () => {
-            const now = new Date().getTime();
-            let diff = finaleDate - now;
-            if (diff < 0) {
-                document.querySelector('.alert').style.display = 'block';
-                document.querySelector('.container').style.display = 'none';
-            }
-
-            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            let hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
-            let minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
-            let seconds = Math.floor(diff % (1000 * 60) / 1000);
-
-            days <= 99 ? days = `0${days}` : days;
-            days <= 9 ? days = `00${days}` : days;
-            hours <= 9 ? hours = `0${hours}` : hours;
-            minutes <= 9 ? minutes = `0${minutes}` : minutes;
-            seconds <= 9 ? seconds = `0${seconds}` : seconds;
-
-            document.querySelector('#days').textContent = days;
-            document.querySelector('#hours').textContent = hours;
-            document.querySelector('#minutes').textContent = minutes;
-            document.querySelector('#seconds').textContent = seconds;
-
+    const timer = () => {
+        const now = new Date().getTime();
+        let diff = finaleDate - now;
+        if (diff < 0) {
+            document.querySelector('.alert').style.display = 'block';
+            document.querySelector('.container').style.display = 'none';
         }
-        timer();
-        setInterval(timer, 1000);
+
+        let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        let hours = Math.floor(diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+        let minutes = Math.floor(diff % (1000 * 60 * 60) / (1000 * 60));
+        let seconds = Math.floor(diff % (1000 * 60) / 1000);
+
+        days <= 99 ? days = `0${days}` : days;
+        days <= 9 ? days = `00${days}` : days;
+        hours <= 9 ? hours = `0${hours}` : hours;
+        minutes <= 9 ? minutes = `0${minutes}` : minutes;
+        seconds <= 9 ? seconds = `0${seconds}` : seconds;
+
+        document.querySelector('#days').textContent = days;
+        document.querySelector('#hours').textContent = hours;
+        document.querySelector('#minutes').textContent = minutes;
+        document.querySelector('#seconds').textContent = seconds;
+
+    }
+    timer();
+    setInterval(timer, 1000);
     </script>
     @stack('scripts')
 </body>
