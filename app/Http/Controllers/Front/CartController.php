@@ -23,7 +23,7 @@ class CartController extends Controller
             if ($user->carts->count()) {
                 return view('front.cart', compact('carts'));
             }
-            return  redirect('/');
+            return redirect('/');
         }
         return redirect()->route('login');
     }
@@ -104,5 +104,17 @@ class CartController extends Controller
                 return  ['message' => 'This coupon is not valid anymore!.'];
             }
         }
+
+        session()->put('coupon_code', $coupon_code);
+
+        if (session()->has('coupon_code')) {
+            if ($request->expectsJson()) {
+                return [
+                    'message' => 'Coupon applied successfully!',
+                    'coupon_code' => session()->get('coupon_code'),
+                ];
+            }
+        }
+        return ['message' => 'There is no Coupon been found for the user!'];
     }
 }

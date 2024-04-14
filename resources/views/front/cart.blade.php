@@ -124,13 +124,21 @@
                                     <ul>
                                         @if (auth()->user()->carts()->count())
                                         @foreach ($carts as $cart)
-                                        <li>Cart
+                                        @if(session()->has('coupon_code'))
+                                        <li>
+                                            Cart
+                                            Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
+                                        </li>
+                                        @else
+                                        <li>
+                                            Cart
                                             Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity) }}</span>
                                         </li>
+                                        @endif
                                         <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>${{ $discount = $cartTotal - 10 * 350 }}</span></li>
+                                        <li>You Save<span>$0</span></li>
                                         <li class="last">You
-                                            Pay<span>{{ CurrencyFormat::format($cartTotal - $discount) }}</span>
+                                            Pay<span></span>
                                         </li>
                                         @endforeach
                                         @endif
