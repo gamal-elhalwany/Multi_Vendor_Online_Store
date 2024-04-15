@@ -56,7 +56,8 @@
                 <div class="cart-single-list" id="{{ $cart->id }}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
-                            <a href="{{ route('product.show', $cart->product->slug) }}"><img src="{{ $cart->product->image_url }}" alt="#"></a>
+                            <a href="{{ route('product.show', $cart->product->slug) }}"><img
+                                    src="{{ $cart->product->image_url }}" alt="#"></a>
                         </div>
                         <div class="col-lg-4 col-md-3 col-12">
                             <h5 class="product-name">
@@ -71,11 +72,13 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <input class="form-control item-qty" data-id="{{ $cart->id }}" value="{{ $cart->quantity }}" name="quantity">
+                                <input class="form-control item-qty" data-id="{{ $cart->id }}"
+                                    value="{{ $cart->quantity }}" name="quantity">
                                 @error('quantity')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
-                                <input type="hidden" class="product_id" name="productID" id="product_id" value="{{ $cart->product_id }}">
+                                <input type="hidden" class="product_id" name="productID" id="product_id"
+                                    value="{{ $cart->product_id }}">
                                 @error('productID')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -93,7 +96,8 @@
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
                             <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                            <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)"><i class="lni lni-close"></i></a>
+                            <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)"><i
+                                    class="lni lni-close"></i></a>
                         </div>
                     </div>
                 </div>
@@ -111,9 +115,11 @@
                                         <x-alert type="error" />
                                         <form action="{{ route('apply.discount') }}" method="POST">
                                             @csrf
-                                            <input name="coupon_code" id="coupon_code" placeholder="{{__('Enter Your Coupon')}}">
+                                            <input name="coupon_code" id="coupon_code"
+                                                placeholder="{{__('Enter Your Coupon')}}">
                                             <div class="button">
-                                                <button class="btn" id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
+                                                <button class="btn"
+                                                    id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -124,22 +130,34 @@
                                     <ul>
                                         @if (auth()->user()->carts()->count())
                                         @foreach ($carts as $cart)
-                                        @if(session()->has('coupon_code'))
-                                        <li>
-                                            Cart
-                                            Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
-                                        </li>
-                                        @else
                                         <li>
                                             Cart
                                             Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity) }}</span>
                                         </li>
-                                        @endif
                                         <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>$0</span></li>
-                                        <li class="last">You
-                                            Pay<span></span>
+                                        @if(session()->has('coupon_code') && session('coupon_code')->type ==
+                                        'persentage')
+                                        <li>You
+                                            Save<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}</span>
                                         </li>
+                                        <li class="last">
+                                            You
+                                            Pay<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity) 
+
+                                            - ($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100
+                                            
+                                            ) }}</span>
+                                        </li>
+                                        @elseif(session()->has('coupon_code') && session('coupon_code')->type ==
+                                        'fixed')
+                                        <li>You
+                                            Save<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
+                                        </li>
+                                        <li class="last">
+                                            You
+                                            Pay<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
+                                        </li>
+                                        @endif
                                         @endforeach
                                         @endif
                                     </ul>
