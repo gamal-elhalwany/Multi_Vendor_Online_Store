@@ -114,6 +114,7 @@ class CartController extends Controller
                     'coupon_code' => session()->get('coupon_code'),
                 ];
             }
+            return redirect()->route('cart.index')->with('success', 'Coupon applied successfully!');
         }
         return ['message' => 'There is no Coupon been found for the user!'];
     }

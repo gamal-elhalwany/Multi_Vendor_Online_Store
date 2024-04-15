@@ -45,7 +45,7 @@
             data: {
                 coupon_code: $('#coupon_code').val(),
             },
-            success: function (response) {
+            success: function () {
                 console.log('Coupon Applied Successfully!');
             }
         });
