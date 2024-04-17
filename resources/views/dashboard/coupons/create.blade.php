@@ -86,12 +86,6 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="form-group">
-                <strong>Min Amount:</strong>
-                <input type="text" placeholder="Min amount" class="form-control" name="min_amount" />
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <div class="form-group">
                 <strong>Start Date:</strong>
                 <input type="date" class="form-control" name="start_at" placeholder="Starts at" />
             </div>
