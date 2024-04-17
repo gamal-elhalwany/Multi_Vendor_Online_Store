@@ -18,7 +18,6 @@
                 let priceNumber = productPrice * $('.item-qty').val();
                 let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
                 totalCartPrice.text(priceNumber.toLocaleString(undefined, options));
-                console.log($('.item-qty').val());
             }
         });
     });
@@ -40,13 +39,18 @@
 
     $('#apply_coupon').on('click', function () {
         $.ajax({
-            url: '{{ route("apply.discount") }}',
+            url: "/apply-coupon",
             method: 'POST',
             data: {
                 coupon_code: $('#coupon_code').val(),
+                _token: $('#hidden-token').val(),
             },
-            success: response => {
-                console.log('Coupon Applied Successfully!');
+            success: function (response) {
+                if (response.status == true) {
+                    $("#coupon_wrapper").html(response.message);
+                } else {
+                    alert('Coupon application failed: ' + response.message);
+                }
             }
         });
     });

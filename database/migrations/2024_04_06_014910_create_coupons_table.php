@@ -24,9 +24,8 @@ class CreateCouponsTable extends Migration
                 $table->foreign('user_id')->references('id')->on('users');
                 $table->integer('max_uses');
                 $table->integer('user_max_uses');
-                $table->enum('type', ['persentage', 'fixed'])->default('persentage');
+                $table->enum('type', ['percent', 'fixed'])->default('percent');
                 $table->double('discount_amount', 10, 2)->nullable();
-                $table->double('min_amount', 10, 2)->nullable();
                 $table->integer('status')->default(1);
                 $table->timestamp('start_at');
                 $table->timestamp('end_at');

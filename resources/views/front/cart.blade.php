@@ -92,7 +92,14 @@
                             </p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>{{ CurrencyFormat::format(0) }}</p>
+                            @if(session()->has('coupon_code') && session('coupon_code')->type == 'persentage')
+                            <p>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}
+                            </p>
+                            @endif
+                            @if(session()->has('coupon_code') && session('coupon_code')->type == 'fixed')
+                            <p>{{ CurrencyFormat::format(session()->get('coupon_code')->min_amount) }}
+                            </p>
+                            @endif
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
                             <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
@@ -111,17 +118,20 @@
                         <div class="row">
                             <div class="col-lg-8 col-md-6 col-12">
                                 <div class="left">
-                                    <div class="coupon">
+                                    <div class="coupon" id="coupon_wrapper">
+                                        <!-- <form action="{{ route('cart.index') }}" method="POST">
+                                            @csrf -->
+
+                                        <!-- the Ajax methods work better without forms because forms make pages reload -->
+                                        <input name="coupon_code" id="coupon_code"
+                                            placeholder="{{__('Enter Your Coupon')}}">
+                                        <input type="hidden" id="hidden-token" value="{{csrf_token()}}">
+                                        <div class="button">
+                                            <button class="btn" type="submit"
+                                                id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
+                                        </div>
+                                        <!-- </form> -->
                                         <x-alert type="error" />
-                                        <form action="{{ route('apply.discount') }}" method="POST">
-                                            @csrf
-                                            <input name="coupon_code" id="coupon_code"
-                                                placeholder="{{__('Enter Your Coupon')}}">
-                                            <div class="button">
-                                                <button class="btn"
-                                                    id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -142,16 +152,12 @@
                                         </li>
                                         <li class="last">
                                             You
-                                            Pay<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity) 
-
-                                            - ($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100
-                                            
-                                            ) }}</span>
+                                            Pay<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity) - ($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}</span>
                                         </li>
                                         @elseif(session()->has('coupon_code') && session('coupon_code')->type ==
                                         'fixed')
                                         <li>You
-                                            Save<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
+                                            Save<span>{{ CurrencyFormat::format(session()->get('coupon_code')->min_amount) }}</span>
                                         </li>
                                         <li class="last">
                                             You

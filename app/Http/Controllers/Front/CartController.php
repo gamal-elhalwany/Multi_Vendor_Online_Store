@@ -87,6 +87,7 @@ class CartController extends Controller
     {
         $now = Carbon::now();
         $coupon_code = Coupon::where('code', $request->coupon_code)->first();
+
         if (!$coupon_code || $coupon_code == null) {
             return ['message' => 'Invalid coupon code!'];
         }
@@ -107,14 +108,16 @@ class CartController extends Controller
 
         session()->put('coupon_code', $coupon_code);
 
-        if (session()->has('coupon_code')) {
-            if ($request->expectsJson()) {
-                return [
-                    'message' => 'Coupon applied successfully!',
-                    'coupon_code' => session()->get('coupon_code'),
-                ];
-            }
-            return redirect()->route('cart.index')->with('success', 'Coupon applied successfully!');
+        if ($coupon_code !== null) {
+            // if ($request->expectsJson()) {
+            return response()->json([
+                'response' => response(),
+                'status' => true,
+                'message' => 'Coupon applied successfully by Ajax!',
+                'coupon_code' => session()->get('coupon_code'),
+            ]);
+            // }
+            // return redirect()->route('cart.index')->with('success', 'Coupon applied successfully!');
         }
         return ['message' => 'There is no Coupon been found for the user!'];
     }
