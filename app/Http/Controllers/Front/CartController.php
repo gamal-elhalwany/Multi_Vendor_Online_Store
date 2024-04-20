@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helpers\Currency;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\Cart\CartRepository;
 use Carbon\Carbon;
+
 
 class CartController extends Controller
 {
@@ -16,12 +19,13 @@ class CartController extends Controller
      */
     public function index(CartRepository $cart)
     {
+        $total = $cart->total($quantity = 1);
         $user = auth()->user();
         //Comment:- By using this variable $cart you use the services container.
         $carts = $cart->get();
         if ($user) {
             if ($user->carts->count()) {
-                return view('front.cart', compact('carts'));
+                return view('front.cart', compact('carts', 'total'));
             }
             return redirect('/');
         }
@@ -56,13 +60,15 @@ class CartController extends Controller
         //     'quantity' => 'required|int|min:1',
         // ]);
 
-        $product = Product::findOrFail($request->post('product_id'));
+        $product = Product::findOrFail($request->product_id);
         $quantity = $request->post('quantity');
 
         $cart->update($product, $quantity);
         if ($request->expectsJson()) {
             return [
                 'message' => 'Quantity updated successfully!',
+                'product_id' => $product->id,
+                'quantity' => $quantity,
             ];
         }
         return redirect()->back()->with('success', "The quantity of {$product->name} has been updated!");
@@ -73,7 +79,6 @@ class CartController extends Controller
      */
     public function destroy(Request $request, CartRepository $cart, string $id)
     {
-        //Comment:- The ajax method is responsible for hitting the php or laravel method that does the action but without reloading page.
         $cart->delete($id);
         if ($request->expectsJson()) {
             return [
@@ -108,17 +113,32 @@ class CartController extends Controller
 
         session()->put('coupon_code', $coupon_code);
 
-        if ($coupon_code !== null) {
-            // if ($request->expectsJson()) {
-            return response()->json([
-                'response' => response(),
-                'status' => true,
-                'message' => 'Coupon applied successfully by Ajax!',
-                'coupon_code' => session()->get('coupon_code'),
-            ]);
-            // }
-            // return redirect()->route('cart.index')->with('success', 'Coupon applied successfully!');
+        if ($coupon_code) {
+            if ($coupon_code->type == 'fixed') {
+                $currencyFormat = Currency::format($coupon_code->discount_amount);
+                session()->put('fixed_amount', $currencyFormat);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Coupon applied successfully by Ajax!',
+                    'coupon_code' => session()->get('coupon_code'),
+                    'currencyFormat' => $currencyFormat,
+                ]);
+            } elseif ($coupon_code->type == 'persentage') {
+                session()->put('percent_amount', $coupon_code->discount_amount . '%');
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Coupon applied successfully by Ajax!',
+                    'coupon_code' => session()->get('coupon_code'),
+                    'percent_amount' => $coupon_code->discount_amount . '%',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Coupon applied successfully by Ajax!',
+                    'coupon_code' => session()->get('coupon_code'),
+                ]);
+            }
         }
-        return ['message' => 'There is no Coupon been found for the user!'];
+        return ['message' => 'There is no Coupon been found. Please apply the right coupon code!'];
     }
 }

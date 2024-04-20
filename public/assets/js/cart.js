@@ -2,7 +2,7 @@
 
     $('.item-qty').on('change', function () {
         let cartID = $(this).data('id');
-        let product_id = $('#product_id').val();
+        let product_id = $(this).closest('.count-input').find('.product_id').val();
         let token = $('#x-csrf').val();
         let totalCartPrice = $('.totalCartPrice');
         let productPrice = $('.product_price').val();
@@ -10,33 +10,36 @@
             url: "/cart/" + cartID,
             type: 'put',
             data: {
+                cart_id: cartID,
                 product_id: product_id,
                 quantity: this.value,
                 _token: token,
             },
             success: function () {
-                let priceNumber = productPrice * $('.item-qty').val();
-                let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-                totalCartPrice.text(priceNumber.toLocaleString(undefined, options));
+                // let totalPrice = productPrice * this.value;
+                // let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+                // alert(productPrice);
+                // totalCartPrice.text(totalPrice.toLocaleString(undefined, options));
             }
         });
     });
 
 
-    $('.remove-item').on('click', function (e) {
+    $('.remove-item').on('click', function () {
         let id = $(this).data('id');
         $.ajax({
-            url: "/cart/" + id,
+            url: "/cart/"+id,
             method: "delete",
             data: {
                 _token: $('#d-csrf').val(),
             },
             success: response => {
-                $('#' + id).remove();
+                $('#cart_id').remove();
             }
         });
     });
 
+    // Apply Coupon
     $('#apply_coupon').on('click', function () {
         $.ajax({
             url: "/apply-coupon",
@@ -48,8 +51,11 @@
             success: function (response) {
                 if (response.status == true) {
                     $("#coupon_wrapper").html(response.message);
+                    $('.discount_amount').html(response.currencyFormat);
+                    $('.discount_amount').html(response.percent_amount);
+                    console.log(response.percent_amount);
                 } else {
-                    alert('Coupon application failed: ' + response.message);
+                    $(".err-msg").text(response.message);
                 }
             }
         });

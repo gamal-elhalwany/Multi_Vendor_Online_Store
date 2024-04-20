@@ -53,7 +53,7 @@
                 <!-- End Cart List Title -->
                 <!-- Cart Single List list -->
                 @foreach ($carts as $cart)
-                <div class="cart-single-list" id="{{ $cart->id }}">
+                <div class="cart-single-list" id="cart_id">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
                             <a href="{{ route('product.show', $cart->product->slug) }}"><img
@@ -87,18 +87,18 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p class="totalCartPrice" data-id="{{ $cart->id }}">
+                            <p class="totalCartPrice" id="{{ $cart->product_id }}">
+                                HERE
                                 {{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}
                             </p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            @if(session()->has('coupon_code') && session('coupon_code')->type == 'persentage')
-                            <p>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}
-                            </p>
-                            @endif
-                            @if(session()->has('coupon_code') && session('coupon_code')->type == 'fixed')
-                            <p>{{ CurrencyFormat::format(session()->get('coupon_code')->min_amount) }}
-                            </p>
+                            @if(session('fixed_amount'))
+                            <p class="discount_amount">{{ session('fixed_amount') }}</p>
+                            @elseif(session('percent_amount'))
+                            <p class="discount_amount">{{ session('percent_amount') }}</p>
+                            @else
+                            <p class="discount_amount">0.00</p>
                             @endif
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
@@ -119,10 +119,10 @@
                             <div class="col-lg-8 col-md-6 col-12">
                                 <div class="left">
                                     <div class="coupon" id="coupon_wrapper">
-                                        <!-- <form action="{{ route('cart.index') }}" method="POST">
-                                            @csrf -->
-
                                         <!-- the Ajax methods work better without forms because forms make pages reload -->
+                                        @if(session('coupon_code'))
+                                        <p class="err-msg">Coupon applied successfully by Ajax!</p>
+                                        @else
                                         <input name="coupon_code" id="coupon_code"
                                             placeholder="{{__('Enter Your Coupon')}}">
                                         <input type="hidden" id="hidden-token" value="{{csrf_token()}}">
@@ -130,8 +130,8 @@
                                             <button class="btn" type="submit"
                                                 id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
                                         </div>
-                                        <!-- </form> -->
-                                        <x-alert type="error" />
+                                        <p class="err-msg text-danger"></p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -139,32 +139,47 @@
                                 <div class="right">
                                     <ul>
                                         @if (auth()->user()->carts()->count())
-                                        @foreach ($carts as $cart)
                                         <li>
                                             Cart
-                                            Subtotal<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity) }}</span>
+                                            Subtotal<span>{{ CurrencyFormat::format($total) }}</span>
                                         </li>
                                         <li>Shipping<span>Free</span></li>
-                                        @if(session()->has('coupon_code') && session('coupon_code')->type ==
-                                        'persentage')
-                                        <li>You
-                                            Save<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}</span>
+
+                                        <li class="last">
+                                            You Save
+                                            <span class="discount_amount">
+                                                @if(session('percent_amount'))
+                                                {{ CurrencyFormat::format(($total) * floatval(session('percent_amount'))/100) }}
+                                                @else
+                                                {{ CurrencyFormat::format(0) }}
+                                                @endif
+                                            </span>
+                                        </li>
+                                        <li>
+                                            You Pay
+                                            @if(session('percent_amount'))
+                                            <span>
+                                                @if(session('percent_amount'))
+                                                {{ CurrencyFormat::format(($total) - ($total) * floatval(session('percent_amount'))/100) }}
+                                                @else
+                                                {{ CurrencyFormat::format($cart->product->price * $cart->quantity) }}
+                                                @endif
+                                            </span>
+                                            @endif
+                                        </li>
+
+                                        <li>
+                                            You Save
+                                            @if(session('fixed_amount'))
+                                            <span class="you_save">
+                                                {{ session('fixed_amount') }}
+                                            </span>
+                                            @endif
                                         </li>
                                         <li class="last">
-                                            You
-                                            Pay<span>{{ CurrencyFormat::format(($cartTotal = $cart->product->price * $cart->quantity) - ($cartTotal = $cart->product->price * $cart->quantity * session()->get('coupon_code')->discount_amount)/100) }}</span>
+                                            You Pay<span></span>
                                         </li>
-                                        @elseif(session()->has('coupon_code') && session('coupon_code')->type ==
-                                        'fixed')
-                                        <li>You
-                                            Save<span>{{ CurrencyFormat::format(session()->get('coupon_code')->min_amount) }}</span>
-                                        </li>
-                                        <li class="last">
-                                            You
-                                            Pay<span>{{ CurrencyFormat::format($cartTotal = $cart->product->price * $cart->quantity - session()->get('coupon_code')->min_amount) }}</span>
-                                        </li>
-                                        @endif
-                                        @endforeach
+
                                         @endif
                                     </ul>
                                     <div class="button">
