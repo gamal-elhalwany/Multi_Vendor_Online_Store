@@ -40,7 +40,8 @@
                             {{ $cart->product->name }}
                         </a>
                     </h4>
-                    <p class="quantity">{{ $cart->quantity }}x - <span class="amount">{{ CurrencyFormat::format($cart->product->price) }}</span></p>
+                    <p class="quantity">{{ $cart->quantity }}x - <span
+                            class="amount">{{ CurrencyFormat::format($cart->product->price) }}</span></p>
                 </div>
             </li>
             @endif

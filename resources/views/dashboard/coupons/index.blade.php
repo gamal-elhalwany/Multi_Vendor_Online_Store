@@ -39,7 +39,7 @@
             @if($coupon->type === 'persentage')
             <td>{{ $coupon->discount_amount }}%</td>
             @else
-            <td>{{ $coupon->min_amount }} of the total price</td>
+            <td>{{ $coupon->discount_amount }} of the total price</td>
             @endif
             <td>{{ $coupon->store_id }}</td>
             <td>{{ $coupon->status }}</td>
