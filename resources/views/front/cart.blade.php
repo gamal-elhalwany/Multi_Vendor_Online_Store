@@ -66,14 +66,15 @@
                                 </a>
                             </h5>
                             <p class="product-des">
-                                <span><em>Type:</em> Mirrorless</span>
+                                <span><em>Price:</em> {{$cart->product->price}}</span>
                                 <span><em>Color:</em> Black</span>
                             </p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
                                 <input class="form-control item-qty" data-id="{{ $cart->id }}"
-                                    value="{{ $cart->quantity }}" name="quantity">
+                                    value="{{ $cart->quantity }}" name="quantity"
+                                    {{ session('coupon_code') ? 'disabled' : '' }}>
                                 @error('quantity')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -86,9 +87,8 @@
                                 <input type="hidden" id="x-csrf" value="{{ csrf_token() }}">
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-12">
+                        <div class="col-lg-2 col-md-2 col-12 total-cart-price-wrapper">
                             <p class="totalCartPrice" id="{{ $cart->product_id }}">
-                                HERE
                                 {{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}
                             </p>
                         </div>
@@ -96,15 +96,21 @@
                             @if(session('fixed_amount'))
                             <p class="discount_amount">{{ session('fixed_amount') }}</p>
                             @elseif(session('percent_amount'))
-                            <p class="discount_amount">{{ session('percent_amount') }}</p>
+                            <p class="discount_amount">{{ session('percent_amount') . '%' }}</p>
                             @else
                             <p class="discount_amount">0.00</p>
                             @endif
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
-                            <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                            <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)"><i
-                                    class="lni lni-close"></i></a>
+                            @if(session()->has('coupon_code'))
+                            @else
+                            <div class="remove_wrapper">
+                                <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
+                                <a class="remove-item" data-id="{{ $cart->id }}" href="javascript:void(0)">
+                                    <i class="lni lni-close"></i>
+                                </a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -121,7 +127,7 @@
                                     <div class="coupon" id="coupon_wrapper">
                                         <!-- the Ajax methods work better without forms because forms make pages reload -->
                                         @if(session('coupon_code'))
-                                        <p class="err-msg">Coupon applied successfully by Ajax!</p>
+                                        <p>Coupon Applied Successfully. This message by blade</p>
                                         @else
                                         <input name="coupon_code" id="coupon_code"
                                             placeholder="{{__('Enter Your Coupon')}}">
@@ -140,16 +146,19 @@
                                     <ul>
                                         @if (auth()->user()->carts()->count())
                                         <li>
-                                            Cart
-                                            Subtotal<span>{{ CurrencyFormat::format($total) }}</span>
+                                            Cart Subtotal<span>{{ CurrencyFormat::format($total) }}</span>
                                         </li>
                                         <li>Shipping<span>Free</span></li>
 
                                         <li class="last">
                                             You Save
-                                            <span class="discount_amount">
+                                            <span class="you_save">
                                                 @if(session('percent_amount'))
                                                 {{ CurrencyFormat::format(($total) * floatval(session('percent_amount'))/100) }}
+
+                                                @elseif(session('fixed_amount'))
+                                                {{ session('fixed_amount') }}
+
                                                 @else
                                                 {{ CurrencyFormat::format(0) }}
                                                 @endif
@@ -157,29 +166,18 @@
                                         </li>
                                         <li>
                                             You Pay
-                                            @if(session('percent_amount'))
-                                            <span>
+                                            <span class="you_pay">
                                                 @if(session('percent_amount'))
                                                 {{ CurrencyFormat::format(($total) - ($total) * floatval(session('percent_amount'))/100) }}
+
+                                                @elseif(session('fixed_amount'))
+                                                {{ CurrencyFormat::format(($total) - session('coupon_code')->discount_amount) }}
+
                                                 @else
-                                                {{ CurrencyFormat::format($cart->product->price * $cart->quantity) }}
+                                                {{ CurrencyFormat::format($total) }}
                                                 @endif
                                             </span>
-                                            @endif
                                         </li>
-
-                                        <li>
-                                            You Save
-                                            @if(session('fixed_amount'))
-                                            <span class="you_save">
-                                                {{ session('fixed_amount') }}
-                                            </span>
-                                            @endif
-                                        </li>
-                                        <li class="last">
-                                            You Pay<span></span>
-                                        </li>
-
                                         @endif
                                     </ul>
                                     <div class="button">

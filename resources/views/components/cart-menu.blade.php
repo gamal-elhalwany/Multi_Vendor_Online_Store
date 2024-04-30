@@ -15,7 +15,10 @@
                 {{ Auth::user()->carts()->count() . ' ' . __('Items') }}
             </span>
             @if (auth()->user()->carts()->count())
-            <a href="{{ route('cart.index') }}">{{ __('Total Items') }}</a>
+            <a href="{{ route('cart.index') }}" Route::currentRouteName()=='cart.index' ?
+                onclick="event.preventDefault();" style="pointer-events: none; opacity: 0.5;" : ''>
+                {{ __('Total Items') }}
+            </a>
             @elseif (auth()->user()->orders()->count())
             <p>You have some orders, but no items in the cart.</p>
             @else
@@ -55,7 +58,10 @@
                 <span class="total-amount">{{ CurrencyFormat::format($total) }}</span>
             </div>
             <div class="button">
-                <a href="{{ route('cart.index') }}" class="btn animate">{{ __('Cart') }}</a>
+                <a href="{{ route('cart.index') }}" class="btn animate" @if(Route::currentRouteName()=='cart.index' )
+                    onclick="event.preventDefault();" style="pointer-events: none; opacity: 0.5;" @endif>
+                    {{ __('Cart') }}
+                </a>
             </div>
             @elseif (auth()->user()->orders()->count())
             <div class="button">
