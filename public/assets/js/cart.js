@@ -4,7 +4,7 @@
         let cartID = $(this).data('id');
         let product_id = $(this).closest('.count-input').find('.product_id').val();
         let token = $('#x-csrf').val();
-        let totalCartPrice = $('.totalCartPrice');
+        let totalCartPrice = $(this).closest('.row').find('.totalCartPrice');
         let productPrice = $('.product_price').val();
         $.ajax({
             url: "/cart/" + cartID,
@@ -16,10 +16,9 @@
                 _token: token,
             },
             success: function () {
-                // let totalPrice = productPrice * this.value;
-                // let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-                // alert(productPrice);
-                // totalCartPrice.text(totalPrice.toLocaleString(undefined, options));
+                let itemTotalPrice = productPrice * $('.item-qty').val();
+                let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+                totalCartPrice.text(itemTotalPrice.toLocaleString(undefined, options));
             }
         });
     });
@@ -51,14 +50,30 @@
             success: function (response) {
                 if (response.status == true) {
                     $("#coupon_wrapper").html(response.message);
-                    $('.discount_amount').html(response.currencyFormat);
-                    $('.discount_amount').html(response.percent_amount);
-                    console.log(response.percent_amount);
+                    $('.remove_wrapper').prop('hidden', true);
+                    $('.item-qty').prop('disabled', true);
+                    if (response.currencyFormat) {
+                        $('.discount_amount').html(response.currencyFormat);
+                    } else {
+                        $('.discount_amount').html(response.percent_amount + '%');
+                    }
+
+                    if (response.coupon_code.type === 'fixed') {
+                        $('.you_save').html(response.fixedTotalSave);
+                    } else {
+                        $('.you_save').html(response.percentTotalSave);
+                    }
+                    
+                    if (response.coupon_code.type === 'fixed') {
+                        $('.you_pay').html(response.fixedTotalPay);
+                    } else {
+                        $('.you_pay').html(response.percentTotalPay);
+                    }
                 } else {
                     $(".err-msg").text(response.message);
                 }
             }
         });
     });
-
+ 
 })(jQuery);

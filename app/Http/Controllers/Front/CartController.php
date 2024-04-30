@@ -55,10 +55,10 @@ class CartController extends Controller
     public function update(Request $request, CartRepository $cart)
     {
         //Comment:- By using this variable $cart you are using the services container.
-        // $request->validate([
-        //     'product_id' => 'required|int|exists:products,id',
-        //     'quantity' => 'required|int|min:1',
-        // ]);
+        $request->validate([
+            'product_id' => 'required|int|exists:products,id',
+            'quantity' => 'required|int|min:1',
+        ]);
 
         $product = Product::findOrFail($request->product_id);
         $quantity = $request->post('quantity');
@@ -88,10 +88,11 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Cart Deleted Successfully!');
     }
 
-    public function applyCoupon(Request $request)
+    public function applyCoupon(Request $request, CartRepository $cart)
     {
         $now = Carbon::now();
         $coupon_code = Coupon::where('code', $request->coupon_code)->first();
+        $total = $cart->total($quantity = 1);
 
         if (!$coupon_code || $coupon_code == null) {
             return ['message' => 'Invalid coupon code!'];
@@ -117,25 +118,40 @@ class CartController extends Controller
             if ($coupon_code->type == 'fixed') {
                 $currencyFormat = Currency::format($coupon_code->discount_amount);
                 session()->put('fixed_amount', $currencyFormat);
+
+                $fixedTotalPay = Currency::format($total - $coupon_code->discount_amount);
+                $fixedTotalSave = Currency::format(($total) - ($total - $coupon_code->discount_amount));
+
                 return response()->json([
                     'status' => true,
-                    'message' => 'Coupon applied successfully by Ajax!',
+                    'message' => 'Coupon applied successfully. this message by Ajax!',
                     'coupon_code' => session()->get('coupon_code'),
                     'currencyFormat' => $currencyFormat,
+                    'total' => $total,
+                    'fixedTotalSave' => $fixedTotalSave,
+                    'fixedTotalPay' => $fixedTotalPay,
                 ]);
             } elseif ($coupon_code->type == 'persentage') {
-                session()->put('percent_amount', $coupon_code->discount_amount . '%');
+                session()->put('percent_amount', $coupon_code->discount_amount);
+
+                $percentTotalSave = Currency::format(($total * $coupon_code->discount_amount) / 100);
+                $percentTotalPay = Currency::format(($total) - ($total * $coupon_code->discount_amount) / 100);
+
                 return response()->json([
                     'status' => true,
-                    'message' => 'Coupon applied successfully by Ajax!',
+                    'message' => 'Coupon applied successfully. this message by Ajax!',
                     'coupon_code' => session()->get('coupon_code'),
-                    'percent_amount' => $coupon_code->discount_amount . '%',
+                    'percent_amount' => $coupon_code->discount_amount,
+                    'total' => $total,
+                    'percentTotalSave' => $percentTotalSave,
+                    'percentTotalPay' => $percentTotalPay,
                 ]);
             } else {
                 return response()->json([
                     'status' => true,
-                    'message' => 'Coupon applied successfully by Ajax!',
+                    'message' => 'Coupon applied successfully. this message by Ajax!',
                     'coupon_code' => session()->get('coupon_code'),
+                    'total' => $total,
                 ]);
             }
         }
