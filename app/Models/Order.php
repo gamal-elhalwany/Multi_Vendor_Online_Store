@@ -15,59 +15,64 @@ class Order extends Model
         'store_id', 'user_id', 'number', 'status', 'payment_status', 'payment_method',
     ];
 
-    public function store () {
+    public function store()
+    {
         return $this->belongsTo(Store::class);
     }
 
-    public function user () {
+    public function user()
+    {
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'Guest Customer',
         ]);
     }
 
-    public function orderItems ()
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function addresses ()
+    public function addresses()
     {
         return $this->hasMany(OrderAddress::class);
     }
 
-    public function billingAddress ()
+    public function billingAddress()
     {
         return $this->hasOne(OrderAddress::class, 'order_id', 'id')
-        ->where('type', '=', 'billing');
+            ->where('type', '=', 'billing');
     }
 
-    public function shippingAddress ()
+    public function shippingAddress()
     {
         return $this->hasOne(OrderAddress::class, 'order_id', 'id')
-        ->where('type', '=', 'shipping');
+            ->where('type', '=', 'shipping');
     }
 
-    public function products () {
+    public function products()
+    {
         return $this->belongsToMany(Product::class, 'order_id', 'id')
-        ->withPivot([
-            // this used if you have a pivot table with additional columns more than the foreign ids.
-            'product_name', 'price', 'quantity', 'options',
-        ]);
+            ->withPivot([
+                // this used if you have a pivot table with additional columns more than the foreign ids.
+                'product_name', 'price', 'quantity', 'options',
+            ]);
     }
 
-    public function payments () {
+    public function payments()
+    {
         return $this->hasMany(Payment::class);
     }
 
     protected static function booted()
     {
-//these functions is used with Observers but we used it here without creating an Observer File.
+        //these functions is used with Observers but we used it here without creating an Observer File.
         static::creating(function (Order $order) {
             $order->number = Order::getOrderNextNumber();
         });
     }
 
-    public static function getOrderNextNumber () {
+    public static function getOrderNextNumber()
+    {
         $year = Carbon::now()->year;
         $number = Order::whereYear('created_at', $year)->max('number');
 

@@ -58,7 +58,7 @@ class ProductsController extends Controller
         $request->validate([
             'name'          => ['required', 'min:3', 'max:100'],
             'descirption'   => ['required', 'min:100', 'max:255'],
-            'price'         => ['required', 'numeric'],
+            'price'         => ['required', 'numeric', 'double'],
             'category'   => ['required', 'nullable', Rule::exists('categories', 'id')],
             'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
             'compare_price' => ['numeric'],
@@ -96,7 +96,7 @@ class ProductsController extends Controller
         $request->validate([
             'name'          => ['required', 'min:3', 'max:100'],
             'descirption'   => ['required', 'min:100', 'max:255'],
-            'price'         => ['required', 'numeric'],
+            'price'         => ['required', 'numeric', 'double'],
             'category'   => ['required', Rule::exists('categories', 'id')],
             'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
             'compare_price' => ['numeric', 'nullable'],

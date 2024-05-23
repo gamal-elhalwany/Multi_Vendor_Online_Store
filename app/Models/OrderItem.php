@@ -14,14 +14,14 @@ class OrderItem extends Model
 
     public $timestamps = false; //this is used if you are not using the timestamps method in the migration file.
 
-    public function product ()
+    public function product()
     {
         return $this->belongsTo(Product::class)->withDefault([
             'name' => $this->product_name,
         ]);
     }
 
-    public function order ()
+    public function order()
     {
         return $this->belongsToMany(Order::class)->withPivot([
             'price', 'product_name'

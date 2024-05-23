@@ -31,6 +31,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 
     Route::get('/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+    Route::get('/products/filter/by-range', [ProductController::class, 'filterByRange'])->name('filter.products.byRange');
+    Route::get('/products/sort', [ProductController::class, 'sortProducts'])->name('sort.products');
+
     Route::get('category/{category:slug}', [HomeController::class, 'category'])->name('category.show');
     Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about');
     Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact');
@@ -43,6 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 
     Route::get('checkout', [OrdersController::class, 'create'])->name('checkout.create');
     Route::post('checkout', [OrdersController::class, 'store'])->name('checkout.store');
+    Route::post('checkout/paypal', [OrdersController::class, 'paypalCheckout'])->name('checkout.paypal');
 
     Route::get('user/2fa', [TwoFactorAuthenticationController::class, 'index'])->name('two-factor');
 
@@ -56,10 +60,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::match(['get', 'post'], 'payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
     Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
     Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
-
-    Route::get('/products/filter/by-range', [ProductController::class, 'filterByRange'])->name('filter.products.byRange');
-    Route::get('/products/sort', [ProductController::class, 'sortProducts'])->name('sort.products');
-
 
     //Payments Routes.
     // Route::match(['get', 'post'], 'payments/{order}', [PaymentController::class, 'pay'])->name('payments.pay');
