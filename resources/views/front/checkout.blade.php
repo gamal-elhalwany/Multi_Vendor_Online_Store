@@ -31,7 +31,7 @@
             <div class="row justify-content-center">
                 @if ($cart->get()->count())
                 <div class="col-lg-8">
-                    <form action="{{ route('checkout.create') }}" method="POST">
+                    <form action="{{ route('checkout.store') }}" method="POST">
                         @csrf
                         <div class="checkout-steps-form-style-1">
                             <ul id="accordionExample">
@@ -282,14 +282,19 @@
                                                     <a data-bs-toggle="collapse" data-bs-target="#collapseThree"
                                                         aria-expanded="false" aria-controls="collapseThree"
                                                         class="btn btn-primary">previous</a>
-                                                    <button type="submit" class="btn btn-alt">Save &
-                                                        Continue</button>
+                                                    <button type="submit" class="btn btn-alt" name="action" value="cod">
+                                                        Cash on Delivery
+                                                    </button>
+                                                    <button type="submit" class="btn btn-alt" name="action"
+                                                        value="with_paypal">
+                                                        Pay via PayPal
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </section>
                                 </li>
-                                {{-- <li>
+                                <!-- <li>
                                     <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapsefive"
                                         aria-expanded="false" aria-controls="collapsefive">Payment Info</h6>
                                     <section class="checkout-steps-form-content collapse" id="collapsefive"
@@ -338,13 +343,19 @@
                                             </div>
                                         </div>
                                     </section>
-                                </li> --}}
+                                </li> -->
                             </ul>
                         </div>
                     </form>
                 </div>
+                <!-- <form action="{{ route('checkout.paypal') }}" method="POST">
+                    @csrf
+                    <button class="btn btn-alt" type="submit">Pay via
+                        PayPal</button>
+                </form> -->
                 @else
-                <div class="col-lg-4">
+                <strong>There is no carts for this user!</strong>
+                <!-- <div class="col-lg-4">
                     <div class="checkout-sidebar">
                         <div class="checkout-sidebar-coupon">
                             <p>Appy Coupon to get discount!</p>
@@ -386,13 +397,12 @@
                             <div class="price-table-btn button">
                                 <form action="{{ route('paypal.create', $order->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit"
-                                        class="btn btn-alt {{ $order->get()->count() == 0 ? 'disabled' : ''}}">Checkout</button>
+                                    <button type="submit" class="btn btn-alt {{ $order->get()->count() == 0 ? 'disabled' : ''}}">Checkout</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 @endif
             </div>
         </div>

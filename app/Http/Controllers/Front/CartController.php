@@ -63,7 +63,8 @@ class CartController extends Controller
         $product = Product::findOrFail($request->product_id);
         $quantity = $request->post('quantity');
 
-        $cart->update($product, $quantity);
+        $price = $quantity * $product->price;
+        $cart->update($product, $quantity, $price);
         if ($request->expectsJson()) {
             return [
                 'message' => 'Quantity updated successfully!',

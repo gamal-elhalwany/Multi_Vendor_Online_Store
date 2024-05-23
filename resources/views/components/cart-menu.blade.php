@@ -65,7 +65,9 @@
             </div>
             @elseif (auth()->user()->orders()->count())
             <div class="button">
-                <a href="{{ route('checkout.create') }}" class="btn animate">{{ __('Checkout') }}</a>
+                <a href="{{ route('checkout.create') }}" class="btn animate">
+                    {{ __('Checkout') }}
+                </a>
             </div>
             @endif
             @endauth

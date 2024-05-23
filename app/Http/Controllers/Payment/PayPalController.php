@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Session;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalHttp\HttpException;
+use Illuminate\Support\Carbon;
 
 // The Main Controller of Payment That I'm using.
 class PayPalController extends Controller
 {
-    public function create(Order $order)
+    public function create(Request $request, Order $order)
     {
         $authID = auth()->id();
         $totalPrice = 0;
@@ -27,10 +28,14 @@ class PayPalController extends Controller
         }
 
         if (auth()->id() == $order->user_id) {
-            if ($order->payment_status == 'paid') {
-                // abort(404);
-                return $order->payments;
-            }
+
+            // $dateNowPlusMinutes = Carbon::now('Africa/Cairo')->addMinutes(2);
+            // $dateFormatter = $dateNowPlusMinutes->format('H:i:s d-m-Y');
+            // if ($order->payment_status == 'paid' && $order->payments == empty([])) {
+            //     // abort(404);
+            //     // return $order->payments;
+            //     // return "Hello";
+            // }
 
             $client = app('paypal.client');
 
@@ -71,18 +76,20 @@ class PayPalController extends Controller
                 $order->save();
                 return redirect('/')->with('error', 'Payment Cancelled!');
             }
+            return redirect()->route('home')->with('error', 'You are not allow for this action!');
         }
-        return redirect()->route('home')->with('error', 'You are not allow for this action!');
     }
 
     public function callback(Request $request, Order $order)
     {
         // To make this method work right as you wish you have to create a custom accounts on PayPal Developer tool and not use the Default apps {personal or business} apps.
 
-        if ($order->payment_status == 'paid') {
-            // abort(404);
-            return $order->payments;
-        }
+        // $dateNowPlusMinutes = Carbon::now('Africa/Cairo')->addMinutes(2);
+        // // $dateFormatter = $dateNowPlusMinutes->format('H:i:s d-m-Y');
+        // if ($order->payment_status = 'paid' && $order->payments == empty([])) {
+        //     // abort(404);
+        //     // return $order->payments;
+        // }
 
         $token = $request->query('token');
         if (!$token) {

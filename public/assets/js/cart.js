@@ -1,10 +1,10 @@
 (function ($) {
 
-    $('.item-qty').on('change', function () {
+        // Update Cart Qty & Price.
+        $('.item-qty').on('change', function () {
         let cartID = $(this).data('id');
         let product_id = $(this).closest('.count-input').find('.product_id').val();
         let token = $('#x-csrf').val();
-        let totalCartPrice = $(this).closest('.row').find('.totalCartPrice');
         let productPrice = $('.product_price').val();
         $.ajax({
             url: "/cart/" + cartID,
@@ -16,14 +16,13 @@
                 _token: token,
             },
             success: function () {
-                let itemTotalPrice = productPrice * $('.item-qty').val();
-                let options = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-                totalCartPrice.text(itemTotalPrice.toLocaleString(undefined, options));
+                
             }
         });
     });
 
 
+    // Delete Cart Item.
     $('.remove-item').on('click', function () {
         let id = $(this).data('id');
         $.ajax({

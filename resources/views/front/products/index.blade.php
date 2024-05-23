@@ -1,23 +1,23 @@
 <x-front-layout title="{{ config('app.name') }}">
     @section('breadcrumbs')
-        <div class="breadcrumbs">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="breadcrumbs-content">
-                            <h1 class="page-title">Shop Grid</h1>
-                        </div>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Shop Grid</h1>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('product.index') }}">Shop</a></li>
-                            <li>Shop Grid</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <ul class="breadcrumb-nav">
+                        <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
+                        <li><a href="{{ route('product.index') }}">Shop</a></li>
+                        <li>Shop Grid</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
     @endsection
 
     <!-- Start Products Grid -->
@@ -31,8 +31,7 @@
                         <div class="single-widget search">
                             <h3>Search Product</h3>
                             <form action="{{ route('product.index') }}" method="get">
-                                <input type="text" name="name" placeholder="Search Here..."
-                                    :value="$request - > name">
+                                <input type="text" name="name" placeholder="Search Here..." :value="$request - > name">
                                 <button type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>
                         </div>
@@ -51,11 +50,12 @@
                         <div class="single-widget range">
                             <h3>Price Range</h3>
                             <form action="{{ route('filter.products.byRange') }}" method="GET">
-                                <input type="range" class="form-range" name="range" step="1" min="100"
-                                    max="10000" value="10" onchange="rangePrimary.value=value">
+                                <input type="range" class="form-range" name="range" step="1" min="100" max="10000"
+                                    value="10" onchange="rangePrimary.value=value">
                                 <div class="range-inner">
                                     <label>$</label>
-                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100" value="10">
+                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100"
+                                        value="10">
                                 </div>
                                 <button type="submit" class="btn btn-outline-primary m-3">Apply Filter</button>
                             </form>
@@ -72,7 +72,7 @@
                                     <div class="product-sorting">
                                         <form action="{{ route('sort.products') }}" method="GET">
                                             <label for="sorting">Sort by:</label>
-                                            <select class="form-control" id="sorting"name="criteria"
+                                            <select class="form-control" id="sorting" name="criteria"
                                                 onchange="this.form.submit()">
                                                 <option value="popularity">Popularity</option>
                                                 <option value="average_rating">Average Rating</option>
@@ -106,44 +106,43 @@
                                 aria-labelledby="nav-grid-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
-                                        <div class="col-lg-4 col-md-6 col-12">
-                                            <!-- Start Single Product -->
-                                            <div class="single-product">
-                                                <div class="product-image">
-                                                    <img src="{{ $product->image_url }}" alt="#">
-                                                    <div class="button">
-                                                        <form action="{{ route('cart.store') }}" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $product->id }}" />
-                                                            <input type="hidden" name="quantity" value="1" />
-                                                            <button type="submit" class="btn"><i
-                                                                    class="lni lni-cart"></i>
-                                                                {{ __('Add To Cart') }}</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <span class="category">{{ $product->category->name }}</span>
-                                                    <h4 class="title">
-                                                        <a
-                                                            href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star"></i></li>
-                                                        <li><span>4.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>{{ CurrencyFormat::format($product->price) }}</span>
-                                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-12">
+                                        <!-- Start Single Product -->
+                                        <div class="single-product">
+                                            <div class="product-image">
+                                                <img src="{{ $product->image_url }}" alt="#">
+                                                <div class="button">
+                                                    <form action="{{ route('cart.store') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="btn"><i class="lni lni-cart"></i>
+                                                            {{ __('Add To Cart') }}</button>
+                                                    </form>
                                                 </div>
                                             </div>
-                                            <!-- End Single Product -->
+                                            <div class="product-info">
+                                                <span class="category">{{ $product->category->name }}</span>
+                                                <h4 class="title">
+                                                    <a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}
+                                                    </a>
+                                                </h4>
+                                                <ul class="review">
+                                                    <li><i class="lni lni-star-filled"></i></li>
+                                                    <li><i class="lni lni-star-filled"></i></li>
+                                                    <li><i class="lni lni-star-filled"></i></li>
+                                                    <li><i class="lni lni-star-filled"></i></li>
+                                                    <li><i class="lni lni-star"></i></li>
+                                                    <li><span>4.0 Review(s)</span></li>
+                                                </ul>
+                                                <div class="price">
+                                                    <span>{{ CurrencyFormat::format($product->price) }}</span>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <!-- End Single Product -->
+                                    </div>
                                     @endforeach
                                 </div>
                                 <div class="row">
@@ -159,57 +158,53 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="nav-list" role="tabpanel"
-                                aria-labelledby="nav-list-tab">
+                            <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <!-- Start Single Product -->
-                                            <div class="single-product">
-                                                <div class="row align-items-center">
-                                                    <div class="col-lg-4 col-md-4 col-12">
-                                                        <div class="product-image">
-                                                            <img src="{{ $product->image_url }}" alt="#">
-                                                            <div class="button">
-                                                                <form action="{{ route('cart.store') }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <input type="hidden" name="product_id"
-                                                                        value="{{ $product->id }}" />
-                                                                    <input type="hidden" name="quantity"
-                                                                        value="1" />
-                                                                    <button type="submit" class="btn"><i
-                                                                            class="lni lni-cart"></i>
-                                                                        {{ __('Add To Cart') }}</button>
-                                                                </form>
-                                                            </div>
+                                    <div class="col-lg-12 col-md-12 col-12">
+                                        <!-- Start Single Product -->
+                                        <div class="single-product">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-4 col-md-4 col-12">
+                                                    <div class="product-image">
+                                                        <img src="{{ $product->image_url }}" alt="#">
+                                                        <div class="button">
+                                                            <form action="{{ route('cart.store') }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}" />
+                                                                <input type="hidden" name="quantity" value="1" />
+                                                                <button type="submit" class="btn"><i
+                                                                        class="lni lni-cart"></i>
+                                                                    {{ __('Add To Cart') }}</button>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-8 col-md-8 col-12">
-                                                        <div class="product-info">
-                                                            <span
-                                                                class="category">{{ $product->category->name }}</span>
-                                                            <h4 class="title">
-                                                                <a
-                                                                    href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
-                                                            </h4>
-                                                            <ul class="review">
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star"></i></li>
-                                                                <li><span>4.0 Review(s)</span></li>
-                                                            </ul>
-                                                            <div class="price">
-                                                                <span>{{ CurrencyFormat::format($product->price) }}</span>
-                                                            </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-12">
+                                                    <div class="product-info">
+                                                        <span class="category">{{ $product->category->name }}</span>
+                                                        <h4 class="title">
+                                                            <a
+                                                                href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
+                                                        </h4>
+                                                        <ul class="review">
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star"></i></li>
+                                                            <li><span>4.0 Review(s)</span></li>
+                                                        </ul>
+                                                        <div class="price">
+                                                            <span>{{ CurrencyFormat::format($product->price) }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Single Product -->
                                         </div>
+                                        <!-- End Single Product -->
+                                    </div>
                                     @endforeach
                                 </div>
                                 <div class="row">
@@ -238,22 +233,22 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="text/javascript">
-        const current = document.getElementById("current");
-        const opacity = 0.6;
-        const imgs = document.querySelectorAll(".img");
-        imgs.forEach(img => {
-            img.addEventListener("click", (e) => {
-                //reset opacity
-                imgs.forEach(img => {
-                    img.style.opacity = 1;
-                });
-                current.src = e.target.src;
-                //adding class
-                //current.classList.add("fade-in");
-                //opacity
-                e.target.style.opacity = opacity;
+    const current = document.getElementById("current");
+    const opacity = 0.6;
+    const imgs = document.querySelectorAll(".img");
+    imgs.forEach(img => {
+        img.addEventListener("click", (e) => {
+            //reset opacity
+            imgs.forEach(img => {
+                img.style.opacity = 1;
             });
+            current.src = e.target.src;
+            //adding class
+            //current.classList.add("fade-in");
+            //opacity
+            e.target.style.opacity = opacity;
         });
+    });
     </script>
 
 </x-front-layout>

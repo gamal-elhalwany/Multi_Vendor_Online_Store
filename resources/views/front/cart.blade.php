@@ -72,12 +72,16 @@
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
                             <div class="count-input">
-                                <input class="form-control item-qty" data-id="{{ $cart->id }}"
-                                    value="{{ $cart->quantity }}" name="quantity"
-                                    {{ session('coupon_code') ? 'disabled' : '' }}>
-                                @error('quantity')
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <form action="{{ route('cart.update', $cart->id) }}" method="post">
+                                    @csrf
+                                    @method('put')
+                                    <input class="form-control item-qty" data-id="{{ $cart->id }}"
+                                        value="{{ $cart->quantity }}" name="quantity"
+                                        {{ session('coupon_code') ? 'disabled' : '' }} onchange="this.form.submit()">
+                                    @error('quantity')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </form>
                                 <input type="hidden" class="product_id" name="productID" id="product_id"
                                     value="{{ $cart->product_id }}">
                                 @error('productID')
@@ -88,7 +92,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12 total-cart-price-wrapper">
-                            <p class="totalCartPrice" id="{{ $cart->product_id }}">
+                            <p class="totalCartPrice {{ $cart->product_id }}" id="{{ $cart->product_id }}">
                                 {{ CurrencyFormat::format($cart->quantity * $cart->product->price) }}
                             </p>
                         </div>
@@ -181,7 +185,7 @@
                                         @endif
                                     </ul>
                                     <div class="button">
-                                        <a href="{{ route('checkout.store') }}" class="btn">Checkout</a>
+                                        <a href="{{ route('checkout.store') }}" class="btn">Proceed to Order</a>
                                         <a href="{{ route('product.index') }}" class="btn btn-alt">Continue
                                             shopping</a>
                                     </div>
