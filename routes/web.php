@@ -57,7 +57,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Paypal Routes.
-    Route::match(['get', 'post'], 'payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
+    Route::get('payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
     Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
     Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
 

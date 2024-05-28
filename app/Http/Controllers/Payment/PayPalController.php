@@ -29,14 +29,6 @@ class PayPalController extends Controller
 
         if (auth()->id() == $order->user_id) {
 
-            // $dateNowPlusMinutes = Carbon::now('Africa/Cairo')->addMinutes(2);
-            // $dateFormatter = $dateNowPlusMinutes->format('H:i:s d-m-Y');
-            // if ($order->payment_status == 'paid' && $order->payments == empty([])) {
-            //     // abort(404);
-            //     // return $order->payments;
-            //     // return "Hello";
-            // }
-
             $client = app('paypal.client');
 
             $baseCurrency = config('app.currency', 'EUR');
@@ -77,20 +69,13 @@ class PayPalController extends Controller
                 return redirect('/')->with('error', 'Payment Cancelled!');
             }
             return redirect()->route('home')->with('error', 'You are not allow for this action!');
+        } else {
+            abort(404);
         }
     }
 
     public function callback(Request $request, Order $order)
     {
-        // To make this method work right as you wish you have to create a custom accounts on PayPal Developer tool and not use the Default apps {personal or business} apps.
-
-        // $dateNowPlusMinutes = Carbon::now('Africa/Cairo')->addMinutes(2);
-        // // $dateFormatter = $dateNowPlusMinutes->format('H:i:s d-m-Y');
-        // if ($order->payment_status = 'paid' && $order->payments == empty([])) {
-        //     // abort(404);
-        //     // return $order->payments;
-        // }
-
         $token = $request->query('token');
         if (!$token) {
             abort(404, 'Payment not found!');
@@ -114,6 +99,9 @@ class PayPalController extends Controller
                     'method' => 'PayPal',
                 ]);
 
+                if (session()->has('coupon_code')) {
+                    session()->forget('coupon_code');
+                }
                 return redirect('/')->with('success', 'Your Payment Operation Done Successfully. We will Proceed with your order very soon.');
             }
         } catch (HttpException $ex) {
@@ -124,9 +112,16 @@ class PayPalController extends Controller
 
     public function cancel(Order $order)
     {
-        $order->payment_status = 'failed';
-        $order->status = 'canceled';
-        $order->save();
+        $authID = auth()->id();
+        $userOrders = Order::where('user_id', $authID)->get();
+        foreach ($userOrders as $userOrder) {
+            $userOrder->payment_status = 'failed';
+            $userOrder->status = 'canceled';
+            $userOrder->save();
+        }
+        if (session('coupon_code')) {
+            session()->forget('coupon_code');
+        }
         return redirect('/')->with('error', 'Payment Cancelled!');
     }
 }

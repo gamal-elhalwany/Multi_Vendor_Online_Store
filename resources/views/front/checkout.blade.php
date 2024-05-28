@@ -36,22 +36,24 @@
                         <div class="checkout-steps-form-style-1">
                             <ul id="accordionExample">
                                 <li>
-                                    <h6 class="title" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                        aria-expanded="true" aria-controls="collapseThree">Your Personal Details </h6>
-                                    <section class="checkout-steps-form-content collapse show" id="collapseThree"
-                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <h6 class="title" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Your Personal Details </h6>
+                                    <section class="checkout-steps-form-content collapse show" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="single-form form-default">
                                                     <label>User Name</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[billing][first_name]"
-                                                                placeholder="First Name">
+                                                            <input type="text" name="address[billing][first_name]" placeholder="First Name">
+                                                            @error('address.billing.first_name')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[billing][last_name]"
-                                                                placeholder="Last Name">
+                                                            <input type="text" name="address[billing][last_name]" placeholder="Last Name">
+                                                            @error('address.billing.last_name')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -60,8 +62,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Email Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][email]"
-                                                            placeholder="Email Address">
+                                                        <input type="text" name="address[billing][email]" placeholder="Email Address">
+                                                        @error('address.billing.email')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,8 +73,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Phone Number</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][phone_number]"
-                                                            placeholder="Phone Number">
+                                                        <input type="text" name="address[billing][phone_number]" placeholder="Phone Number">
+                                                        @error('address.billing.phone_number')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,8 +84,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Mailing Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][street_address]"
-                                                            placeholder="Mailing Address">
+                                                        <input type="text" name="address[billing][street_address]" placeholder="Street Address">
+                                                        @error('address.billing.street_address')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,8 +95,10 @@
                                                 <div class="single-form form-default">
                                                     <label>City</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][city]"
-                                                            placeholder="City">
+                                                        <input type="text" name="address[billing][city]" placeholder="City">
+                                                        @error('address.billing.city')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,8 +106,7 @@
                                                 <div class="single-form form-default">
                                                     <label>Post Code</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][postal_code]"
-                                                            placeholder="Post Code">
+                                                        <input type="text" name="address[billing][postal_code]" placeholder="Post Code">
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,6 +121,9 @@
                                                             </option>
                                                             @endforeach
                                                         </select>
+                                                        @error('address.billing.country')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,8 +131,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Region/State</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[billing][state]"
-                                                            placeholder="State">
+                                                        <input type="text" name="address[billing][state]" placeholder="State">
+                                                        @error('address.billing.state')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,14 +143,11 @@
                                                 <div class="single-checkbox checkbox-style-3">
                                                     <input type="checkbox" id="checkbox-3">
                                                     <label for="checkbox-3"><span></span></label>
-                                                    <p>My delivery and mailing addresses are the same.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="single-form button">
-                                                    <a class="btn" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapseFour" aria-expanded="false"
-                                                        aria-controls="collapseFour" href="javascript:void(0)">next
+                                                    <a class="btn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" href="javascript:void(0)">next
                                                         step</a>
                                                 </div>
                                             </div>
@@ -144,22 +155,24 @@
                                     </section>
                                 </li>
                                 <li>
-                                    <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                        aria-expanded="false" aria-controls="collapseFour">Shipping Address</h6>
-                                    <section class="checkout-steps-form-content collapse" id="collapseFour"
-                                        aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                    <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Shipping Address</h6>
+                                    <section class="checkout-steps-form-content collapse" id="collapseFour" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="single-form form-default">
                                                     <label>User Name</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[shipping][first_name]"
-                                                                placeholder="First Name">
+                                                            <input type="text" name="address[shipping][first_name]" placeholder="First Name">
+                                                            @error('address.shipping.first_name')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <input type="text" name="address[shipping][last_name]"
-                                                                placeholder="Last Name">
+                                                            <input type="text" name="address[shipping][last_name]" placeholder="Last Name">
+                                                            @error('address.shipping.last_name')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,8 +181,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Email Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][email]"
-                                                            placeholder="Email Address">
+                                                        <input type="text" name="address[shipping][email]" placeholder="Email Address">
+                                                        @error('address.shipping.email')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,8 +192,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Phone Number</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][phone_number]"
-                                                            placeholder="Phone Number">
+                                                        <input type="text" name="address[shipping][phone_number]" placeholder="Phone Number">
+                                                        @error('address.shipping.phone_number')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,8 +203,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Mailing Address</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][street_address]"
-                                                            placeholder="Mailing Address">
+                                                        <input type="text" name="address[shipping][street_address]" placeholder="Mailing Address">
+                                                        @error('address.shipping.street_address')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,8 +214,10 @@
                                                 <div class="single-form form-default">
                                                     <label>City</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][city]"
-                                                            placeholder="City">
+                                                        <input type="text" name="address[shipping][city]" placeholder="City">
+                                                        @error('address.shipping.city')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -204,8 +225,7 @@
                                                 <div class="single-form form-default">
                                                     <label>Post Code</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][postal_code]"
-                                                            placeholder="Post Code">
+                                                        <input type="text" name="address[shipping][postal_code]" placeholder="Post Code">
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,6 +240,9 @@
                                                             </option>
                                                             @endforeach
                                                         </select>
+                                                        @error('address.shipping.country')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,8 +250,10 @@
                                                 <div class="single-form form-default">
                                                     <label>Region/State</label>
                                                     <div class="form-input form">
-                                                        <input type="text" name="address[shipping][state]"
-                                                            placeholder="State">
+                                                        <input type="text" name="address[shipping][state]" placeholder="State">
+                                                        @error('address.shipping.state')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -241,8 +266,7 @@
                                                         <div class="single-payment-option">
                                                             <input type="radio" name="shipping" checked id="shipping-1">
                                                             <label for="shipping-1">
-                                                                <img src="assets/images/shipping/shipping-1.png"
-                                                                    alt="Sipping">
+                                                                <img src="assets/images/shipping/shipping-1.png" alt="Sipping">
                                                                 <p>Standerd Shipping</p>
                                                                 <span class="price">$10.50</span>
                                                             </label>
@@ -250,8 +274,7 @@
                                                         <div class="single-payment-option">
                                                             <input type="radio" name="shipping" id="shipping-2">
                                                             <label for="shipping-2">
-                                                                <img src="assets/images/shipping/shipping-2.png"
-                                                                    alt="Sipping">
+                                                                <img src="assets/images/shipping/shipping-2.png" alt="Sipping">
                                                                 <p>Standerd Shipping</p>
                                                                 <span class="price">$10.50</span>
                                                             </label>
@@ -259,8 +282,7 @@
                                                         <div class="single-payment-option">
                                                             <input type="radio" name="shipping" id="shipping-3">
                                                             <label for="shipping-3">
-                                                                <img src="assets/images/shipping/shipping-3.png"
-                                                                    alt="Sipping">
+                                                                <img src="assets/images/shipping/shipping-3.png" alt="Sipping">
                                                                 <p>Standerd Shipping</p>
                                                                 <span class="price">$10.50</span>
                                                             </label>
@@ -268,8 +290,7 @@
                                                         <div class="single-payment-option">
                                                             <input type="radio" name="shipping" id="shipping-4">
                                                             <label for="shipping-4">
-                                                                <img src="assets/images/shipping/shipping-4.png"
-                                                                    alt="Sipping">
+                                                                <img src="assets/images/shipping/shipping-4.png" alt="Sipping">
                                                                 <p>Standerd Shipping</p>
                                                                 <span class="price">$10.50</span>
                                                             </label>
@@ -279,14 +300,11 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="steps-form-btn button">
-                                                    <a data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                        aria-expanded="false" aria-controls="collapseThree"
-                                                        class="btn btn-primary">previous</a>
+                                                    <a data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="btn btn-primary">previous</a>
                                                     <button type="submit" class="btn btn-alt" name="action" value="cod">
                                                         Cash on Delivery
                                                     </button>
-                                                    <button type="submit" class="btn btn-alt" name="action"
-                                                        value="with_paypal">
+                                                    <button type="submit" class="btn btn-alt" name="action" value="with_paypal">
                                                         Pay via PayPal
                                                     </button>
                                                 </div>

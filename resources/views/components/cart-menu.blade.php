@@ -19,10 +19,6 @@
                 onclick="event.preventDefault();" style="pointer-events: none; opacity: 0.5;" : ''>
                 {{ __('Total Items') }}
             </a>
-            @elseif (auth()->user()->orders()->count())
-            <p>You have some orders, but no items in the cart.</p>
-            @else
-            <p>you have no carts</p>
             @endif
             @endauth
         </div>
@@ -63,12 +59,11 @@
                     {{ __('Cart') }}
                 </a>
             </div>
-            @elseif (auth()->user()->orders()->count())
-            <div class="button">
+            <!-- <div class="button">
                 <a href="{{ route('checkout.create') }}" class="btn animate">
                     {{ __('Checkout') }}
                 </a>
-            </div>
+            </div> -->
             @endif
             @endauth
         </div>

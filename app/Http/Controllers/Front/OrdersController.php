@@ -31,13 +31,21 @@ class OrdersController extends Controller
 
     public function store(Request $request, CartRepository $cartRepository)
     {
-        // $request->validate([
-        //     'address.billing.first_name' => ['required', 'string', 'min:3', 'max:255'],
-        //     'address.billing.email' => ['required', 'email'],
-        //     'address.billing.phone_number' => ['required', 'string', 'min:11'],
-        //     'address.billing.city' => ['required'],
-        //     'address.billing.country' => ['required'],
-        // ]);
+        $request->validate([
+            'address.billing.first_name' => ['required', 'string', 'min:3', 'max:255'],
+            'address.billing.email' => ['required', 'email'],
+            'address.billing.phone_number' => ['required', 'string', 'min:11'],
+            'address.billing.street_address' => ['required'],
+            'address.billing.city' => ['required', 'string'],
+            'address.billing.country' => ['required', 'string', 'min:2'],
+
+            'address.shipping.first_name' => ['required', 'string', 'min:3', 'max:255'],
+            'address.shipping.email' => ['required', 'email'],
+            'address.shipping.phone_number' => ['required', 'string', 'min:11'],
+            'address.shipping.street_address' => ['required'],
+            'address.shipping.city' => ['required', 'string'],
+            'address.shipping.country' => ['required', 'string', 'min:2'],
+        ]);
 
         $items = $cartRepository->get()->groupBy('product.store_id')->all();
 
@@ -83,6 +91,37 @@ class OrdersController extends Controller
                     $order->addresses()->create($address);
                 }
             }
+
+            if ($request->is(url('payments/paypal/' . $order->id . 'cancel*'))) {
+                dd(url('payments/paypal/' . $order->id . '/cancel*'));
+                $order->payment_method = 'PayPal';
+                $order->payment_status = 'failed';
+                $order->status = 'canceled';
+                $order->save();
+            }
+
+            if (session('coupon_code')) {
+                $authID = auth()->id();
+                $coupon_code = session('coupon_code');
+                if ($coupon_code->type === 'persentage') {
+                    $userOrders = Order::where('user_id', $authID)->get();
+                    foreach ($userOrders as $userOrder) {
+                        foreach ($userOrder->orderItems as $orderItem) {
+                            $orderItem->price = $orderItem->price - $orderItem->price * $coupon_code->discount_amount / 100;
+                            $orderItem->save();
+                        }
+                    }
+                } elseif ($coupon_code->type === 'fixed') {
+                    $userOrders = Order::where('user_id', $authID)->get();
+                    foreach ($userOrders as $userOrder) {
+                        foreach ($userOrder->orderItems as $orderItem) {
+                            $orderItem->price = $orderItem->price - $coupon_code->discount_amount;
+                            $orderItem->save();
+                        }
+                    }
+                }
+            }
+
             event(new OrderCreated($order));
 
             DB::commit(); // this function is used for making this function works:startTransaction().
@@ -93,6 +132,9 @@ class OrdersController extends Controller
         }
 
         if ($request->input('action') === 'cod') {
+            if (session('coupon_code')) {
+                session()->forget('coupon_code');
+            }
             return redirect()->route('home')->with('success', 'Your Order has Successfully Created. thanks for using our app.');
         } else {
             $authID = auth()->id();

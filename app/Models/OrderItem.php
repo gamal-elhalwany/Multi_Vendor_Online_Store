@@ -23,7 +23,7 @@ class OrderItem extends Model
 
     public function order()
     {
-        return $this->belongsToMany(Order::class)->withPivot([
+        return $this->belongsTo(Order::class)->withPivot([
             'price', 'product_name'
         ]);
     }
