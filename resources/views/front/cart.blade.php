@@ -97,10 +97,16 @@
                             </p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
+                            @if(session('coupon_code'))
+
                             @if(session('fixed_amount'))
                             <p class="discount_amount">{{ session('fixed_amount') }}</p>
                             @elseif(session('percent_amount'))
                             <p class="discount_amount">{{ session('percent_amount') . '%' }}</p>
+                            @else
+                            <p class="discount_amount">0.00</p>
+                            @endif
+
                             @else
                             <p class="discount_amount">0.00</p>
                             @endif
@@ -157,6 +163,8 @@
                                         <li class="last">
                                             You Save
                                             <span class="you_save">
+                                                @if(session('coupon_code'))
+
                                                 @if(session('percent_amount'))
                                                 {{ CurrencyFormat::format(($total) * floatval(session('percent_amount'))/100) }}
 
@@ -166,16 +174,26 @@
                                                 @else
                                                 {{ CurrencyFormat::format(0) }}
                                                 @endif
+
+                                                @else
+                                                {{ CurrencyFormat::format(0) }}
+                                                @endif
                                             </span>
                                         </li>
                                         <li>
                                             You Pay
                                             <span class="you_pay">
+                                                @if(session('coupon_code'))
+
                                                 @if(session('percent_amount'))
                                                 {{ CurrencyFormat::format(($total) - ($total) * floatval(session('percent_amount'))/100) }}
 
                                                 @elseif(session('fixed_amount'))
                                                 {{ CurrencyFormat::format(($total) - session('coupon_code')->discount_amount) }}
+
+                                                @else
+                                                {{ CurrencyFormat::format($total) }}
+                                                @endif
 
                                                 @else
                                                 {{ CurrencyFormat::format($total) }}

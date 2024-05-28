@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Order;
 use App\Repositories\Cart\CartRepository;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -14,7 +15,7 @@ class CartMenu extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(CartRepository $cart)
+    public function __construct(CartRepository $cart, Order $order)
     {
         $this->items = $cart->get();
         $this->total = $cart->total($quantity = 1);
