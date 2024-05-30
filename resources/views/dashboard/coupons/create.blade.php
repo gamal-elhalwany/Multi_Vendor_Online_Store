@@ -73,7 +73,7 @@
             <div class="form-group">
                 <strong>Discount Type:</strong>
                 <select name="type" class="form-control">
-                    <option value="persentage">Persentage</option>
+                    <option value="percent">Persentage</option>
                     <option value="fixed">Fixed</option>
                 </select>
             </div>

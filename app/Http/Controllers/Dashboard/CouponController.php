@@ -44,7 +44,7 @@ class CouponController extends Controller
         $request->validate([
             'code' => ['required', 'string'],
             'name' => ['required', 'string', 'min:3', 'max:50'],
-            'type' => ['required', 'in:persentage,fixed'],
+            'type' => ['required', 'in:percent,fixed'],
             'store_id' => ['required', 'exists:stores,id'],
             'user_id' => ['required', 'exists:users,id'],
             'max_uses' => ['required', 'numeric'],
@@ -89,7 +89,7 @@ class CouponController extends Controller
         $request->validate([
             'code' => ['required', 'string'],
             'name' => ['required', 'string', 'min:3', 'max:50'],
-            'type' => ['required', 'in:persentage,fixed'],
+            'type' => ['required', 'in:percent,fixed'],
             'store_id' => ['required', 'exists:stores,id'],
             'user_id' => ['required', 'exists:users,id'],
             'max_uses' => ['required', 'numeric'],

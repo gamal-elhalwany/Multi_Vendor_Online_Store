@@ -140,12 +140,6 @@
                                             </div>
 
                                             <div class="col-md-12">
-                                                <div class="single-checkbox checkbox-style-3">
-                                                    <input type="checkbox" id="checkbox-3">
-                                                    <label for="checkbox-3"><span></span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
                                                 <div class="single-form button">
                                                     <a class="btn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" href="javascript:void(0)">next
                                                         step</a>
