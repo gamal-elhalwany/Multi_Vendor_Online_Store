@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Session;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalHttp\HttpException;
-use Illuminate\Support\Carbon;
 
 // The Main Controller of Payment That I'm using.
 class PayPalController extends Controller
 {
     public function create(Request $request, Order $order)
     {
+        if ($order->payment_status === 'paid') {
+            return $order->payments;
+        }
+
         $authID = auth()->id();
         $totalPrice = 0;
         if ($authID) {
@@ -76,6 +79,10 @@ class PayPalController extends Controller
 
     public function callback(Request $request, Order $order)
     {
+        if ($order->payment_status === 'paid') {
+            return $order->payments;
+        }
+
         $token = $request->query('token');
         if (!$token) {
             abort(404, 'Payment not found!');
@@ -102,6 +109,7 @@ class PayPalController extends Controller
                 if (session()->has('coupon_code')) {
                     session()->forget('coupon_code');
                 }
+
                 return redirect('/')->with('success', 'Your Payment Operation Done Successfully. We will Proceed with your order very soon.');
             }
         } catch (HttpException $ex) {
@@ -112,13 +120,10 @@ class PayPalController extends Controller
 
     public function cancel(Order $order)
     {
-        $authID = auth()->id();
-        $userOrders = Order::where('user_id', $authID)->get();
-        foreach ($userOrders as $userOrder) {
-            $userOrder->payment_status = 'failed';
-            $userOrder->status = 'canceled';
-            $userOrder->save();
-        }
+        $order->payment_status = 'failed';
+        $order->payment_method = 'PayPal';
+        $order->status = 'canceled';
+        $order->save();
         if (session('coupon_code')) {
             session()->forget('coupon_code');
         }

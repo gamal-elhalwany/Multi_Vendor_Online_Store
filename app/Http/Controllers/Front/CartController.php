@@ -132,7 +132,7 @@ class CartController extends Controller
                     'fixedTotalSave' => $fixedTotalSave,
                     'fixedTotalPay' => $fixedTotalPay,
                 ]);
-            } elseif ($coupon_code->type == 'persentage') {
+            } elseif ($coupon_code->type == 'percent') {
                 session()->put('percent_amount', $coupon_code->discount_amount);
 
                 $percentTotalSave = Currency::format(($total * $coupon_code->discount_amount) / 100);

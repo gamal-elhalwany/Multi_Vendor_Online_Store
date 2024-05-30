@@ -120,6 +120,11 @@
                                     </li>
                                     @endif
                                     <li>
+                                        <a class="dropdown-item"
+                                            href="{{ route('user.orders', auth()->user()->name) }}">Your
+                                            Orders</a>
+                                    </li>
+                                    <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>

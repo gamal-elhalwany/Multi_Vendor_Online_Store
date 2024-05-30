@@ -51,30 +51,14 @@ class OrdersController extends Controller
 
         DB::beginTransaction(); // this function is used for checking if all the insertion processes are good, or if it will stop the whole process and roll back again and this is used when you try to make multiple insertions at various tables.
         try {
-            $action = $request->post('action');
-            $payment_method = '';
-            $payment_status = '';
-
-            if ($action === 'cod') {
-                $payment_method = 'cod';
-                $payment_status = 'pending';
-            } elseif ($action === 'with_paypal') {
-                $payment_method = 'PayPal';
-                $payment_status = 'paid';
-            } else {
-                $payment_method = 'Other';
-                $payment_status = 'failed';
-            }
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'total' => $cartRepository->total(0),
+                'payment_status' => 'pending',
+                'payment_method' => 'cod',
+            ]);
 
             foreach ($items as $store_id => $cart_items) {
-                $order = Order::create([
-                    'store_id' => $store_id,
-                    'user_id' => Auth::id(),
-                    'total' => $cartRepository->total(0),
-                    'payment_status' => $payment_status,
-                    'payment_method' => $payment_method,
-                ]);
-
                 //this foreach is for every single item of the cart.
                 foreach ($cart_items as $item) {
                     OrderItem::create([
@@ -83,6 +67,7 @@ class OrdersController extends Controller
                         'product_name' => $item->product->name,
                         'price' => $item->product->price * $item->quantity,
                         'quantity' => $item->quantity,
+                        'store_id' => $store_id,
                     ]);
                 } // end foreach
 
@@ -92,31 +77,19 @@ class OrdersController extends Controller
                 }
             }
 
-            if ($request->is(url('payments/paypal/' . $order->id . 'cancel*'))) {
-                dd(url('payments/paypal/' . $order->id . '/cancel*'));
-                $order->payment_method = 'PayPal';
-                $order->payment_status = 'failed';
-                $order->status = 'canceled';
-                $order->save();
-            }
-
+            // This condition is for updating the items's prices if there is a discount coupon.
             if (session('coupon_code')) {
-                $authID = auth()->id();
                 $coupon_code = session('coupon_code');
-                if ($coupon_code->type === 'persentage') {
-                    $userOrders = Order::where('user_id', $authID)->get();
-                    foreach ($userOrders as $userOrder) {
-                        foreach ($userOrder->orderItems as $orderItem) {
-                            $orderItem->price = $orderItem->price - $orderItem->price * $coupon_code->discount_amount / 100;
-                            $orderItem->save();
-                        }
+                if ($coupon_code->type === 'percent') {
+                    foreach ($order->orderItems as $item) {
+                        $item->price = $item->price - $item->price * $coupon_code->discount_amount / 100;
+                        $item->save();
                     }
-                } elseif ($coupon_code->type === 'fixed') {
-                    $userOrders = Order::where('user_id', $authID)->get();
-                    foreach ($userOrders as $userOrder) {
-                        foreach ($userOrder->orderItems as $orderItem) {
-                            $orderItem->price = $orderItem->price - $coupon_code->discount_amount;
-                            $orderItem->save();
+                } elseif (session('coupon_code')) {
+                    if ($coupon_code->type === 'fixed') {
+                        foreach ($order->orderItems as $item) {
+                            $item->price = $item->price - $coupon_code->discount_amount;
+                            $item->save();
                         }
                     }
                 }
@@ -142,6 +115,19 @@ class OrdersController extends Controller
                 return redirect()->route('paypal.create', $order->id);
             }
             return redirect('/')->with('error', 'You are not allow to this action!');
+        }
+    }
+
+    public function user_orders($username)
+    {
+        $user = auth()->user();
+        if ($user && $user->name === $username) {
+            $orders = Order::where('user_id', $user->id)->get();
+            return view('front.orders', [
+                'orders' => $orders,
+            ]);
+        } else {
+            abort(404);
         }
     }
 }
