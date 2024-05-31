@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\Currency;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repositories\Cart\CartRepository;

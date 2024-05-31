@@ -23,11 +23,8 @@ class PayPalController extends Controller
         $authID = auth()->id();
         $totalPrice = 0;
         if ($authID) {
-            $orders = Order::where('user_id', '=', $authID)->get();
-            foreach ($orders as $order) {
-                $orderTotalPrice = OrderItem::where('order_id', '=', $order->id)->sum('price');
-                $totalPrice += $orderTotalPrice;
-            }
+            $orderTotalPrice = OrderItem::where('order_id', '=', $order->id)->sum('price');
+            $totalPrice += $orderTotalPrice;
         }
 
         if (auth()->id() == $order->user_id) {

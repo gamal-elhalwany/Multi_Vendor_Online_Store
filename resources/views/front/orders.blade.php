@@ -37,15 +37,17 @@
                             <th scope="col">Order Payment Status</th>
                         </tr>
                     </thead>
-                    @foreach($orders as $order)
                     <tbody>
+                        @forelse($orders as $order)
                         <tr>
                             <td>{{ $order->number }}</td>
                             <td>{{ $order->payment_method }}</td>
                             <td>{{ $order->payment_status }}</td>
                         </tr>
+                        @empty
+                        <h5 class="mt-3">You have no orders!</h5>
+                        @endforelse
                     </tbody>
-                    @endforeach
                 </table>
             </div>
         </div>
