@@ -123,8 +123,24 @@ class OrdersController extends Controller
         $user = auth()->user();
         if ($user && $user->name === $username) {
             $orders = Order::where('user_id', $user->id)->get();
-            return view('front.orders', [
+            return view('front.user.orders', [
                 'orders' => $orders,
+            ]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function user_orders_items($username, Order $order)
+    {
+        $user = auth()->user();
+        if ($user && $user->name === $username) {
+            if (!$order) {
+                abort(404);
+            }
+            $orderItems = $order->orderItems;
+            return view('front.user.order_items', [
+                'orderItems' => $orderItems,
             ]);
         } else {
             abort(404);

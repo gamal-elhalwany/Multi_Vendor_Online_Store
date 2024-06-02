@@ -20,9 +20,9 @@ class Store extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function orders()
+    public function orderItem()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(orderItem::class);
     }
 
     public function coupon()
