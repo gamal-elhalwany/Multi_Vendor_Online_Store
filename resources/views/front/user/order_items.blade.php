@@ -1,4 +1,4 @@
-<x-front-layout title="Orders">
+<x-front-layout title="Order's items">
     <!-- Start Breadcrumbs -->
     @section('breadcrumbs')
     <div class="breadcrumbs">
@@ -6,14 +6,14 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">Orders</h1>
+                        <h1 class="page-title">Order's items</h1>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <ul class="breadcrumb-nav">
                         <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
                         <li><a href="{{ route('product.index') }}">Shop</a></li>
-                        <li>orders</li>
+                        <li>order's items</li>
                     </ul>
                 </div>
             </div>
@@ -28,27 +28,29 @@
     <section class="checkout-wrapper section">
         <div class="container">
             <div class="row justify-content-center">
-                <h4>Here are your orders. Welcome {{ auth()->user()->name }}!</h4>
-                <table class="table mt-5">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Order Number</th>
-                            <th scope="col">Order Payment Method</th>
-                            <th scope="col">Order Payment Status</th>
+                            <th>Product name</th>
+                            <th>Product price</th>
+                            <th>Product quantity</th>
+                            <th>Product options</th>
+                            <th>Product store</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($orders as $order)
+                        @foreach($orderItems as $item)
                         <tr>
-                            <td>{{ $order->number }}</td>
-                            <td>{{ $order->payment_method }}</td>
-                            <td>{{ $order->payment_status }}</td>
+                            <td>{{ $item->product_name }}</td>
+                            <td>{{ $item->price }}</td>
+                            <td>{{ $item->quantity }}</td>
+                            <td>{{ $item->options }}</td>
+                            <td>{{ $item->store->name }}</td>
                         </tr>
-                        @empty
-                        <h5 class="mt-3">You have no orders!</h5>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
     </section>

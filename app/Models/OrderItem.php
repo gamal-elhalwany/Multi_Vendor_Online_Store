@@ -27,4 +27,9 @@ class OrderItem extends Model
             'price', 'product_name'
         ]);
     }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

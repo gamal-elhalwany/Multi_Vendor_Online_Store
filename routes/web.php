@@ -46,8 +46,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 
     Route::get('checkout', [OrdersController::class, 'create'])->name('checkout.create');
     Route::post('checkout', [OrdersController::class, 'store'])->name('checkout.store');
-    Route::post('checkout/paypal', [OrdersController::class, 'paypalCheckout'])->name('checkout.paypal');
+    // Route::post('checkout/paypal', [OrdersController::class, 'paypalCheckout'])->name('checkout.paypal');
+
     Route::get('/{username}/orders', [OrdersController::class, 'user_orders'])->name('user.orders');
+    Route::get('/{username}/orders/{order}/items', [OrdersController::class, 'user_orders_items'])->name('user.orders.items');
 
     Route::get('user/2fa', [TwoFactorAuthenticationController::class, 'index'])->name('two-factor');
 
