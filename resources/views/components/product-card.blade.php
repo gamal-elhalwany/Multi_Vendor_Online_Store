@@ -12,6 +12,12 @@
                 <button type="submit" class="btn"><i class="lni lni-cart"></i> {{ __('Add To
                 Cart') }}</button>
             </form>
+            <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                <input type="hidden" name="quantity" value="1" />
+                <button type="submit" class="btn mt-3"><i class="lni lni-heart"></i> {{ __('Wishlist') }}</button>
+            </form>
         </div>
     </div>
     <div class="product-info">
