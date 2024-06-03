@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\TwoFactorAuthenticationController;
+use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\PayPalController;
 use App\Observers\CartObserver;
@@ -40,6 +41,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::post('/contact-us', [HomeController::class, 'sendContactEmail'])->name('email.contact');
 
     Route::resource('cart', CartController::class);
+
+    // Wishlist Routes.
+    Route::get('{username}/wishlist', [WishlistController::class, 'index'])->name('user.wishlist');
+    Route::post('{username}/wishlist', [WishlistController::class, 'store'])->name('user.wishlist.store');
 
     // Apply Coupon Discount Code Route.
     Route::post('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.discount');
