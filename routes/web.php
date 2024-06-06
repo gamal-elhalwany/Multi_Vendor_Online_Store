@@ -11,6 +11,7 @@ use App\Http\Controllers\Front\TwoFactorAuthenticationController;
 use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Payment\PayPalController;
+use App\Models\Wishlist;
 use App\Observers\CartObserver;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -45,6 +46,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     // Wishlist Routes.
     Route::get('{username}/wishlist', [WishlistController::class, 'index'])->name('user.wishlist');
     Route::post('{username}/wishlist', [WishlistController::class, 'store'])->name('user.wishlist.store');
+    Route::put('{username}/wishlist/{id}', [WishlistController::class, 'update'])->name('user.wishlist.update');
+    Route::delete('wishlist/{wishlist}', [WishlistController::class, 'destroy'])->name('user.wishlist.delete');
 
     // Apply Coupon Discount Code Route.
     Route::post('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply.discount');

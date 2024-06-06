@@ -34,30 +34,32 @@
                         <!-- Cart List Title -->
                         <div class="cart-list-title">
                             <div class="row">
-                                <div class="col-lg-1 col-md-1 col-12">
-                                    #
+                                <div class="col-lg-1 col-md-2 col-12">
                                 </div>
-                                <div class="col-lg-4 col-md-3 col-12">
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <p>Product Name</p>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-12">
+                                <div class="col-lg-3 col-md-1 col-12">
                                     <p>Quantity</p>
                                 </div>
-                                <div class="col-lg-1 col-md-2 col-12">
-                                    <p>Remove</p>
+                                <div class="col-lg-1 col-md-3 col-12">
+                                    <p>Price</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-12">
+                                    <p>Actions</p>
                                 </div>
                             </div>
                         </div>
                         <!-- End Cart List Title -->
                         <!-- Cart Single List list -->
                         @foreach ($wishlists as $list)
-                        <div class="cart-single-list" id="cart_id">
+                        <div class="cart-single-list" id="{{ $list->id }}">
                             <div class="row align-items-center">
-                                <div class="col-lg-1 col-md-1 col-12">
+                                <div class="col-lg-1 col-md-2 col-12">
                                     <a href="{{ route('product.show', $list->product->slug) }}"><img
                                             src="{{ $list->product->image_url }}" alt="#"></a>
                                 </div>
-                                <div class="col-lg-4 col-md-3 col-12">
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <h5 class="product-name">
                                         <a href="{{ route('product.show', $list->product->slug) }}">
                                             {{ $list->product->name }}
@@ -68,15 +70,15 @@
                                         <span><em>Color:</em> Black</span>
                                     </p>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-12">
+                                <div class="col-lg-3 col-md-1 col-12">
                                     <div class="count-input">
-                                        <form action="{{ route('cart.update', $list->id) }}" method="post">
+                                        <form
+                                            action="{{ route('user.wishlist.update', ['username'=>auth()->user()->name,'id'=>$list->product->id]) }}"
+                                            method="POST" id="wish-form">
                                             @csrf
                                             @method('put')
                                             <input class="form-control item-qty" data-id="{{ $list->id }}"
-                                                value="{{ $list->quantity }}" name="quantity"
-                                                {{ session('coupon_code') ? 'disabled' : '' }}
-                                                onchange="this.form.submit()">
+                                                value="{{ $list->quantity }}" name="wishlist-qty">
                                             @error('quantity')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -90,38 +92,26 @@
                                         <input type="hidden" id="x-csrf" value="{{ csrf_token() }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-12 total-cart-price-wrapper">
+                                <div class="col-lg-1 col-md-3 col-12 total-cart-price-wrapper">
                                     <p class="totalCartPrice {{ $list->product_id }}" id="{{ $list->product_id }}">
-                                        {{ CurrencyFormat::format($list->quantity * $list->product->price) }}
+                                        {{ CurrencyFormat::format($list->product->price) }}
                                     </p>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-12">
-                                    @if(session('coupon_code'))
-
-                                    @if(session('fixed_amount'))
-                                    <p class="discount_amount">{{ session('fixed_amount') }}</p>
-                                    @elseif(session('percent_amount'))
-                                    <p class="discount_amount">{{ session('percent_amount') . '%' }}</p>
-                                    @else
-                                    <p class="discount_amount">0.00</p>
-                                    @endif
-
-                                    @else
-                                    <p class="discount_amount">0.00</p>
-                                    @endif
+                                <div class="col-lg-2 col-md-3 col-12">
+                                    <div class="add-to-cart">
+                                        <button type="submit" class="btn btn-outline-primary" form="wish-form">
+                                            add to cart
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-lg-1 col-md-2 col-12">
-                                    @if(session()->has('coupon_code'))
-                                    @else
+                                <div class="col-lg-1 col-md-3 col-12">
                                     <div class="remove_wrapper">
                                         <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                                        <a class="remove-item" data-id="{{ $list->id }}"
-                                            onclick="return confirm('Are you sure you want to delete this item from the cart?')"
-                                            href="javascript:void(0)">
+                                        <a href="javascript:void(0)" class="remove-wishlist" data-id="{{ $list->id }}"
+                                            onclick="return confirm('Are you sure you want to delete this item from the Wishlist?')">
                                             <i class="lni lni-close"></i>
                                         </a>
                                     </div>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -132,4 +122,8 @@
                 </div>
             </div>
     </section>
+    @push('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    @endpush
 </x-front-layout>

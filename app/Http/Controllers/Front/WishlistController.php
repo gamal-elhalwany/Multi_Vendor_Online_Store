@@ -13,10 +13,7 @@ class WishlistController extends Controller
         $user = auth()->user();
         if ($user && $user->name == $username) {
             $wishlists = $user->wishlist;
-            if ($wishlists) {
-                foreach ($wishlists as $item) {
-                    dd($item);
-                }
+            if ($wishlists->count()) {
                 return view('front.user.wishlist', compact('wishlists'));
             } else {
                 return redirect()->route('home')->with('error', 'You have no products in the wishlist!');
@@ -38,5 +35,24 @@ class WishlistController extends Controller
         } else {
             return redirect()->route('home')->with('error', 'You are not Allowed to this action.');
         }
+    }
+
+    public function update(Request $request, $username, $id)
+    {
+        dd($id);
+        if ($request->post('wishlist-qty')) {
+            return 'Hello From Wishlist Update';
+        }
+        return "Suck it!";
+    }
+
+    public function destroy(Wishlist $wishlist)
+    {
+        $authUser = auth()->user();
+        if ($authUser && $authUser->id == $wishlist->user_id) {
+            $wishlist->delete();
+            return ['message' => 'Wishlist item removed Sucessfully!'];
+        }
+        return false;
     }
 }
