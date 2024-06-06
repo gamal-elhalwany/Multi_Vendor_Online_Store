@@ -16,7 +16,7 @@
                 _token: token,
             },
             success: function () {
-                
+
             }
         });
     });
@@ -32,7 +32,22 @@
                 _token: $('#d-csrf').val(),
             },
             success: response => {
-                $('#cart_id').remove();
+                $('#'+id).remove();
+            }
+        });
+    });
+
+    // Delete Wishlist Item.
+    $('.remove-wishlist').on('click', function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: "/wishlist/"+id,
+            method: "delete",
+            data: {
+                _token: $('#d-csrf').val(),
+            },
+            success: response => {
+                $('#'+id).remove();
             }
         });
     });
@@ -62,7 +77,7 @@
                     } else {
                         $('.you_save').html(response.percentTotalSave);
                     }
-                    
+
                     if (response.coupon_code.type === 'fixed') {
                         $('.you_pay').html(response.fixedTotalPay);
                     } else {
@@ -74,5 +89,5 @@
             }
         });
     });
- 
+
 })(jQuery);

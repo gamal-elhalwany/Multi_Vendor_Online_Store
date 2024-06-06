@@ -65,11 +65,6 @@ class Product extends Model
         );
     }
 
-    public function wishlist()
-    {
-        return $this->belongsTo(Wishlist::class);
-    }
-
     // this protected function is for making or calling the global scope that we have created by this command:php artisan make:scope [nameOfScope].
     protected static function booted()
     {

@@ -53,10 +53,11 @@
                 <!-- End Cart List Title -->
                 <!-- Cart Single List list -->
                 @foreach ($carts as $cart)
-                <div class="cart-single-list" id="cart_id">
+                <div class="cart-single-list" id="{{ $cart->id }}">
                     <div class="row align-items-center">
                         <div class="col-lg-1 col-md-1 col-12">
-                            <a href="{{ route('product.show', $cart->product->slug) }}"><img src="{{ $cart->product->image_url }}" alt="#"></a>
+                            <a href="{{ route('product.show', $cart->product->slug) }}"><img
+                                    src="{{ $cart->product->image_url }}" alt="#"></a>
                         </div>
                         <div class="col-lg-4 col-md-3 col-12">
                             <h5 class="product-name">
@@ -74,12 +75,15 @@
                                 <form action="{{ route('cart.update', $cart->id) }}" method="post">
                                     @csrf
                                     @method('put')
-                                    <input class="form-control item-qty" data-id="{{ $cart->id }}" value="{{ $cart->quantity }}" name="quantity" {{ session('coupon_code') ? 'disabled' : '' }} onchange="this.form.submit()">
+                                    <input class="form-control item-qty" data-id="{{ $cart->id }}"
+                                        value="{{ $cart->quantity }}" name="quantity"
+                                        {{ session('coupon_code') ? 'disabled' : '' }} onchange="this.form.submit()">
                                     @error('quantity')
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </form>
-                                <input type="hidden" class="product_id" name="productID" id="product_id" value="{{ $cart->product_id }}">
+                                <input type="hidden" class="product_id" name="productID" id="product_id"
+                                    value="{{ $cart->product_id }}">
                                 @error('productID')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -112,7 +116,9 @@
                             @else
                             <div class="remove_wrapper">
                                 <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                                <a class="remove-item" data-id="{{ $cart->id }}" onclick="return confirm('Are you sure you want to delete this item from the cart?')" href="javascript:void(0)">
+                                <a class="remove-item" data-id="{{ $cart->id }}"
+                                    onclick="return confirm('Are you sure you want to delete this item from the cart?')"
+                                    href="javascript:void(0)">
                                     <i class="lni lni-close"></i>
                                 </a>
                             </div>
@@ -135,10 +141,12 @@
                                         @if(session('coupon_code'))
                                         <p>Coupon Applied Successfully. This message by blade</p>
                                         @else
-                                        <input name="coupon_code" id="coupon_code" placeholder="{{__('Enter Your Coupon')}}">
+                                        <input name="coupon_code" id="coupon_code"
+                                            placeholder="{{__('Enter Your Coupon')}}">
                                         <input type="hidden" id="hidden-token" value="{{csrf_token()}}">
                                         <div class="button">
-                                            <button class="btn" type="submit" id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
+                                            <button class="btn" type="submit"
+                                                id="apply_coupon">{{ __('Apply Coupon Code') }}</button>
                                         </div>
                                         <p class="err-msg text-danger"></p>
                                         @endif
