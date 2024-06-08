@@ -56,8 +56,7 @@
                         <div class="cart-single-list" id="{{ $list->id }}">
                             <div class="row align-items-center">
                                 <div class="col-lg-1 col-md-2 col-12">
-                                    <a href="{{ route('product.show', $list->product->slug) }}"><img
-                                            src="{{ $list->product->image_url }}" alt="#"></a>
+                                    <a href="{{ route('product.show', $list->product->slug) }}"><img src="{{ $list->product->image_url }}" alt="#"></a>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-12">
                                     <h5 class="product-name">
@@ -72,19 +71,15 @@
                                 </div>
                                 <div class="col-lg-3 col-md-1 col-12">
                                     <div class="count-input">
-                                        <form
-                                            action="{{ route('user.wishlist.update', ['username'=>auth()->user()->name,'id'=>$list->product->id]) }}"
-                                            method="POST" id="wish-form">
+                                        <form action="{{ route('user.wishlist.update', ['username'=>auth()->user()->name,'wishlist'=>$list->id]) }}" method="POST" id="wish-form-{{ $list->id }}">
                                             @csrf
                                             @method('put')
-                                            <input class="form-control item-qty" data-id="{{ $list->id }}"
-                                                value="{{ $list->quantity }}" name="wishlist-qty">
+                                            <input class="form-control wishlist-item-qty" data-id="{{ $list->id }}" value="{{ $list->quantity }}" name="wishlist-qty">
                                             @error('quantity')
                                             <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </form>
-                                        <input type="hidden" class="product_id" name="productID" id="product_id"
-                                            value="{{ $list->product_id }}">
+                                        <input type="hidden" class="product_id" name="productID" id="product_id" value="{{ $list->product_id }}">
                                         @error('productID')
                                         <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -99,7 +94,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-3 col-12">
                                     <div class="add-to-cart">
-                                        <button type="submit" class="btn btn-outline-primary" form="wish-form">
+                                        <button type="submit" class="btn btn-outline-primary" form="wish-form-{{ $list->id }}">
                                             add to cart
                                         </button>
                                     </div>
@@ -107,8 +102,7 @@
                                 <div class="col-lg-1 col-md-3 col-12">
                                     <div class="remove_wrapper">
                                         <input type="hidden" id="d-csrf" value="{{ csrf_token() }}">
-                                        <a href="javascript:void(0)" class="remove-wishlist" data-id="{{ $list->id }}"
-                                            onclick="return confirm('Are you sure you want to delete this item from the Wishlist?')">
+                                        <a href="javascript:void(0)" class="remove-wishlist" data-id="{{ $list->id }}">
                                             <i class="lni lni-close"></i>
                                         </a>
                                     </div>
