@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Cart;
+use App\Models\Wishlist;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Wishlist;
 
 class WishlistController extends Controller
 {
@@ -26,24 +28,47 @@ class WishlistController extends Controller
     public function store(Request $request, $username)
     {
         $user = auth()->user();
-        if ($user->name == $username) {
-            Wishlist::create([
-                'user_id' => $user->id,
-                'product_id' => $request->product_id,
-            ]);
-            return redirect()->back()->with('success', 'Product added to the wishlist!');
-        } else {
-            return redirect()->route('home')->with('error', 'You are not Allowed to this action.');
+        if ($user->name === $username) {
+            if ($user->wishlist()->where('product_id', $request->product_id)->exists()) {
+                return redirect()->back()->with('error', 'Product already exists in wishlist!');
+            } else {
+                Wishlist::create([
+                    'user_id' => $user->id,
+                    'product_id' => $request->product_id,
+                ]);
+                return redirect()->back()->with('success', 'Product added to the wishlist!');
+            }
         }
+        return redirect()->route('home')->with('error', 'You are not Allowed to this action.');
     }
 
-    public function update(Request $request, $username, $id)
+    public function update(Request $request, $username, Wishlist $wishlist)
     {
-        dd($id);
-        if ($request->post('wishlist-qty')) {
-            return 'Hello From Wishlist Update';
+        $user = auth()->user();
+        if ($user->name === $username) {
+            if ($request->post('wishlist-qty')) {
+                if ($user->carts()->where('product_id', $wishlist->product->id)->exists()) {
+                    $cart = $user->carts()->where(
+                        'product_id',
+                        $wishlist->product->id
+                    )->first();
+                    $cart->quantity = $request->post('wishlist-qty') + $cart->quantity;
+                    $cart->save();
+                    $wishlist->delete();
+                } else {
+                    Cart::create([
+                        'cookie_id' => Str::uuid(),
+                        'user_id' => $user->id,
+                        'product_id' => $wishlist->product_id,
+                        'quantity' => $request->post('wishlist-qty'),
+                    ]);
+                    $wishlist->delete();
+                }
+                return redirect()->back()->with('success', 'Product added to the cart successfully!');
+            }
+            abort(404);
         }
-        return "Suck it!";
+        return redirect()->route('home')->with('error', 'You\'re not allowed to this action!');
     }
 
     public function destroy(Wishlist $wishlist)
@@ -53,6 +78,6 @@ class WishlistController extends Controller
             $wishlist->delete();
             return ['message' => 'Wishlist item removed Sucessfully!'];
         }
-        return false;
+        return redirect()->route('login');
     }
 }

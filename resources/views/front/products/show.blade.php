@@ -1,23 +1,23 @@
 <x-front-layout :title="$product->name">
     @section('breadcrumbs')
-        <div class="breadcrumbs">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="breadcrumbs-content">
-                            <h1 class="page-title">{{ $product->name }}</h1>
-                        </div>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">{{ $product->name }}</h1>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('product.index') }}">Shop</a></li>
-                            <li>{{ $product->name }}</li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <ul class="breadcrumb-nav">
+                        <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
+                        <li><a href="{{ route('product.index') }}">Shop</a></li>
+                        <li>{{ $product->name }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
     @endsection
 
     <!-- Start Item Details -->
@@ -54,7 +54,7 @@
                             <h3 class="price">
                                 {{ CurrencyFormat::format($product->price) }}
                                 @if ($product->compare_price)
-                                    <span>{{ CurrencyFormat::format($product->compare_price) }}</span>
+                                <span>{{ CurrencyFormat::format($product->compare_price) }}</span>
                                 @endif
                             </h3>
                             <p class="info-text">
@@ -112,7 +112,8 @@
                                     <div class="row align-items-end">
                                         <div class="col-lg-4 col-md-4 col-12">
                                             <div class="button cart-button">
-                                                <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
+                                                <button class="btn" type="submit" style="width: 100%;">Add to
+                                                    Cart</button>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-12">
@@ -120,15 +121,22 @@
                                                 <button class="btn"><i class="lni lni-reload"></i> Compare</button>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="wish-button">
-                                                <button class="btn"><i class="lni lni-heart"></i> To Wishlist</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </form>
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="wish-button">
+                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit" class="btn mt-3"><i class="lni lni-heart"></i>
+                                            {{ __('To Wishlist') }}</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -220,8 +228,7 @@
                                 </li>
                             </ul>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn review-btn" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <button type="button" class="btn review-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Leave a Review
                             </button>
                         </div>
@@ -300,8 +307,7 @@
     <!-- End Item Details -->
 
     <!-- Review Modal -->
-    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -379,5 +385,8 @@
             });
         });
     </script>
-
+    @push('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    @endpush
 </x-front-layout>
