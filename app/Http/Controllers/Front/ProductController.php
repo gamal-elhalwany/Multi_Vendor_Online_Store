@@ -2,24 +2,38 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
+use App\Models\Rating;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::filter($request->all())->active()->latest()->paginate(12);
-        return view('front.products.index', compact('products'));
+        $user = auth()->user();
+        if ($user) {
+            $products = Product::filter($request->all())->active()->latest()->paginate(12);
+            return view('front.products.index', compact('products'));
+        }
+        return redirect()->route('login');
     }
 
     public function show(Product $product)
     {
-        if ($product->status != 'active') {
-            abort(404);
+        $user = auth()->user();
+        $ratings = Rating::latest()->get();
+        // $totalRatings = Rating::where('product_id', $product->id)->sum('rating');
+        $averageRating = Rating::where('product_id', $product->id)->avg('rating');
+        // dd(round($averageRating, 2));
+
+        if ($user) {
+            if ($product->status != 'active') {
+                abort(404);
+            }
+            return view('front.products.show', compact('product', 'ratings', 'averageRating'));
         }
-        return view('front.products.show', compact('product'));
+        return redirect()->route('login');
     }
 
     public function filterByRange(Request $request)
@@ -32,7 +46,6 @@ class ProductController extends Controller
     public function sortProducts(Request $request)
     {
         $selectedCriteria = $request->input('criteria');
-        // $products = Product::orderBy($selectedCriteria)->paginate();
 
         switch ($selectedCriteria) {
             case 'low_high':
@@ -53,5 +66,28 @@ class ProductController extends Controller
         }
 
         return view('front.products.index', compact('products'));
+    }
+
+    public function add_rating(Request $request)
+    {
+        $user = auth()->user();
+        if ($user) {
+            if ($user->ratings) {
+                $rating = Rating::where('product_id', $request->product_id)->where('user_id', $user->id)->first();
+                if ($rating) {
+                    return redirect()->back()->with('error', 'You have already Rated this Product!');
+                } else {
+                    Rating::create([
+                        'user_id' => auth()->id(),
+                        'product_id' => $request->product_id,
+                        'rating' => $request->rating,
+                        'review' => $request->review,
+                    ]);
+                }
+            }
+        } else {
+            return redirect()->route('login');
+        }
+        return redirect()->back()->with('success', 'You have Rated this product successfully!');
     }
 }

@@ -200,9 +200,9 @@
                             </div>
                             <div class="navbar-cart">
                                 <div class="wishlist">
-                                    <a href="{{route('user.wishlist', auth()->user()->name)}}">
+                                    <a @auth href="{{route('user.wishlist', auth()->user()->name)}}" @endauth>
                                         <i class="lni lni-heart"></i>
-                                        @if(auth()->user()->wishlist->count() > 0)
+                                        @if(Auth::check() && auth()->user()->wishlist->count() > 0)
                                         <span class="total-items">{{ auth()->user()->wishlist->count() }}</span>
                                         @else
                                         <span class="total-items">0</span>
