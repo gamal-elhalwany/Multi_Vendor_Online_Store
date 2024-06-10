@@ -47,7 +47,7 @@
                             <p class="category">
                                 <i class="lni lni-tag"></i>
                                 {{ $product->tag }}:
-                                <a href="javascript:void(0)">
+                                <a href="{{ route('category.show', $product->category->slug) }}">
                                     {{ $product->category->name }}
                                 </a>
                             </p>
@@ -110,23 +110,19 @@
                                 </div>
                                 <div class="bottom-content">
                                     <div class="row align-items-end">
-                                        <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="col-lg-12 col-md-12 col-12">
                                             <div class="button cart-button">
                                                 <button class="btn" type="submit" style="width: 100%;">Add to
                                                     Cart</button>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="wish-button">
-                                                <button class="btn"><i class="lni lni-reload"></i> Compare</button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="col-lg-4 col-md-4 col-12">
+                            <div class="col-lg-12 col-md-12 col-12">
                                 <div class="wish-button">
-                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
+                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}"
+                                        method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                         <input type="hidden" name="quantity" value="1" />
@@ -184,51 +180,16 @@
                 <div class="row">
                     <div class="col-lg-4 col-12">
                         <div class="single-block give-review">
-                            <h4>4.5 (Overall)</h4>
+                            <h4>Overall ({{round($averageRating, 3)}})</h4>
                             <ul>
                                 <li>
-                                    <span>5 stars - 38</span>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                </li>
-                                <li>
-                                    <span>4 stars - 10</span>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star"></i>
-                                </li>
-                                <li>
-                                    <span>3 stars - 3</span>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
-                                </li>
-                                <li>
-                                    <span>2 stars - 1</span>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
-                                </li>
-                                <li>
-                                    <span>1 star - 0</span>
-                                    <i class="lni lni-star-filled"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
-                                    <i class="lni lni-star"></i>
+                                    @for($i = 1; $i <= round($averageRating); $i++) <i class="lni lni-star-filled"></i>
+                                        @endfor
                                 </li>
                             </ul>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn review-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn review-btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 Leave a Review
                             </button>
                         </div>
@@ -238,64 +199,27 @@
                             <div class="reviews">
                                 <h4 class="title">Latest Reviews</h4>
                                 <!-- Start Single Review -->
+                                @if($ratings->count() > 0)
+                                @foreach($ratings as $rating)
                                 <div class="single-review">
-                                    <img src="assets/images/blog/comment1.jpg" alt="#">
+                                    <img src="{{auth()->user()->photo}}" alt="#">
                                     <div class="review-info">
-                                        <h4>Awesome quality for the price
-                                            <span>Jacob Hammond
-                                            </span>
+                                        <h4>{{$rating->review}}
+                                            <span>By {{$rating->user->name}}</span>
                                         </h4>
                                         <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
+                                            @for($i = 0; $i < $rating->rating; $i++)
+                                                <li><i class="lni lni-star-filled"></i></li>
+                                                @endfor
+                                                Rating
                                         </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
+                                        <p>{{$rating->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
-                                <!-- End Single Review -->
-                                <!-- Start Single Review -->
-                                <div class="single-review">
-                                    <img src="assets/images/blog/comment2.jpg" alt="#">
-                                    <div class="review-info">
-                                        <h4>My husband love his new...
-                                            <span>Alex Jaza
-                                            </span>
-                                        </h4>
-                                        <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
-                                    </div>
-                                </div>
-                                <!-- End Single Review -->
-                                <!-- Start Single Review -->
-                                <div class="single-review">
-                                    <img src="assets/images/blog/comment3.jpg" alt="#">
-                                    <div class="review-info">
-                                        <h4>I love the built quality...
-                                            <span>Jacob Hammond
-                                            </span>
-                                        </h4>
-                                        <ul class="stars">
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                            <li><i class="lni lni-star-filled"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor...</p>
-                                    </div>
-                                </div>
+                                @endforeach
+                                @else
+                                <p>No reviews yet</p>
+                                @endif
                                 <!-- End Single Review -->
                             </div>
                         </div>
@@ -306,57 +230,68 @@
     </section>
     <!-- End Item Details -->
 
+    <x-alert type="success" />
+
     <!-- Review Modal -->
-    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-name">Your Name</label>
-                                <input class="form-control" type="text" id="review-name" required>
+                <form action="{{ route('ratings.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="review-name">Your Name</label>
+                                    <input class="form-control" type="text" id="review-name" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="review-email">Your Email</label>
+                                    <input class="form-control" type="email" id="review-email" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-email">Your Email</label>
-                                <input class="form-control" type="email" id="review-email" required>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="review-rating">Rating</label>
+                                    <select class="form-control" name="rating" id="review-rating">
+                                        <option value="5">5 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="1">1 Star</option>
+                                    </select>
+                                    @error('rating')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="review-message">Review</label>
+                            <textarea class="form-control" name="review" id="review-message" rows="8"></textarea>
+                            @error('review')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-subject">Subject</label>
-                                <input class="form-control" type="text" id="review-subject" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="review-rating">Rating</label>
-                                <select class="form-control" id="review-rating">
-                                    <option>5 Stars</option>
-                                    <option>4 Stars</option>
-                                    <option>3 Stars</option>
-                                    <option>2 Stars</option>
-                                    <option>1 Star</option>
-                                </select>
-                            </div>
-                        </div>
+                    <div class="modal-footer button">
+                        <button type="submit" class="btn">Submit Review</button>
                     </div>
-                    <div class="form-group">
-                        <label for="review-message">Review</label>
-                        <textarea class="form-control" id="review-message" rows="8" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer button">
-                    <button type="button" class="btn">Submit Review</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -368,22 +303,22 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="text/javascript">
-        const current = document.getElementById("current");
-        const opacity = 0.6;
-        const imgs = document.querySelectorAll(".img");
-        imgs.forEach(img => {
-            img.addEventListener("click", (e) => {
-                //reset opacity
-                imgs.forEach(img => {
-                    img.style.opacity = 1;
-                });
-                current.src = e.target.src;
-                //adding class
-                //current.classList.add("fade-in");
-                //opacity
-                e.target.style.opacity = opacity;
+    const current = document.getElementById("current");
+    const opacity = 0.6;
+    const imgs = document.querySelectorAll(".img");
+    imgs.forEach(img => {
+        img.addEventListener("click", (e) => {
+            //reset opacity
+            imgs.forEach(img => {
+                img.style.opacity = 1;
             });
+            current.src = e.target.src;
+            //adding class
+            //current.classList.add("fade-in");
+            //opacity
+            e.target.style.opacity = opacity;
         });
+    });
     </script>
     @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

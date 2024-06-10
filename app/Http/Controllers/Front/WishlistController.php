@@ -28,7 +28,7 @@ class WishlistController extends Controller
     public function store(Request $request, $username)
     {
         $user = auth()->user();
-        if ($user->name === $username) {
+        if ($user) {
             if ($user->wishlist()->where('product_id', $request->product_id)->exists()) {
                 return redirect()->back()->with('error', 'Product already exists in wishlist!');
             } else {
@@ -39,7 +39,7 @@ class WishlistController extends Controller
                 return redirect()->back()->with('success', 'Product added to the wishlist!');
             }
         }
-        return redirect()->route('home')->with('error', 'You are not Allowed to this action.');
+        return redirect()->route('login');
     }
 
     public function update(Request $request, $username, Wishlist $wishlist)
@@ -73,8 +73,8 @@ class WishlistController extends Controller
 
     public function destroy(Wishlist $wishlist)
     {
-        $authUser = auth()->user();
-        if ($authUser && $authUser->id == $wishlist->user_id) {
+        $user = auth()->user();
+        if ($user && $user->id == $wishlist->user_id) {
             $wishlist->delete();
             return ['message' => 'Wishlist item removed Sucessfully!'];
         }

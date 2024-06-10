@@ -12,7 +12,8 @@
                 <button type="submit" class="btn"><i class="lni lni-cart"></i> {{ __('Add To
                 Cart') }}</button>
             </form>
-            <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
+
+            <form action="{{ route('user.wishlist.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}" />
                 <input type="hidden" name="quantity" value="1" />
