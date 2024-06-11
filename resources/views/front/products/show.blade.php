@@ -112,8 +112,9 @@
                                     <div class="row align-items-end">
                                         <div class="col-lg-12 col-md-12 col-12">
                                             <div class="button cart-button">
-                                                <button class="btn" type="submit" style="width: 100%;">Add to
-                                                    Cart</button>
+                                                <button class="btn" type="submit" style="width: 100%;">
+                                                    <i class="lni lni-cart"></i>
+                                                    Add to Cart</button>
                                             </div>
                                         </div>
                                     </div>
@@ -180,10 +181,11 @@
                 <div class="row">
                     <div class="col-lg-4 col-12">
                         <div class="single-block give-review">
-                            <h4>Overall ({{round($averageRating, 3)}})</h4>
+                            <h4>Overall ({{round($product->ratings->avg('rating'), 3)}})</h4>
                             <ul>
                                 <li>
-                                    @for($i = 1; $i <= round($averageRating); $i++) <i class="lni lni-star-filled"></i>
+                                    @for($i = 1; $i <= round($product->ratings->avg('rating')); $i++) <i
+                                            class="lni lni-star-filled"></i>
                                         @endfor
                                 </li>
                             </ul>
@@ -199,8 +201,8 @@
                             <div class="reviews">
                                 <h4 class="title">Latest Reviews</h4>
                                 <!-- Start Single Review -->
-                                @if($ratings->count() > 0)
-                                @foreach($ratings as $rating)
+                                @if($product->ratings->count() > 0)
+                                @foreach($product->ratings()->latest()->get() as $rating)
                                 <div class="single-review">
                                     <img src="{{auth()->user()->photo}}" alt="#">
                                     <div class="review-info">
