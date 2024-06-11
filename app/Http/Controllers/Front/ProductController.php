@@ -6,14 +6,15 @@ use App\Models\Rating;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Handler\Proxy;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Product $product)
     {
         $user = auth()->user();
         if ($user) {
-            $products = Product::filter($request->all())->active()->latest()->paginate(12);
+            $products = Product::filter($request->all())->active()->with('ratings')->latest()->paginate(12);
             return view('front.products.index', compact('products'));
         }
         return redirect()->route('login');
@@ -22,25 +23,24 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $user = auth()->user();
-        $ratings = Rating::latest()->get();
-        // $totalRatings = Rating::where('product_id', $product->id)->sum('rating');
-        $averageRating = Rating::where('product_id', $product->id)->avg('rating');
-        // dd(round($averageRating, 2));
-
         if ($user) {
             if ($product->status != 'active') {
                 abort(404);
             }
-            return view('front.products.show', compact('product', 'ratings', 'averageRating'));
+            return view('front.products.show', compact('product'));
         }
         return redirect()->route('login');
     }
 
     public function filterByRange(Request $request)
     {
-        $rangeValue = $request->input('range_value');
-        $products = Product::where('price', '<=', $rangeValue)->paginate();
-        return view('front.products.index', compact('products'));
+        $user = auth()->user();
+        if ($user) {
+            $rangeValue = $request->input('range_value');
+            $products = Product::where('price', '<=', $rangeValue)->paginate();
+            return view('front.products.index', compact('products'));
+        }
+        return redirect()->route('login');
     }
 
     public function sortProducts(Request $request)

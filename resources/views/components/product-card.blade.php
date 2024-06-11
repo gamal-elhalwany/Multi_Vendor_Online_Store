@@ -27,12 +27,21 @@
             <a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
         </h4>
         <ul class="review">
+            @if($product->ratings->count() >= 1)
+            <li>
+                @for($i=1; $i<=$product->ratings->avg('rating'); $i++)
             <li><i class="lni lni-star-filled"></i></li>
-            <li><i class="lni lni-star-filled"></i></li>
-            <li><i class="lni lni-star-filled"></i></li>
-            <li><i class="lni lni-star-filled"></i></li>
-            <li><i class="lni lni-star"></i></li>
-            <li><span>4.0 Review(s)</span></li>
+            @endfor
+            ({{ $product->ratings->avg('rating') }})
+            </li>
+            @else
+            <li>No ratings yet</li>
+            @endif
+            <li>
+                <span>
+                    {{$product->ratings->count('review')}} Review(s)
+                </span>
+            </li>
         </ul>
         <div class="price">
             <span>{{ CurrencyFormat::format($product->price) }}</span>
