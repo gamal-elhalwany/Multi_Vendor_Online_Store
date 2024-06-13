@@ -1,22 +1,23 @@
 <?php
 
-use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\Front\CartController;
-use App\Http\Controllers\Front\CurrencyController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\Front\OrdersController;
-use App\Http\Controllers\Front\ProductController;
-use App\Http\Controllers\Front\RatingsController;
-use App\Http\Controllers\Front\TwoFactorAuthenticationController;
-use App\Http\Controllers\Front\WishlistController;
-use App\Http\Controllers\Payment\PaymentController;
-use App\Http\Controllers\Payment\PayPalController;
 use App\Models\Product;
 use App\Models\Wishlist;
 use App\Observers\CartObserver;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\OrdersController;
+use App\Http\Controllers\Front\ProductController;
+use App\Http\Controllers\Front\RatingsController;
+use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Front\CurrencyController;
+use App\Http\Controllers\Front\WishlistController;
+use App\Http\Controllers\Payment\PayPalController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Front\NewsletterController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Front\TwoFactorAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::get('payments/paypal/{order}', [PayPalController::class, 'create'])->name('paypal.create');
     Route::get('payments/paypal/{order}/return', [PayPalController::class, 'callback'])->name('paypal.return');
     Route::get('payments/paypal/{order}/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+
+    // Newsletters Routes.
+    Route::get('/newsletters', [NewsletterController::class, 'index'])->name('newsletters');
+    Route::post('/newsletters', [NewsletterController::class, 'subscribe'])->name('newsletters.subscribe');
+
 
     //Payments Routes.
     // Route::match(['get', 'post'], 'payments/{order}', [PaymentController::class, 'pay'])->name('payments.pay');
