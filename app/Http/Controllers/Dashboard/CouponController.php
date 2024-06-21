@@ -9,6 +9,14 @@ use App\Models\Store;
 
 class CouponController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:list-coupon', ['only' => ['index']]);
+        $this->middleware('permission:create-coupon', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-coupon', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-coupon', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -55,8 +63,12 @@ class CouponController extends Controller
             'end_at' => ['required', 'date', 'after:start_at'],
         ]);
 
-        $coupon = Coupon::create($request->all());
-        return redirect()->route('coupons.index')->with('success', 'Coupon is successfully added!');
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            $coupon = Coupon::create($request->all());
+            return redirect()->route('coupons.index')->with('success', 'Coupon is successfully added!');
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -100,9 +112,14 @@ class CouponController extends Controller
             'end_at' => ['required', 'date', 'after:start_at'],
         ]);
 
-        $coupon = Coupon::findOrFail($id);
-        $coupon->update($request->all());
-        return redirect()->route('coupons.index')->with('success', 'Coupon is successfully updated!');
+        $user = auth()->user();
+
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            $coupon = Coupon::findOrFail($id);
+            $coupon->update($request->all());
+            return redirect()->route('coupons.index')->with('success', 'Coupon is successfully updated!');
+        }
+        return redirect(route('login'));
     }
 
     /**

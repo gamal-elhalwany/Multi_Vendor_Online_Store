@@ -3328,6 +3328,7 @@ ol {
 .single-product .product-image {
   overflow: hidden;
   position: relative;
+  height: 243px;
 }
 
 .single-product .product-image .sale-tag {
@@ -3382,6 +3383,7 @@ ol {
 }
 
 .single-product .product-image img {
+  height: 100%;
   width: 100%;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;

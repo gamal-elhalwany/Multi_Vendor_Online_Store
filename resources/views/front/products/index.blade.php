@@ -50,12 +50,10 @@
                         <div class="single-widget range">
                             <h3>Price Range</h3>
                             <form action="{{ route('filter.products.byRange') }}" method="GET">
-                                <input type="range" class="form-range" name="range" step="1" min="100" max="10000"
-                                    value="10" onchange="rangePrimary.value=value">
+                                <input type="range" class="form-range" name="range" step="1" min="100" max="10000" value="10" onchange="rangePrimary.value=value">
                                 <div class="range-inner">
                                     <label>$</label>
-                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100"
-                                        value="10">
+                                    <input type="text" id="rangePrimary" name="range_value" placeholder="100" value="10">
                                 </div>
                                 <button type="submit" class="btn btn-outline-primary m-3">Apply Filter</button>
                             </form>
@@ -72,8 +70,7 @@
                                     <div class="product-sorting">
                                         <form action="{{ route('sort.products') }}" method="GET">
                                             <label for="sorting">Sort by:</label>
-                                            <select class="form-control" id="sorting" name="criteria"
-                                                onchange="this.form.submit()">
+                                            <select class="form-control" id="sorting" name="criteria" onchange="this.form.submit()">
                                                 <option value="popularity">Popularity</option>
                                                 <option value="average_rating">Average Rating</option>
                                                 <option value="low_high">Low - High Price</option>
@@ -88,22 +85,15 @@
                                 <div class="col-lg-5 col-md-4 col-12">
                                     <nav>
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-grid" type="button" role="tab"
-                                                aria-controls="nav-grid" aria-selected="true"><i
-                                                    class="lni lni-grid-alt"></i></button>
-                                            <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-list" type="button" role="tab"
-                                                aria-controls="nav-list" aria-selected="false"><i
-                                                    class="lni lni-list"></i></button>
+                                            <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><i class="lni lni-grid-alt"></i></button>
+                                            <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><i class="lni lni-list"></i></button>
                                         </div>
                                     </nav>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade active show" id="nav-grid" role="tabpanel"
-                                aria-labelledby="nav-grid-tab">
+                            <div class="tab-pane fade active show" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
                                     <div class="col-lg-4 col-md-6 col-12">
@@ -114,21 +104,16 @@
                                                 <div class="button">
                                                     <form action="{{ route('cart.store') }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" name="product_id"
-                                                            value="{{ $product->id }}" />
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                                         <input type="hidden" name="quantity" value="1" />
                                                         <button type="submit" class="btn"><i class="lni lni-cart"></i>
                                                             {{ __('Add To Cart') }}</button>
                                                     </form>
-                                                    <form
-                                                        action="{{ route('user.wishlist.store', auth()->user()->name) }}"
-                                                        method="POST">
+                                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" name="product_id"
-                                                            value="{{ $product->id }}" />
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                                         <input type="hidden" name="quantity" value="1" />
-                                                        <button type="submit" class="btn mt-3"><i
-                                                                class="lni lni-heart"></i> {{ __('Wishlist') }}</button>
+                                                        <button type="submit" class="btn mt-3"><i class="lni lni-heart"></i> {{ __('Wishlist') }}</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -190,22 +175,16 @@
                                                         <div class="button">
                                                             <form action="{{ route('cart.store') }}" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="product_id"
-                                                                    value="{{ $product->id }}" />
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                                                 <input type="hidden" name="quantity" value="1" />
-                                                                <button type="submit" class="btn"><i
-                                                                        class="lni lni-cart"></i>
+                                                                <button type="submit" class="btn"><i class="lni lni-cart"></i>
                                                                     {{ __('Add To Cart') }}</button>
                                                             </form>
-                                                            <form
-                                                                action="{{ route('user.wishlist.store', auth()->user()->name) }}"
-                                                                method="POST">
+                                                            <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="product_id"
-                                                                    value="{{ $product->id }}" />
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                                                 <input type="hidden" name="quantity" value="1" />
-                                                                <button type="submit" class="btn mt-3"><i
-                                                                        class="lni lni-heart"></i>
+                                                                <button type="submit" class="btn mt-3"><i class="lni lni-heart"></i>
                                                                     {{ __('Wishlist') }}</button>
                                                             </form>
                                                         </div>
@@ -215,8 +194,7 @@
                                                     <div class="product-info">
                                                         <span class="category">{{ $product->category->name }}</span>
                                                         <h4 class="title">
-                                                            <a
-                                                                href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
+                                                            <a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
                                                         </h4>
                                                         <ul class="review">
                                                             @if($product->ratings->count() >= 1)
@@ -272,22 +250,22 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="text/javascript">
-    const current = document.getElementById("current");
-    const opacity = 0.6;
-    const imgs = document.querySelectorAll(".img");
-    imgs.forEach(img => {
-        img.addEventListener("click", (e) => {
-            //reset opacity
-            imgs.forEach(img => {
-                img.style.opacity = 1;
+        const current = document.getElementById("current");
+        const opacity = 0.6;
+        const imgs = document.querySelectorAll(".img");
+        imgs.forEach(img => {
+            img.addEventListener("click", (e) => {
+                //reset opacity
+                imgs.forEach(img => {
+                    img.style.opacity = 1;
+                });
+                current.src = e.target.src;
+                //adding class
+                //current.classList.add("fade-in");
+                //opacity
+                e.target.style.opacity = opacity;
             });
-            current.src = e.target.src;
-            //adding class
-            //current.classList.add("fade-in");
-            //opacity
-            e.target.style.opacity = opacity;
         });
-    });
     </script>
 
 </x-front-layout>

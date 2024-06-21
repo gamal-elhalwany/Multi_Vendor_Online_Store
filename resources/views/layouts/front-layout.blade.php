@@ -394,8 +394,8 @@
                             <div class="single-footer f-link">
                                 <h3>{{ __('Information') }}</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">About Us</a></li>
-                                    <li><a href="javascript:void(0)">Contact Us</a></li>
+                                    <li><a href="{{route('about')}}">About Us</a></li>
+                                    <li><a href="{{route('contact')}}">Contact Us</a></li>
                                     <li><a href="javascript:void(0)">Downloads</a></li>
                                     <li><a href="javascript:void(0)">Sitemap</a></li>
                                     <li><a href="javascript:void(0)">FAQs Page</a></li>
@@ -408,11 +408,11 @@
                             <div class="single-footer f-link">
                                 <h3>{{ __('Shop Departments') }}</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">Computers & Accessories</a></li>
-                                    <li><a href="javascript:void(0)">Smartphones & Tablets</a></li>
-                                    <li><a href="javascript:void(0)">TV, Video & Audio</a></li>
-                                    <li><a href="javascript:void(0)">Cameras, Photo & Video</a></li>
-                                    <li><a href="javascript:void(0)">Headphones</a></li>
+                                    @foreach($categories as $category)
+                                    <li>
+                                        <a href="{{ route('category.show', $category->slug) }}">{{$category->name}}</a>
+                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <!-- End Single Widget -->

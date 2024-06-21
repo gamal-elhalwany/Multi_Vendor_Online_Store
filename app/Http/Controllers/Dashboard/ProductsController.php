@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Tag;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\HeroSlider;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Models\Store;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('permission:list-product', ['only' => ['index']]);
         $this->middleware('permission:create-product', ['only' => ['create', 'store']]);
@@ -36,9 +37,13 @@ class ProductsController extends Controller
         //    $products = Product::paginate();
         // }
 
-        // I used the global scope instead of the above code and repeat it every time.
-        $products = Product::filter($request->all())->latest()->orderby('name')->paginate();
-        return view('dashboard.products.index', compact('products'));
+        // I used the global scope instead of the above code and instead of repeating it every time.
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            $products = Product::filter($request->all())->latest()->orderby('name')->paginate();
+            return view('dashboard.products.index', compact('products'));
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -46,8 +51,13 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return "Hello From Creation Page of Products that we haven't Create it yet ♥.";
-        // return view('dashboard.products.create');
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            $stores = $user->stores;
+            $categories = Category::all();
+            return view('dashboard.products.create', compact('stores', 'categories'));
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -55,16 +65,54 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         $request->validate([
-            'name'          => ['required', 'min:3', 'max:100'],
-            'descirption'   => ['required', 'min:100', 'max:255'],
-            'price'         => ['required', 'numeric', 'double'],
-            'category'   => ['required', 'nullable', Rule::exists('categories', 'id')],
-            'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
-            'compare_price' => ['numeric'],
-            'store'      =>  'required|string|exists:stores,name',
-            'tags'      =>   'string|min:3|max:15',
+            'name'              => ['required', 'min:3', 'max:100'],
+            'description'       => ['required', 'min:100', 'max:255'],
+            'qty'               => ['required'],
+            'price'             => ['required', 'numeric'],
+            'image'             => ['required', 'mimes:jpg,jpeg,png,webp'],
+            'category_id'       => ['required', Rule::exists('categories', 'id')],
+            'store_id'          =>  'required|exists:stores,id',
         ]);
+
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            if (!$request->hasFile('image')) {
+                return;
+            }
+            $file = $request->file('image');
+            $path = $file->store('uploads/products', 'public');
+
+
+            $data = $request->all();
+            $data['image'] = $path;
+            $options = json_encode($request->post('options'));
+            $data['options'] = $options;
+
+            $tag_ids = [];
+            if ($request->post('tags')) {
+                $tags = json_decode($request->post('tags'));
+                $allTags = Tag::all();
+                foreach ($tags as $tag_name) {
+                    $slug = Str::slug($tag_name->value);
+                    $tag = $allTags->where('slug', $slug)->first();
+                    if (!$tag) {
+                        $tag = Tag::create([
+                            'name' => $tag_name->value,
+                            'slug' => $slug,
+                        ]);
+                    }
+                    $tag_ids[] = $tag->id;
+                }
+            }
+
+            $product = Product::create($data);
+            // the sync function is used only with belongToMany relationships and here I assigned the tags array to the tags model after creating it.
+            $product->tags()->sync($tag_ids);
+
+            return redirect()->route('products.index')->with('success', 'Product created successfully');
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -72,7 +120,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('dashboard.products.show', compact('product'));
     }
 
     /**
@@ -80,12 +129,18 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
+        $user = auth()->user();
         $product = Product::findOrFail($id);
 
-        //Comment:- the pluck() method is used to retrieve a list of specific values from a collection of records in the database. This method allows you to specify the field you want to extract values from and is typically used to retrieve a single value or a small set of values from a result set.
-        $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            //Comment:- The pluck() method in Laravel and PHP is used to extract a specific column's values from a collection of arrays or objects.
+            $tags = implode(',', $product->tags()->pluck('name')->toArray());
+            $user = auth()->user();
+            $stores = $user->stores;
 
-        return view('dashboard.products.edit', compact('product', 'tags'));
+            return view('dashboard.products.edit', compact('product', 'tags', 'stores'));
+        }
+        return redirect()->route('login');
     }
 
     /**
@@ -94,16 +149,28 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'          => ['required', 'min:3', 'max:100'],
-            'descirption'   => ['required', 'min:100', 'max:255'],
-            'price'         => ['required', 'numeric', 'double'],
-            'category'   => ['required', Rule::exists('categories', 'id')],
-            'image'         => ['required', 'nullable', 'mimes:jpg,jpeg,png'],
-            'compare_price' => ['numeric', 'nullable'],
-            'store'      =>  'required|string|exists:stores,name',
+            'name'              => ['required', 'min:3', 'max:100'],
+            'description'       => ['required', 'min:100', 'max:255'],
+            'qty'               => ['required'],
+            'price'             => ['required', 'numeric'],
+            'image'             => ['mimes:jpg,jpeg,png,webp'],
+            'category_id'       => ['required', Rule::exists('categories', 'id')],
+            'store_id'          =>  'required|exists:stores,id',
         ]);
 
-        $product->update($request->except('tags'));
+        if (!$request->hasFile('image')) {
+            return;
+        }
+        $old_image = $product->image;
+        Storage::disk('public')->delete($old_image);
+
+        $file = $request->file('image');
+        $path = $file->store('uploads/products', 'public');
+
+        $product->update([
+            $request->except('tags'),
+            'image' => $path,
+        ]);
 
         $tags = json_decode($request->post('tags'));
         $tag_ids = [];
@@ -129,14 +196,23 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            $product->delete();
+            return redirect()->route('products.index')->with('success', 'Product Deleted Successfully!');
+        }
+        return redirect()->route('products.index')->with('error', 'You are not authorized to delete products!');
     }
 
     public function createSlider()
     {
-        return view('dashboard.products.slider');
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            return view('dashboard.products.slider');
+        }
+        return redirect()->route('login');
     }
 
     public function storeSlider(Request $request)
@@ -148,17 +224,21 @@ class ProductsController extends Controller
             'price' => 'required',
         ]);
 
-        if ($request->file('image')) {
-            $file = $request->file('image');
-            $path = $file->store('hero/slider', 'public');
-        }
+        $user = auth()->user();
+        if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
+            if ($request->file('image')) {
+                $file = $request->file('image');
+                $path = $file->store('hero/slider', 'public');
+            }
 
-        HeroSlider::create([
-            'title' => $validatedData['title'],
-            'description' => $validatedData['description'],
-            'image' => $path,
-            'price' => $validatedData['price'],
-        ]);
-        return back()->with('success', 'Slider Created Successfully!');
+            HeroSlider::create([
+                'title' => $validatedData['title'],
+                'description' => $validatedData['description'],
+                'image' => $path,
+                'price' => $validatedData['price'],
+            ]);
+            return back()->with('success', 'Slider Created Successfully!');
+        }
+        return back()->with('error', 'You are not authorized to create sliders!');
     }
 }
