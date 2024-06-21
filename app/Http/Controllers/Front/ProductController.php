@@ -6,7 +6,6 @@ use App\Models\Rating;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Handler\Proxy;
 
 class ProductController extends Controller
 {

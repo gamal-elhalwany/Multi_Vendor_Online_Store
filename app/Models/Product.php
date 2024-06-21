@@ -13,7 +13,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'slug', 'description', 'store_id', 'image', 'category_id', 'price', 'compare_price', 'options', 'rating', 'featured', 'status',
+        'name', 'slug', 'description', 'store_id', 'image', 'category_id', 'price', 'compare_price', 'options', 'rating', 'featured', 'status', 'qty'
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at', 'image'];
@@ -87,6 +87,10 @@ class Product extends Model
 
         $builder->when($filters['price'] ?? false, function ($builder, $price) {
             $builder->where('price', 'LIKE', "%$price%");
+        });
+
+        $builder->when($filters['status'] ?? false, function ($builder, $status /* It doesn't  matter what variable name you use here */) { // status is a column in products table.
+            $builder->where('status', 'LIKE', "%$status%");
         });
     }
 

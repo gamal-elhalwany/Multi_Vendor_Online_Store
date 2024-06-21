@@ -11,6 +11,7 @@ class FrontLayout extends Component
 {
     public $title;
     public $category;
+    public $categories;
 
     /**
      * Create a new component instance.
@@ -19,6 +20,7 @@ class FrontLayout extends Component
     {
         $this->title = $title ?? config('app.name');
         $category = Category::whereNull('parent_id')->with('children')->get();
+        $this->categories = Category::limit(5)->get();
         $this->category = $category;
     }
 
