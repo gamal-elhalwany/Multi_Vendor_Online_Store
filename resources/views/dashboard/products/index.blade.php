@@ -37,7 +37,7 @@
             <th>Store</th>
             <th>Status</th>
             <th>Created At</th>
-            <th colspan="2">Actions</th>
+            <th colspan="3">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -63,7 +63,7 @@
                 </form>
             </td>
             <td>
-                <a href="{{ route('products.show', $product->id) }}" class="btn btn-link">Show</a>
+                <a href="{{ route('products.show', $product->id) }}" class="btn btn-outline-info btn-sm">Show</a>
             </td>
         </tr>
         @empty

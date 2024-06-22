@@ -12,6 +12,8 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
+use function Laravel\Prompts\error;
+
 class ProductsController extends Controller
 {
     public function __construct()
@@ -121,7 +123,9 @@ class ProductsController extends Controller
     public function show(string $id)
     {
         $product = Product::findOrFail($id);
-        return view('dashboard.products.show', compact('product'));
+        $options = $product->options;
+        $options = json_decode($options);
+        return view('dashboard.products.show', compact('product', 'options'));
     }
 
     /**
@@ -159,17 +163,26 @@ class ProductsController extends Controller
         ]);
 
         if (!$request->hasFile('image')) {
-            return;
+            return 'You have to pick-up a photo for the product!';
         }
         $old_image = $product->image;
         Storage::disk('public')->delete($old_image);
 
         $file = $request->file('image');
         $path = $file->store('uploads/products', 'public');
+        $options = json_encode($request->post('options'));
 
         $product->update([
             $request->except('tags'),
+            'name' => $request->post('name'),
+            'description' => $request->post('description'),
+            'qty' => $request->post('qty'),
+            'price' => $request->post('price'),
+            'category_id' => $request->post('category_id'),
+            'store_id' => $request->post('store_id'),
+            'status' => $request->post('status'),
             'image' => $path,
+            'options' => $options,
         ]);
 
         $tags = json_decode($request->post('tags'));

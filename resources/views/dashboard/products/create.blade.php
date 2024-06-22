@@ -122,9 +122,10 @@
         <h2>Enter Product Options</h2>
         <div id="options">
             <div class="option-container">
-                <input class="form-control mb-3" type="text" name="options[name]" placeholder="Option Name">
-                <input class="form-control mt-3" type="text" name="options[value]" placeholder="Option Value">
+                <input class="form-control mb-3" type="text" name="options[0][name]" placeholder="Option Name">
+                <input class="form-control mt-3" type="text" name="options[0][value]" placeholder="Option Value">
                 <button class="remove-option btn btn-danger mt-3 mb-3">Remove Option</button>
+
             </div>
         </div>
         <div class="form-group">
@@ -136,4 +137,26 @@
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>
+<script>
+    let optionIndex = 1;
+    document.getElementById('addOption').addEventListener('click', function(e) {
+        e.preventDefault();
+        const optionsDiv = document.getElementById('options');
+        const newOption = document.createElement('div');
+        newOption.classList.add('option-container');
+        newOption.innerHTML = `
+            <input class="form-control mb-3" type="text" name="options[${optionIndex}][name]" placeholder="Option Name">
+            <input class="form-control mt-3" type="text" name="options[${optionIndex}][value]" placeholder="Option Value" >
+            <span class="remove-option btn btn-danger mt-3 mb-3">Remove Option</span>
+        `;
+        optionsDiv.appendChild(newOption);
+        optionIndex++;
+    });
+
+    document.getElementById('options').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-option')) {
+            event.target.parentElement.remove();
+        }
+    });
+</script>
 @endsection
