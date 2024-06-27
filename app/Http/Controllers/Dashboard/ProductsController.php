@@ -7,12 +7,13 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\HeroSlider;
 use Illuminate\Support\Str;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use function Laravel\Prompts\error;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-
-use function Laravel\Prompts\error;
 
 class ProductsController extends Controller
 {
@@ -79,9 +80,6 @@ class ProductsController extends Controller
         ]);
 
         if ($user && $user->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor')) {
-            if (!$request->hasFile('image')) {
-                return;
-            }
             $file = $request->file('image');
             $path = $file->store('uploads/products', 'public');
 
@@ -112,6 +110,16 @@ class ProductsController extends Controller
             // the sync function is used only with belongToMany relationships and here I assigned the tags array to the tags model after creating it.
             $product->tags()->sync($tag_ids);
 
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $product_image) {
+                    $paths = $product_image->store('uploads/products/product_images', 'public');
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => $paths,
+                    ]);
+                }
+            }
+
             return redirect()->route('products.index')->with('success', 'Product created successfully');
         }
         return redirect()->route('login');
@@ -141,8 +149,8 @@ class ProductsController extends Controller
             $tags = implode(',', $product->tags()->pluck('name')->toArray());
             $user = auth()->user();
             $stores = $user->stores;
-
-            return view('dashboard.products.edit', compact('product', 'tags', 'stores'));
+            $options = json_decode($product->options);
+            return view('dashboard.products.edit', compact('product', 'tags', 'stores', 'options'));
         }
         return redirect()->route('login');
     }
@@ -157,14 +165,11 @@ class ProductsController extends Controller
             'description'       => ['required', 'min:100', 'max:255'],
             'qty'               => ['required'],
             'price'             => ['required', 'numeric'],
-            'image'             => ['mimes:jpg,jpeg,png,webp'],
+            'image'             => ['required', 'mimes:jpg,jpeg,png,webp'],
             'category_id'       => ['required', Rule::exists('categories', 'id')],
             'store_id'          =>  'required|exists:stores,id',
         ]);
 
-        if (!$request->hasFile('image')) {
-            return 'You have to pick-up a photo for the product!';
-        }
         $old_image = $product->image;
         Storage::disk('public')->delete($old_image);
 
@@ -185,23 +190,35 @@ class ProductsController extends Controller
             'options' => $options,
         ]);
 
-        $tags = json_decode($request->post('tags'));
         $tag_ids = [];
-        $allTags = Tag::all();
-        foreach ($tags as $tag_name) {
-            $slug = Str::slug($tag_name->value);
-            $tag = $allTags->where('slug', $slug)->first();
-            if (!$tag) {
-                $tag = Tag::create([
-                    'name' => $tag_name->value,
-                    'slug' => $slug,
-                ]);
+        if ($request->post('tags')) {
+            $tags = json_decode($request->post('tags'));
+            $allTags = Tag::all();
+            foreach ($tags as $tag_name) {
+                $slug = Str::slug($tag_name->value);
+                $tag = $allTags->where('slug', $slug)->first();
+                if (!$tag) {
+                    $tag = Tag::create([
+                        'name' => $tag_name->value,
+                        'slug' => $slug,
+                    ]);
+                }
+                $tag_ids[] = $tag->id;
             }
-            $tag_ids[] = $tag->id;
         }
 
         // the sync function is used only with belongToMany relationships and here I assigned the tags array to the tags model after creating it.
         $product->tags()->sync($tag_ids);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $product_image) {
+                $paths = $product_image->store('uploads/products/product_images', 'public');
+                ProductImage::updateOrCreate([
+                    'product_id' => $product->id,
+                    'image_path' => $paths,
+                ]);
+            }
+        }
 
         return redirect()->route('products.index')->with('success', 'Product Updated Successfully!');
     }

@@ -22,11 +22,12 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $user = auth()->user();
+        $options = json_decode($product->options);
         if ($user) {
             if ($product->status != 'active') {
                 abort(404);
             }
-            return view('front.products.show', compact('product'));
+            return view('front.products.show', compact('product', 'options'));
         }
         return redirect()->route('login');
     }
