@@ -70,6 +70,11 @@ class Product extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
     // this protected function is for making or calling the global scope that we have created by this command:php artisan make:scope [nameOfScope].
     protected static function booted()
     {

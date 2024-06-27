@@ -32,11 +32,11 @@
                                     <img src="{{ $product->image_url }}" id="current" alt="#">
                                 </div>
                                 <div class="images">
-                                    <img src="assets/images/product-details/01.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/02.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/03.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/04.jpg" class="img" alt="#">
-                                    <img src="assets/images/product-details/05.jpg" class="img" alt="#">
+                                    @if ($product->images)
+                                    @foreach($product->images as $image)
+                                    <img src="{{ asset('storage/' .$image->image_path) }}" alt="Image">
+                                    @endforeach
+                                    @endif
                                 </div>
                             </main>
                         </div>
@@ -122,8 +122,7 @@
                             </form>
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="wish-button">
-                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}"
-                                        method="POST">
+                                    <form action="{{ route('user.wishlist.store', auth()->user()->name) }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                                         <input type="hidden" name="quantity" value="1" />
@@ -133,7 +132,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -142,18 +140,14 @@
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="info-body custom-responsive-margin">
-                                <h4>Details</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.</p>
-                                <h4>Features</h4>
-                                <ul class="features">
-                                    <li>Capture 4K30 Video and 12MP Photos</li>
-                                    <li>Game-Style Controller with Touchscreen</li>
-                                    <li>View Live Camera Feed</li>
-                                    <li>Full Control of HERO6 Black</li>
-                                    <li>Use App for Dedicated Camera Operation</li>
+                                <h4>Details or Description</h4>
+                                <p style="word-wrap:break-word;">{{$product->description}}</p>
+                                <h4>Shipping Options:</h4>
+                                <ul class="normal-list">
+                                    <li><span>Courier:</span> 2 - 4 days, $22.50</li>
+                                    <li><span>Local Shipping:</span> up to one week, $10.00</li>
+                                    <li><span>UPS Ground Shipping:</span> 4 - 6 days, $18.00</li>
+                                    <li><span>Unishop Global Export:</span> 3 - 4 days, $25.00</li>
                                 </ul>
                             </div>
                         </div>
@@ -161,18 +155,13 @@
                             <div class="info-body">
                                 <h4>Specifications</h4>
                                 <ul class="normal-list">
-                                    <li><span>Weight:</span> 35.5oz (1006g)</li>
-                                    <li><span>Maximum Speed:</span> 35 mph (15 m/s)</li>
-                                    <li><span>Maximum Distance:</span> Up to 9,840ft (3,000m)</li>
-                                    <li><span>Operating Frequency:</span> 2.4GHz</li>
-                                    <li><span>Manufacturer:</span> GoPro, USA</li>
-                                </ul>
-                                <h4>Shipping Options:</h4>
-                                <ul class="normal-list">
-                                    <li><span>Courier:</span> 2 - 4 days, $22.50</li>
-                                    <li><span>Local Shipping:</span> up to one week, $10.00</li>
-                                    <li><span>UPS Ground Shipping:</span> 4 - 6 days, $18.00</li>
-                                    <li><span>Unishop Global Export:</span> 3 - 4 days, $25.00</li>
+                                    @if($options !== null)
+                                    @foreach($options as $option)
+                                    <li><span><strong>{{$option->name}}:</strong></span> {{$option->value}}</li>
+                                    @endforeach
+                                    @else
+                                    <li>No Options for this product yet.</li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -184,14 +173,16 @@
                             <h4>Overall ({{round($product->ratings->avg('rating'), 3)}})</h4>
                             <ul>
                                 <li>
-                                    @for($i = 1; $i <= round($product->ratings->avg('rating')); $i++) <i
-                                            class="lni lni-star-filled"></i>
+                                    @for($i = 1; $i <= round($product->ratings->avg('rating')); $i++)
+                                        <i class="lni lni-star-filled"></i>
                                         @endfor
+                                        @for($i = 0; $i < floor(5 - $product->ratings->avg('rating')); $i++)
+                                            <i class="lni lni-star-empty"></i>
+                                            @endfor
                                 </li>
                             </ul>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn review-btn" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                            <button type="button" class="btn review-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Leave a Review
                             </button>
                         </div>
@@ -213,7 +204,10 @@
                                             @for($i = 0; $i < $rating->rating; $i++)
                                                 <li><i class="lni lni-star-filled"></i></li>
                                                 @endfor
-                                                Rating
+                                                @for($i = 0; $i < (5 - $rating->rating); $i++)
+                                                    <li><i class="lni lni-star-empty"></i></li>
+                                                    @endfor
+                                                    Rating
                                         </ul>
                                         <p>{{$rating->created_at->diffForHumans()}}</p>
                                     </div>
@@ -235,8 +229,7 @@
     <x-alert type="success" />
 
     <!-- Review Modal -->
-    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade review-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('ratings.store') }}" method="POST">
@@ -305,22 +298,22 @@
     <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script type="text/javascript">
-    const current = document.getElementById("current");
-    const opacity = 0.6;
-    const imgs = document.querySelectorAll(".img");
-    imgs.forEach(img => {
-        img.addEventListener("click", (e) => {
-            //reset opacity
-            imgs.forEach(img => {
-                img.style.opacity = 1;
+        const current = document.getElementById("current");
+        const opacity = 0.6;
+        const imgs = document.querySelectorAll(".img");
+        imgs.forEach(img => {
+            img.addEventListener("click", (e) => {
+                //reset opacity
+                imgs.forEach(img => {
+                    img.style.opacity = 1;
+                });
+                current.src = e.target.src;
+                //adding class
+                //current.classList.add("fade-in");
+                //opacity
+                e.target.style.opacity = opacity;
             });
-            current.src = e.target.src;
-            //adding class
-            //current.classList.add("fade-in");
-            //opacity
-            e.target.style.opacity = opacity;
         });
-    });
     </script>
     @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

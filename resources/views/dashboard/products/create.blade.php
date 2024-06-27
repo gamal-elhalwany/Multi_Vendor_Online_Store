@@ -60,6 +60,14 @@
     </div>
 
     <div class="form-group">
+        <label for="images">Product's gallery</label>
+        <input type="file" name="images[]" class="form-control @error('images[]') is-invalid @enderror" multiple>
+        @error('images[]')
+        <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <label for="">Price</label>
         <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" min="10">
         @error('price')
