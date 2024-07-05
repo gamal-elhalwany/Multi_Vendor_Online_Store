@@ -29,7 +29,7 @@ class OrderCreatedNotifications extends Notification
     public function via(object $notifiable): array
     {
         return ['mail', 'database', 'broadcast'];
-        $channels = ['database'];
+        $channels = ['database']; // this the default channel which I chose to receive the notifications.
 
         if ($notifiable->notification_list['order_created']['sms'] ?? false) {
             $channels[] = 'vonage';

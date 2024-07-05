@@ -9,10 +9,10 @@
         <span class="dropdown-header">{{ $unreadNotifications }} Notifications</span>
         <div class="dropdown-divider"></div>
         @foreach ($notifications as $notification)
-        <a href="{{ $notification->data['url'] }}?notification_id={{ $notification->id }}" class="dropdown-item @if ($notification->unread())
+        <a href="{{ $notification->data['url'] ?? false }}?notification_id={{ $notification->id }}" class="dropdown-item @if ($notification->unread())
             text-bold
         @endif">
-            <i class="fas fa-envelope mr-2"></i> {{ Str::limit($notification->data['body'], 20, '...') }}
+            <i class="fas fa-envelope mr-2"></i> {{ Str::limit($notification->data['body'] ?? false, 20, '...') }}
             <span class="float-right text-muted text-sm">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
         </a>
         <div class="dropdown-divider"></div>

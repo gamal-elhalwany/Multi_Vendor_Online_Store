@@ -39,8 +39,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        {{-- Phone Number --}}
-        <div>
+        <!-- Phone Number -->
+        <div class="mt-4">
             <x-input-label for="phone" :value="__('Phone')" />
             <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone')" required autofocus autocomplete="phone" />
             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
@@ -52,8 +52,15 @@
             </a>
 
             <x-primary-button class="ml-4">
-                {{ __('Register') }}
+                {{ __('Register as customer') }}
             </x-primary-button>
         </div>
     </form>
+    <div class="mt-4">
+        <x-primary-button class="ml-4">
+            <a href="{{ route('merchant_create') }}">
+                {{ __('Register as a merchant') }}
+            </a>
+        </x-primary-button>
+    </div>
 </x-guest-layout>
