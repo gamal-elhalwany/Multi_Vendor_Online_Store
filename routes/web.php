@@ -1,15 +1,11 @@
 <?php
 
-use App\Models\Product;
-use App\Models\Wishlist;
-use App\Observers\CartObserver;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductController;
-use App\Http\Controllers\Front\RatingsController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Front\CurrencyController;
 use App\Http\Controllers\Front\WishlistController;
@@ -93,5 +89,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('auth.socialite.redirect');
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.socialite.callback');
 
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
 require __DIR__ . '/dashboard.php';

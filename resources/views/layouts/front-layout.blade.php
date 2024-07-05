@@ -111,7 +111,7 @@
                                         <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Profile') }}
                                         </a>
                                     </li>
-                                    @if(auth()->user()->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor'))
+                                    @if(auth()->user()->hasAnyRole('Owner', 'Super-admin', 'Admin', 'Editor') || auth()->user()->stores)
                                     <li>
                                         <a class="dropdown-item" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
                                     </li>
